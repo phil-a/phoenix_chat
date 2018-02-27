@@ -1,10 +1,69 @@
-<ul id='msg-list' class='row' style='list-style: none; min-height:200px; padding: 10px;'></ul>
+<div class="display-wrapper">
 
-<div class="row">
-  <div class="col-xs-3">
-    <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus>
+  <div id="w1" class="row mh-250">
+    <div id="w1-m" class="col-md-2"><ul class='row ul-box'></ul></div>
+    <div id="w1-t" class="col-md-2"><ul class='row ul-box'></ul></div>
+    <div id="w1-w" class="col-md-2"><ul class='row ul-box'></ul></div>
+    <div id="w1-th" class="col-md-2"><ul class='row ul-box'></ul></div>
+    <div id="w1-f" class="col-md-2"><ul class='row ul-box'></ul></div>
   </div>
-  <div class="col-xs-9">
-    <input type="text" id="msg" class="form-control" placeholder="Your Message">
+
+  <div class="row mh-30">
+    <div  class="col-md-2 mh-30"><ul class='row ul-date-label'><h2 class="text-center">M</h2></ul></div>
+    <div  class="col-md-2 mh-30"><ul class='row ul-date-label'><h2 class="text-center">T</h2></ul></div>
+    <div  class="col-md-2 mh-30"><ul class='row ul-date-label'><h2 class="text-center">W</h2></ul></div>
+    <div  class="col-md-2 mh-30"><ul class='row ul-date-label'><h2 class="text-center">Th</h2></ul></div>
+    <div  class="col-md-2 mh-30"><ul class='row ul-date-label'><h2 class="text-center">F</h2></ul></div>
+  </div>
+
+  <div id="w2" class="row mh-250">
+    <div id="w2-m" class="col-md-2"><ul class='row ul-box'></ul></div>
+    <div id="w2-t" class="col-md-2"><ul class='row ul-box'></ul></div>
+    <div id="w2-w" class="col-md-2"><ul class='row ul-box'></ul></div>
+    <div id="w2-th" class="col-md-2"><ul class='row ul-box'></ul></div>
+    <div id="w2-f" class="col-md-2"><ul class='row ul-box'></ul></div>
+  </div>
+
+</div>
+
+<div class="container">
+  <div class="input-wrapper well well-lg">
+
+    <div id="week-options-radio" class="btn-group" data-toggle="buttons">
+      <label class="btn btn-lg btn-primary active">
+        <input type="radio" name="week-options" id="option-w1" autocomplete="off" checked> Week 1
+      </label>
+      <label class="btn btn-lg btn-primary">
+        <input type="radio" name="week-options" id="option-w2" autocomplete="off"> Week 2
+      </label>
+    </div>
+
+    <div id="day-options-radio" class="btn-group" data-toggle="buttons">
+      <label class="btn btn-lg btn-primary active">
+        <input type="radio" name="day-options" id="option-m" autocomplete="off" checked> M
+      </label>
+      <label class="btn btn-lg btn-primary">
+        <input type="radio" name="day-options" id="option-t" autocomplete="off"> T
+      </label>
+        <label class="btn btn-lg btn-primary">
+        <input type="radio" name="day-options" id="option-w" autocomplete="off"> W
+      </label>
+      <label class="btn btn-lg btn-primary">
+        <input type="radio" name="day-options" id="option-th" autocomplete="off"> Th
+      </label>
+        <label class="btn btn-lg btn-primary">
+        <input type="radio" name="day-options" id="option-f" autocomplete="off"> F
+      </label>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-3">
+        <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus>
+      </div>
+      <div class="col-xs-9">
+        <input type="text" id="msg" class="form-control" placeholder="Your Message">
+      </div>
+    </div>
+
   </div>
 </div>

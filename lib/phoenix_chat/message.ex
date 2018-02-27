@@ -8,15 +8,16 @@ defmodule PhoenixChat.Message do
   schema "messages" do
     field :message, :string
     field :name, :string
-
+    field :week, :string
+    field :day, :string
     timestamps()
   end
 
   @doc false
   def changeset(%Message{} = message, attrs) do
     message
-    |> cast(attrs, [:name, :message])
-    |> validate_required([:name, :message])
+    |> cast(attrs, [:name, :message, :week, :day])
+    |> validate_required([:message, :week, :day])
   end
 
   def get_messages(limit \\ 20) do

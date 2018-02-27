@@ -32,6 +32,8 @@ defmodule PhoenixChatWeb.RoomChannel do
     |> Enum.each(fn msg -> push(socket, "shout", %{
       name: msg.name,
       message: msg.message,
+      week: msg.week,
+      day: msg.day,
     }) end)
     {:noreply, socket}
   end

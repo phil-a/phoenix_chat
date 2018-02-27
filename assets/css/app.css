@@ -1,1 +1,98 @@
-/* This file is for your main application css. */
+/* Display area */
+.display-wrapper {
+  padding: 50px;
+}
+
+.display-wrapper > #w1 div, #w2 div {
+  margin: 2px;
+  border: 1px solid #252525;
+  background-image: url("/images/retina_wood.png");
+}
+
+.display-wrapper .ul-date-label {
+  list-style: none;
+  padding: 10px;
+  text-decoration: underline;
+  color: #252525;
+}
+
+.ul-box {
+  margin: 0;
+  padding: 4px;
+  min-height: 267.667px;
+  list-style: none;
+  text-decoration: underline;
+}
+
+li.col-md-6 {
+  width: 48%;
+  margin: 1%;
+}
+
+li {
+  opacity: 0;
+  min-height: 125px !important;
+  background-color: #53CAFD;
+  border: 2px solid #3AB1E4;
+  border-radius: 0px;
+  padding: 20px;
+  font-size: 15px;
+  word-wrap: break-word;
+}
+
+li:hover {
+  background-color: #3AB1E4;
+  border: 2px solid #2097CA;
+  -webkit-box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
+  -moz-box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
+  box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
+}
+
+li.fade {
+  -webkit-animation: fade 0.7s;
+  animation: fade 0.7s;
+  opacity: 1;
+}
+/* fallback  */
+@-webkit-keyframes fade {
+  from {opacity: 0}
+  to {opacity: 1}
+}@keyframes fade {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
+/* Input area */
+
+.input-wrapper {
+  padding: 50px;
+}
+
+.input-wrapper #name, .input-wrapper #msg {
+  min-height: 50px;
+  margin: 20px 0;
+}
+
+.btn {
+  font-size: 18px !important;
+  width: 100px;
+  height: 75px;
+  margin: 0 auto;
+  padding-top: 24px !important;
+  display: inline-block;
+  line-height: 100px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.form-control {
+  font-size: 20px !important;
+}
+
+.mh-30 {
+  min-height:30px;
+}
+
+.mh-250 {
+  min-height: 267.667px;
+}
