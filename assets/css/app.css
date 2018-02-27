@@ -30,10 +30,8 @@ li.col-md-6 {
 }
 
 li {
-  opacity: 0;
+  opacity: 1;
   min-height: 125px !important;
-  background-color: #53CAFD;
-  border: 2px solid #3AB1E4;
   border-radius: 0px;
   padding: 20px;
   font-size: 15px;
@@ -41,8 +39,6 @@ li {
 }
 
 li:hover {
-  background-color: #3AB1E4;
-  border: 2px solid #2097CA;
   -webkit-box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
   -moz-box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
   box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
@@ -60,6 +56,75 @@ li.fade {
 }@keyframes fade {
   from {opacity: 0}
   to {opacity: 1}
+}
+
+/* Sticky Rotation */
+ul li:nth-child(even){
+  -o-transform:rotate(4deg);
+  -webkit-transform:rotate(4deg);
+  -moz-transform:rotate(4deg);
+  position:relative;
+  top:5px;
+}
+ul li:nth-child(3n){
+  -o-transform:rotate(-3deg);
+  -webkit-transform:rotate(-3deg);
+  -moz-transform:rotate(-3deg);
+  position:relative;
+  top:-5px;
+}
+ul li:nth-child(5n){
+  -o-transform:rotate(5deg);
+  -webkit-transform:rotate(5deg);
+  -moz-transform:rotate(5deg);
+  position:relative;
+  top:-10px;
+}
+
+/* Sticky Colors */
+ul li:nth-child(even){
+  -o-transform:rotate(4deg);
+  -webkit-transform:rotate(4deg);
+  -moz-transform:rotate(4deg);
+  position:relative;
+  top:5px;
+  background:#cfc;
+}
+ul li:nth-child(3n){
+  -o-transform:rotate(-3deg);
+  -webkit-transform:rotate(-3deg);
+  -moz-transform:rotate(-3deg);
+  position:relative;
+  top:-5px;
+  background:#ccf;
+}
+
+/* Sticky Hover + Focus */
+ul li:hover,ul li:focus{
+  -moz-box-shadow:10px 10px 11px rgba(0,0,0,.7);
+  -webkit-box-shadow: 10px 10px 11px rgba(0,0,0,.7);
+  box-shadow:10px 10px 11px rgba(0,0,0,.7);
+  -webkit-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  position:relative;
+  z-index:5;
+}
+
+ul li{
+  text-decoration:none;
+  color:#000;
+  background:#ffc;
+  display:block;
+  height:10em;
+  width:10em;
+  padding:1em;
+  -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+  -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  -moz-transition:-moz-transform .15s linear;
+  -o-transition:-o-transform .15s linear;
+  -webkit-transition:-webkit-transform .15s linear;
 }
 
 /* Input area */

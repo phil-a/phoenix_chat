@@ -60,11 +60,11 @@ var channel = socket.channel('room:lobby', {});               // connect to chat
 
 channel.on('shout', function (payload) {                      // listen to shout event
   var li = $(document.createElement("li"))
-            .addClass("col-md-6 fade")[0]                          // create new list item
+            .addClass("col-md-6")[0]                     // create new list item
   var name = payload.name || 'anon';                          // get name from payload or use default
-  li.innerHTML = `<b>${name}</b>:<br/>${payload.message}`;        // set li contents
-  getCorrectUl(payload).appendChild(li);
-  li.addClass('fade');                      // append to list
+  li.innerHTML = `<b>${name}</b>:<br/>${payload.message}`;    // set li contents
+  getCorrectUl(payload).appendChild(li);                      // append to list
+                        
 });
 
 channel.join();                                               // join channel
