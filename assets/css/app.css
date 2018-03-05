@@ -3,10 +3,14 @@
   padding: 50px;
 }
 
-.display-wrapper > #w1 div, #w2 div {
-  margin: 2px;
+.display-wrapper > #w1 > div, .display-wrapper > #w2 > div {
   border: 1px solid #252525;
   background-image: url("/images/retina_wood.png");
+}
+
+.display-wrapper > #w1 .panel {
+  border: 1px solid #252525;
+  background-image: none;
 }
 
 .display-wrapper .ul-date-label {
@@ -116,8 +120,6 @@ ul li{
   color:#000;
   background:#ffc;
   display:block;
-  height:10em;
-  width:10em;
   padding:1em;
   -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
   -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
