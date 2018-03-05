@@ -6,14 +6,16 @@
     <div id="w1-w" class="col-md-2"><ul class='row ul-box'></ul></div>
     <div id="w1-th" class="col-md-2"><ul class='row ul-box'></ul></div>
     <div id="w1-f" class="col-md-2"><ul class='row ul-box'></ul></div>
-      <div class="col-md-2 panel panel-primary">
-        <div class="panel-body">
-          Users
+    <div id="user-list" class="col-md-2">
+      <div class="panel panel-primary chat-room">
+        <div class="panel-heading">
+          Online Users
         </div>
-        <div class="panel-footer">
-          Test
+        <div class="panel-body panel-users" id="online-users">
+        <ul></ul>
         </div>
       </div>
+    </div>
   </div>
   
 

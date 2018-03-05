@@ -18,11 +18,26 @@ import "phoenix_html"
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 import socket from "./socket"
+import {Presence} from "phoenix"
 
 const DAY_OPTIONS = ["option-m", "option-t", "option-w", "option-th", "option-f"];
 const WEEK_OPTIONS = ["option-w1", "option-w2"];
 
-// Find correct Ul from payload
+let presences = {}
+let onlineUsers = document.getElementById("online-users")
+// Create list of users
+let listUsers = (user) => {
+  return {
+    user: user
+  }
+}
+// Render list of users
+let renderUsers = (presences) => {
+  onlineUsers.innerHTML = Presence.list(presences, listUsers)
+  .map(presence => `
+    <li>${presence.user}</li>`).join("")
+}
+
 function getCorrectUl(payload) {
   var {week, day} = payload;
   return $(document.getElementById(week + "-" + day)).find("ul")[0];
@@ -58,21 +73,31 @@ $("#day-options-radio").find("label > input").map(function(i, e) {
 //Connect to chat 'room'
 var channel = socket.channel('room:lobby', {});               // connect to chat "room"
 
+// Sync state
+channel.on('presence_state', state => {
+  presences = Presence.syncState(presences, state)
+  renderUsers(presences)
+});
+// Sync diff
+channel.on('presence_diff', diff => {
+  presences = Presence.syncDiff(presences, diff)
+  renderUsers(presences)
+});
+
 channel.on('shout', function (payload) {                      // listen to shout event
-  var li = $(document.createElement("li"))
-            .addClass("col-md-6")[0]                     // create new list item
+  var li = $(document.createElement("li"))                    // create new list item
+            .addClass("col-md-6")[0]                          
   var name = payload.name || 'anon';                          // get name from payload or use default
   li.innerHTML = `<b>${name}</b>:<br/>${payload.message}`;    // set li contents
-  getCorrectUl(payload).appendChild(li);                      // append to list
-                        
+  getCorrectUl(payload).appendChild(li);                      // append to list    
 });
 
 channel.join();                                               // join channel
 
 var msg = document.getElementById('msg');                     // message input field
-var week = $(document.getElementById('week-options-radio'))
+var week = $(document.getElementById('week-options-radio'))   // radio buttons for week
             .find("input:checked")[0]
-var day = $(document.getElementById('day-options-radio'))
+var day = $(document.getElementById('day-options-radio'))     // radio buttons for day
             .find("input:checked")[0]
 
 // Listen for [ Enter ]  keypress event to send message:

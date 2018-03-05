@@ -1,6 +1,7 @@
 defmodule PhoenixChatWeb.RoomChannel do
   use PhoenixChatWeb, :channel
   alias PhoenixChat.{ Repo, Message, Coherence.User }
+  alias PhoenixChatWeb.Presence
 
   def join("room:lobby", payload, socket) do
     if authorized?(payload) do
@@ -34,6 +35,10 @@ defmodule PhoenixChatWeb.RoomChannel do
   end
 
   def handle_info(:after_join, socket) do
+    user = Repo.get(User, socket.assigns.user_id)
+    push(socket, "presence_state", PhoenixChatWeb.Presence.list(socket))
+    {:ok, _} = Presence.track(socket, user.name, %{ online_at: inspect(System.system_time(:seconds)) })
+    
     Message.get_messages()
     |> Enum.each(fn msg -> push(socket, "shout", %{
       name: msg.name,
