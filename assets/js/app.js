@@ -69,7 +69,6 @@ channel.on('shout', function (payload) {                      // listen to shout
 
 channel.join();                                               // join channel
 
-var name = document.getElementById('name');                   // name of message sender
 var msg = document.getElementById('msg');                     // message input field
 var week = $(document.getElementById('week-options-radio'))
             .find("input:checked")[0]
@@ -80,7 +79,7 @@ var day = $(document.getElementById('day-options-radio'))
 msg.addEventListener('keypress', function (event) {
   if (event.keyCode == 13 && msg.value.length > 0) {           // check keypress and non-empty message
     channel.push('shout', {                                    // send message to server on "shout" channel
-      name: name.value,                                        // get value of "name" from DOM
+      name: "",                                                // get value of "name" from DOM
       message: msg.value,                                      // get value of message text from DOM
       week: getCorrectId($(week).attr('id')),                  // get value of week id
       day: getCorrectId($(day).attr('id')),                    // get value of day id
