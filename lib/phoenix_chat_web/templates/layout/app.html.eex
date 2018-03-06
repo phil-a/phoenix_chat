@@ -9,13 +9,16 @@
 
     <title>Hello PhoenixChat!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
   </head>
 
   <body>
       <header class="header">
         <nav role="navigation">
         </nav>
-        <span class="logo"></span>
+        <div style="font-size:3em; color:#f16440; margin-left: 1em;">
+        <i class="fab fa-phoenix-framework fa-3x"></i>
+        </div>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

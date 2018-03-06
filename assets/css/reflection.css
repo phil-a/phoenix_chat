@@ -1,0 +1,237 @@
+/*
+  Reflection Page
+*/
+
+.fa-thumbtack {
+  position: absolute;
+  top: -7px;
+  right: 50%;
+}
+
+/* Display area */
+
+.col-md-2.no-padding {
+  padding: 0;
+}
+
+.reflection-page .display-wrapper {
+  padding: 50px;
+}
+
+.reflection-page #user-list {
+  transition: right 0.3s ease-in-out;
+  position: fixed;
+  top: 0;
+  right: 0;
+  min-width: 200px;
+  margin: 8px;
+  border: 0px solid #252525;
+  background-image: none;
+  z-index: 10;
+}
+
+.reflection-page #btn-minimize-users {
+  transition: right 0.3s ease-in-out;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  width: 42px;
+}
+
+.reflection-page #user-list.phase-right {
+  right: -208px;
+}
+.reflection-page #user-list.phase-right #btn-minimize-users {
+  right: 212px;
+}
+
+.reflection-page .display-wrapper > #w1 > div, .reflection-page .display-wrapper > #w2 > div {
+  border: 1px solid #252525;
+  background-image: url("/images/retina_wood.png");
+}
+
+.reflection-page .display-wrapper .ul-date-label {
+  list-style: none;
+  padding: 10px;
+  text-decoration: underline;
+  color: #252525;
+}
+
+.reflection-page li {
+  list-style-type: none;
+}
+
+.reflection-page .ul-box {
+  margin: 0;
+  padding: 4px;
+  min-height: 267.667px;
+  list-style: none;
+  text-decoration: underline;
+}
+
+.reflection-page .ul-box > li.col-md-6 {
+  width: 48%;
+  margin: 1%;
+}
+
+.reflection-page .ul-box > li {
+  opacity: 1;
+  border-radius: 0px;
+  padding: 20px;
+  font-size: 15px;
+  word-wrap: break-word;
+}
+
+.reflection-page .ul-box > li:hover {
+  -webkit-box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
+  -moz-box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
+  box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
+}
+
+.reflection-page .ul-box > li.fade {
+  -webkit-animation: fade 0.7s;
+  animation: fade 0.7s;
+  opacity: 1;
+}
+/* fallback  */
+@-webkit-keyframes fade {
+  from {opacity: 0}
+  to {opacity: 1}
+}@keyframes fade {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
+/* Sticky Rotation */
+.reflection-page .ul-box li:nth-child(even){
+  -o-transform:rotate(4deg);
+  -webkit-transform:rotate(4deg);
+  -moz-transform:rotate(4deg);
+  position:relative;
+  top:5px;
+}
+.reflection-page .ul-box li:nth-child(3n){
+  -o-transform:rotate(-3deg);
+  -webkit-transform:rotate(-3deg);
+  -moz-transform:rotate(-3deg);
+  position:relative;
+  top:-5px;
+}
+.reflection-page .ul-box li:nth-child(5n){
+  -o-transform:rotate(5deg);
+  -webkit-transform:rotate(5deg);
+  -moz-transform:rotate(5deg);
+  position:relative;
+  top:-10px;
+}
+
+/* Sticky Colors */
+.reflection-page .ul-box li:nth-child(even){
+  -o-transform:rotate(4deg);
+  -webkit-transform:rotate(4deg);
+  -moz-transform:rotate(4deg);
+  position:relative;
+  top:5px;
+  background:#cfc;
+}
+.reflection-page .ul-box li:nth-child(3n){
+  -o-transform:rotate(-3deg);
+  -webkit-transform:rotate(-3deg);
+  -moz-transform:rotate(-3deg);
+  position:relative;
+  top:-5px;
+  background:#ccf;
+}
+
+/* Sticky Hover + Focus */
+.reflection-page .ul-box li:hover,ul li:focus{
+  -moz-box-shadow:10px 10px 11px rgba(0,0,0,.7);
+  -webkit-box-shadow: 10px 10px 11px rgba(0,0,0,.7);
+  box-shadow:10px 10px 11px rgba(0,0,0,.7);
+  -webkit-transform: scale(2.0);
+  -moz-transform: scale(2.0);
+  -o-transform: scale(2.0);
+  position:relative;
+  z-index:5;
+}
+
+.reflection-page .ul-box li{
+  text-decoration:none;
+  color:#000;
+  background:#ffc;
+  display:block;
+  padding:1em;
+  -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+  -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  -moz-transition:-moz-transform .15s linear;
+  -o-transition:-o-transform .15s linear;
+  -webkit-transition:-webkit-transform .15s linear;
+}
+
+/* Input area */
+
+.reflection-page .input-wrapper {
+  transition: right 0.3s ease-in-out;
+  background-color: #EEE;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 8px;
+  border: 1px solid #AAA;
+  border-radius: 3px;
+}
+.reflection-page .input-wrapper.phase-right {
+  right: -816px;
+}
+.reflection-page .input-wrapper.phase-right #btn-minimize-inputs {
+  right: 816px;
+}
+
+.reflection-page .input-wrapper #name, .reflection-page .input-wrapper #msg {
+  height: 46px;
+}
+
+.reflection-page #week-options-radio, .reflection-page #day-options-radio {
+  margin: 8px;
+}
+
+.reflection-page #week-options-radio .btn {
+  font-size: 18px !important;
+  margin: 0 auto;
+  display: inline-block;
+  text-align: center;
+}
+
+.reflection-page #day-options-radio .btn {
+  font-size: 18px !important;
+  margin: 0 auto;
+  display: inline-block;
+  text-align: center;
+  min-width: 70px;
+}
+
+.reflection-page .message-text-input {
+  display: inline-block;
+  margin-right: 50px;
+}
+
+.reflection-page #btn-minimize-inputs {
+  transition: right 0.3s ease-in-out;
+  position: absolute;
+  width: 42px;
+  bottom: 8px;
+  right: 0;
+  margin: 6px !important;
+}
+
+.reflection-page .form-control {
+}
+
+.reflection-page .mh-30 {
+  min-height:30px;
+}
+
+.reflection-page .mh-250 {
+  min-height: 267.667px;
+}

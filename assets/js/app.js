@@ -20,6 +20,18 @@ import "phoenix_html"
 import socket from "./socket"
 import {Presence} from "phoenix"
 
+/* Toggle Users */
+$( "#btn-minimize-users" ).click(function() {
+  $( "#user-list" ).toggleClass("phase-right");
+  $( this ).find("svg").toggleClass("fa-chevron-right fa-users");
+});
+
+/* Toggle Input */
+$( "#btn-minimize-inputs" ).click(function() {
+  $( ".input-wrapper" ).toggleClass("phase-right");
+  $( this ).find("svg").toggleClass("fa-chevron-right fa-keyboard");
+});
+
 const DAY_OPTIONS = ["option-m", "option-t", "option-w", "option-th", "option-f"];
 const WEEK_OPTIONS = ["option-w1", "option-w2"];
 
@@ -88,7 +100,7 @@ channel.on('shout', function (payload) {                      // listen to shout
   var li = $(document.createElement("li"))                    // create new list item
             .addClass("col-md-6")[0]                          
   var name = payload.name || 'anon';                          // get name from payload or use default
-  li.innerHTML = `<b>${name}</b>:<br/>${payload.message}`;    // set li contents
+  li.innerHTML = `<i class="fas fa-thumbtack fa-xs" style="color:#444;"></i><b>${name}</b>:<br/>${payload.message}`;    // set li contents
   getCorrectUl(payload).appendChild(li);                      // append to list    
 });
 

@@ -35,11 +35,11 @@ config :coherence,
   router: PhoenixChatWeb.Router,
   messages_backend: PhoenixChatWeb.Coherence.Messages,
   logged_out_url: "/",
-  email_from_name: "Your Name",
-  email_from_email: "yourname@example.com",
+  email_from_name: System.get_env("COHERENCE_EMAIL_FROM_NAME"),
+  email_from_email: System.get_env("COHERENCE_EMAIL_FROM_EMAIL"),
   opts: [:authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token, :invitable, :registerable]
 
 config :coherence, PhoenixChatWeb.Coherence.Mailer,
   adapter: Swoosh.Adapters.Sendgrid,
-  api_key: "your api key here"
+  api_key: System.get_env("SENDGRID_API_KEY")
 # %% End Coherence Configuration %%
