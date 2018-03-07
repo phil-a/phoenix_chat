@@ -21,8 +21,9 @@
         <nav role="navigation">
         </nav>
         <div style="font-size:3em; color:#f16440; margin-left: 1em;">
-        <i class="fab fa-phoenix-framework fa-3x"></i>
+          <i class="fab fa-phoenix-framework fa-3x"></i>
         </div>
+        <%= PhoenixChatWeb.Coherence.ViewHelpers.signout_link(@conn, "Sign Out", "btn btn-default") %>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

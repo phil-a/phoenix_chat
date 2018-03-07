@@ -1,12 +1,12 @@
 /*!
 
  =========================================================
- * Now-ui-kit - v1.1.0
+ * Now-ui-kit-pro - v1.2.0
  =========================================================
 
- * Product Page: https://www.creative-tim.com/product/now-ui-kit
+ * Product Page: https://www.creative-tim.com/product/now-ui-kit-pro
  * Copyright 2017 Creative Tim (http://www.creative-tim.com)
- * Licensed under MIT (https://github.com/creativetimofficial/now-ui-kit/blob/master/LICENSE.md)
+  * View License on http://www.creative-tim.com/license
 
  * Designed by www.invisionapp.com Coded by www.creative-tim.com
 
@@ -17,6 +17,7 @@
  */
 
 var transparent = true;
+var big_image;
 
 var transparentDemo = true;
 var fixedTop = false;
@@ -28,6 +29,21 @@ var navbar_initialized,
 $(document).ready(function() {
     //  Activate the Tooltips
     $('[data-toggle="tooltip"], [rel="tooltip"]').tooltip();
+
+    //    Activate bootstrap-select
+    if ($(".selectpicker").length != 0) {
+        $(".selectpicker").selectpicker({
+            iconBase: "now-ui-icons",
+            tickIcon: "ui-1_check"
+        });
+    };
+
+    if ($(window).width() >= 768) {
+        big_image = $('.header[data-parallax="true"]');
+        if (big_image.length != 0) {
+            $(window).on('scroll', nowuiKit.checkScrollForParallax);
+        }
+    }
 
     // Activate Popovers and set color for popovers
     $('[data-toggle="popover"]').each(function() {
@@ -44,7 +60,6 @@ $(document).ready(function() {
     scroll_distance = $navbar.attr('color-on-scroll') || 500;
 
     // Check if we have the class "navbar-color-on-scroll" then add the function to remove the class "navbar-transparent" so it will transform to a plain color.
-
     if ($('.navbar[color-on-scroll]').length != 0) {
         nowuiKit.checkScrollForTransparentNavbar();
         $(window).on('scroll', nowuiKit.checkScrollForTransparentNavbar)
@@ -71,7 +86,7 @@ $(document).ready(function() {
     if ($(window).width() >= 992) {
         big_image = $('.page-header-image[data-parallax="true"]');
 
-        $(window).on('scroll', nowuiKitDemo.checkScrollForParallax);
+        $(window).on('scroll', nowuiKit.checkScrollForParallax);
     }
 
     // Activate Carousel
@@ -79,25 +94,56 @@ $(document).ready(function() {
         interval: 4000
     });
 
-    $('.date-picker').each(function() {
-        $(this).datepicker({
-            templates: {
-                leftArrow: '<i class="now-ui-icons arrows-1_minimal-left"></i>',
-                rightArrow: '<i class="now-ui-icons arrows-1_minimal-right"></i>'
+    if ($(".datetimepicker").length != 0) {
+        $('.datetimepicker').datetimepicker({
+            icons: {
+                time: "now-ui-icons tech_watch-time",
+                date: "now-ui-icons ui-1_calendar-60",
+                up: "fa fa-chevron-up",
+                down: "fa fa-chevron-down",
+                previous: 'now-ui-icons arrows-1_minimal-left',
+                next: 'now-ui-icons arrows-1_minimal-right',
+                today: 'fa fa-screenshot',
+                clear: 'fa fa-trash',
+                close: 'fa fa-remove'
             }
-        }).on('show', function() {
-            $('.datepicker').addClass('open');
-
-            datepicker_color = $(this).data('datepicker-color');
-            if (datepicker_color.length != 0) {
-                $('.datepicker').addClass('datepicker-' + datepicker_color + '');
-            }
-        }).on('hide', function() {
-            $('.datepicker').removeClass('open');
         });
-    });
+    }
 
+    if ($(".datepicker").length != 0) {
+        $('.datepicker').datetimepicker({
+            format: 'MM/DD/YYYY',
+            icons: {
+                time: "now-ui-icons tech_watch-time",
+                date: "now-ui-icons ui-1_calendar-60",
+                up: "fa fa-chevron-up",
+                down: "fa fa-chevron-down",
+                previous: 'now-ui-icons arrows-1_minimal-left',
+                next: 'now-ui-icons arrows-1_minimal-right',
+                today: 'fa fa-screenshot',
+                clear: 'fa fa-trash',
+                close: 'fa fa-remove'
+            }
+        });
+    }
 
+    if ($(".timepicker").length != 0) {
+        $('.timepicker').datetimepicker({
+            //          format: 'H:mm',    // use this format if you want the 24hours timepicker
+            format: 'h:mm A', //use this format if you want the 12hours timpiecker with AM/PM toggle
+            icons: {
+                time: "now-ui-icons tech_watch-time",
+                date: "now-ui-icons ui-1_calendar-60",
+                up: "fa fa-chevron-up",
+                down: "fa fa-chevron-down",
+                previous: 'now-ui-icons arrows-1_minimal-left',
+                next: 'now-ui-icons arrows-1_minimal-right',
+                today: 'fa fa-screenshot',
+                clear: 'fa fa-trash',
+                close: 'fa fa-remove'
+            }
+        });
+    }
 });
 
 $(window).on('resize', function() {
@@ -107,7 +153,7 @@ $(window).on('resize', function() {
 $(document).on('click', '.navbar-toggler', function() {
     $toggle = $(this);
 
-    if (nowuiKit.misc.navbar_menu_visible == 2) {
+    if (nowuiKit.misc.navbar_menu_visible == 1) {
         $('html').removeClass('nav-open');
         nowuiKit.misc.navbar_menu_visible = 0;
         $('#bodyClick').remove();
@@ -194,16 +240,9 @@ nowuiKit = {
                 max: 100
             }
         });
-    }
-}
+    },
 
-
-var big_image;
-
-// Javascript just for Demo purpose, remove it from your project
-nowuiKitDemo = {
     checkScrollForParallax: debounce(function() {
-        var current_scroll = $(this).scrollTop();
 
         oVal = ($(window).scrollTop() / 3);
         big_image.css({
@@ -213,8 +252,278 @@ nowuiKitDemo = {
             '-o-transform': 'translate3d(0,' + oVal + 'px,0)'
         });
 
-    }, 6)
+    }, 6),
 
+    initContactUsMap: function() {
+        var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
+        var mapOptions = {
+            zoom: 13,
+            center: myLatlng,
+            scrollwheel: false, //we disable de scroll over the map, it is a really annoing when you scroll through page
+            styles: [{
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#e9e9e9"
+                }, {
+                    "lightness": 17
+                }]
+            }, {
+                "featureType": "landscape",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#f5f5f5"
+                }, {
+                    "lightness": 20
+                }]
+            }, {
+                "featureType": "road.highway",
+                "elementType": "geometry.fill",
+                "stylers": [{
+                    "color": "#ffffff"
+                }, {
+                    "lightness": 17
+                }]
+            }, {
+                "featureType": "road.highway",
+                "elementType": "geometry.stroke",
+                "stylers": [{
+                    "color": "#ffffff"
+                }, {
+                    "lightness": 29
+                }, {
+                    "weight": 0.2
+                }]
+            }, {
+                "featureType": "road.arterial",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#ffffff"
+                }, {
+                    "lightness": 18
+                }]
+            }, {
+                "featureType": "road.local",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#ffffff"
+                }, {
+                    "lightness": 16
+                }]
+            }, {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#f5f5f5"
+                }, {
+                    "lightness": 21
+                }]
+            }, {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#dedede"
+                }, {
+                    "lightness": 21
+                }]
+            }, {
+                "elementType": "labels.text.stroke",
+                "stylers": [{
+                    "visibility": "on"
+                }, {
+                    "color": "#ffffff"
+                }, {
+                    "lightness": 16
+                }]
+            }, {
+                "elementType": "labels.text.fill",
+                "stylers": [{
+                    "saturation": 36
+                }, {
+                    "color": "#333333"
+                }, {
+                    "lightness": 40
+                }]
+            }, {
+                "elementType": "labels.icon",
+                "stylers": [{
+                    "visibility": "off"
+                }]
+            }, {
+                "featureType": "transit",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#f2f2f2"
+                }, {
+                    "lightness": 19
+                }]
+            }, {
+                "featureType": "administrative",
+                "elementType": "geometry.fill",
+                "stylers": [{
+                    "color": "#fefefe"
+                }, {
+                    "lightness": 20
+                }]
+            }, {
+                "featureType": "administrative",
+                "elementType": "geometry.stroke",
+                "stylers": [{
+                    "color": "#fefefe"
+                }, {
+                    "lightness": 17
+                }, {
+                    "weight": 1.2
+                }]
+            }]
+        };
+
+        var map = new google.maps.Map(document.getElementById("contactUsMap"), mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            title: "Hello World!"
+        });
+
+        // To add the marker to the map, call setMap();
+        marker.setMap(map);
+    },
+
+
+    initContactUs2Map: function() {
+        var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
+        var mapOptions = {
+            zoom: 13,
+            center: myLatlng,
+            scrollwheel: false, //we disable de scroll over the map, it is a really annoing when you scroll through page
+            styles: [{
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#e9e9e9"
+                }, {
+                    "lightness": 17
+                }]
+            }, {
+                "featureType": "landscape",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#f5f5f5"
+                }, {
+                    "lightness": 20
+                }]
+            }, {
+                "featureType": "road.highway",
+                "elementType": "geometry.fill",
+                "stylers": [{
+                    "color": "#ffffff"
+                }, {
+                    "lightness": 17
+                }]
+            }, {
+                "featureType": "road.highway",
+                "elementType": "geometry.stroke",
+                "stylers": [{
+                    "color": "#ffffff"
+                }, {
+                    "lightness": 29
+                }, {
+                    "weight": 0.2
+                }]
+            }, {
+                "featureType": "road.arterial",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#ffffff"
+                }, {
+                    "lightness": 18
+                }]
+            }, {
+                "featureType": "road.local",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#ffffff"
+                }, {
+                    "lightness": 16
+                }]
+            }, {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#f5f5f5"
+                }, {
+                    "lightness": 21
+                }]
+            }, {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#dedede"
+                }, {
+                    "lightness": 21
+                }]
+            }, {
+                "elementType": "labels.text.stroke",
+                "stylers": [{
+                    "visibility": "on"
+                }, {
+                    "color": "#ffffff"
+                }, {
+                    "lightness": 16
+                }]
+            }, {
+                "elementType": "labels.text.fill",
+                "stylers": [{
+                    "saturation": 36
+                }, {
+                    "color": "#333333"
+                }, {
+                    "lightness": 40
+                }]
+            }, {
+                "elementType": "labels.icon",
+                "stylers": [{
+                    "visibility": "off"
+                }]
+            }, {
+                "featureType": "transit",
+                "elementType": "geometry",
+                "stylers": [{
+                    "color": "#f2f2f2"
+                }, {
+                    "lightness": 19
+                }]
+            }, {
+                "featureType": "administrative",
+                "elementType": "geometry.fill",
+                "stylers": [{
+                    "color": "#fefefe"
+                }, {
+                    "lightness": 20
+                }]
+            }, {
+                "featureType": "administrative",
+                "elementType": "geometry.stroke",
+                "stylers": [{
+                    "color": "#fefefe"
+                }, {
+                    "lightness": 17
+                }, {
+                    "weight": 1.2
+                }]
+            }]
+        };
+
+        var map = new google.maps.Map(document.getElementById("contactUs2Map"), mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            title: "Hello World!"
+        });
+
+        // To add the marker to the map, call setMap();
+        marker.setMap(map);
+    }
 }
 
 // Returns a function, that, as long as it continues to be invoked, will not
