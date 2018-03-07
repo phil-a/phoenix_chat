@@ -82,45 +82,48 @@ $("#day-options-radio").find("label > input").map(function(i, e) {
   });
 });
 
-//Connect to chat 'room'
-var channel = socket.channel('room:lobby', {});               // connect to chat "room"
+//Connect to chat 'room' when logged in
+if (window.location.pathname === "/") {
+  var channel = socket.channel('room:lobby', {});               // connect to chat "room"
 
-// Sync state
-channel.on('presence_state', state => {
-  presences = Presence.syncState(presences, state)
-  renderUsers(presences)
-});
-// Sync diff
-channel.on('presence_diff', diff => {
-  presences = Presence.syncDiff(presences, diff)
-  renderUsers(presences)
-});
+  // Sync state
+  channel.on('presence_state', state => {
+    presences = Presence.syncState(presences, state)
+    renderUsers(presences)
+  });
+  // Sync diff
+  channel.on('presence_diff', diff => {
+    presences = Presence.syncDiff(presences, diff)
+    renderUsers(presences)
+  });
 
-channel.on('shout', function (payload) {                      // listen to shout event
-  var li = $(document.createElement("li"))                    // create new list item
-            .addClass("col-md-6")[0]                          
-  var name = payload.name || 'anon';                          // get name from payload or use default
-  li.innerHTML = `<i class="fas fa-thumbtack fa-xs" style="color:#444;"></i><b>${name}</b>:<br/>${payload.message}`;    // set li contents
-  getCorrectUl(payload).appendChild(li);                      // append to list    
-});
+  channel.on('shout', function (payload) {                      // listen to shout event
+    var li = $(document.createElement("li"))                    // create new list item
+              .addClass("col-md-6")[0]                          
+    var name = payload.name || 'anon';                          // get name from payload or use default
+    li.innerHTML = `<i class="fas fa-thumbtack fa-xs" style="color:#444;"></i><b>${name}</b>:<br/>${payload.message}`;    // set li contents
+    getCorrectUl(payload).appendChild(li);                      // append to list    
+  });
 
-channel.join();                                               // join channel
+  channel.join();                                               // join channel
 
-var msg = document.getElementById('msg');                     // message input field
-var week = $(document.getElementById('week-options-radio'))   // radio buttons for week
-            .find("input:checked")[0]
-var day = $(document.getElementById('day-options-radio'))     // radio buttons for day
-            .find("input:checked")[0]
+  var msg = document.getElementById('msg');                     // message input field
+  var week = $(document.getElementById('week-options-radio'))   // radio buttons for week
+              .find("input:checked")[0]
+  var day = $(document.getElementById('day-options-radio'))     // radio buttons for day
+              .find("input:checked")[0]
 
-// Listen for [ Enter ]  keypress event to send message:
-msg.addEventListener('keypress', function (event) {
-  if (event.keyCode == 13 && msg.value.length > 0) {           // check keypress and non-empty message
-    channel.push('shout', {                                    // send message to server on "shout" channel
-      name: "",                                                // get value of "name" from DOM
-      message: msg.value,                                      // get value of message text from DOM
-      week: getCorrectId($(week).attr('id')),                  // get value of week id
-      day: getCorrectId($(day).attr('id')),                    // get value of day id
-    });
-    msg.value = '';                                            // reset message input
-  }
-});
+  // Listen for [ Enter ]  keypress event to send message:
+  msg.addEventListener('keypress', function (event) {
+    if (event.keyCode == 13 && msg.value.length > 0) {           // check keypress and non-empty message
+      channel.push('shout', {                                    // send message to server on "shout" channel
+        name: "",                                                // get value of "name" from DOM
+        message: msg.value,                                      // get value of message text from DOM
+        week: getCorrectId($(week).attr('id')),                  // get value of week id
+        day: getCorrectId($(day).attr('id')),                    // get value of day id
+      });
+      msg.value = '';                                            // reset message input
+    }
+  });
+
+}
