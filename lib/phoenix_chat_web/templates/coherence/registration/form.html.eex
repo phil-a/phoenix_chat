@@ -1,53 +1,89 @@
-<%= form_for @changeset, @action, [as: :registration], fn f  -> %>
+<div class="content">
+  <div class="container">
+    <div class="col-md-5 ml-auto mr-auto">
+      <div class="card card-login card-plain">
 
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p><%= dgettext "coherence", "Oops, something went wrong! Please check the errors below." %></p>
+        <%= form_for @changeset, @action, [as: :registration], fn f  -> %>
+
+          <div class="card-header text-center">
+            <div class="logo-container">
+              <div style="font-size:3em; color:#f16440;">
+                <i class="far fa-sticky-note fa-3x"></i>
+              </div>
+              <h3>Register new account</h3>
+            </div>
+          </div>
+
+          <div class="card-body">
+
+            <%= if @changeset.action do %>
+              <div class="alert alert-danger">
+                <p><%= dgettext "coherence", "Oops, something went wrong! Please check the errors below." %></p>
+              </div>
+            <% end %>
+
+            <div class="input-group form-group-no-border input-lg">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
+              </div>
+              <%= text_input f, :name, class: "form-control", placeholder: "Name...", required: "" %>
+              <%= error_tag f, :name %>
+            </div>
+
+            <%= unless (login_field = Coherence.Config.login_field) == :email do %>
+              <div class="input-group form-group-no-border input-lg">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
+                </div>
+                <%= text_input f, login_field, class: "form-control", required: "" %>
+                <%= error_tag f, login_field %>
+              </div>
+            <% end %>
+
+            <div class="input-group form-group-no-border input-lg">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
+              </div>
+                <%= text_input f, :email, class: "form-control", placeholder: "Email...", required: "" %>
+                <%= error_tag f, :email %>
+            </div>
+
+            <%= if Coherence.Config.require_current_password and not is_nil(@changeset.data.id) do %>
+              <div class="input-group form-group-no-border input-lg">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
+              </div>
+                <%= password_input f, :current_password, [class: "form-control"] ++ @required %>
+                <%= error_tag f, :current_password %>
+            <% end %>
+
+            <div class="input-group form-group-no-border input-lg">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="now-ui-icons ui-1_lock-circle-open"></i></span>
+              </div>
+              <%= password_input f, :password, [class: "form-control", placeholder: "Password..."] ++ @required %>
+              <%= error_tag f, :password %>
+            </div>
+
+            <div class="input-group form-group-no-border input-lg">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="now-ui-icons ui-1_lock-circle-open"></i></span>
+              </div>
+              <%= password_input f, :password_confirmation, [class: "form-control", placeholder: "Confirm Password..."] ++ @required %>
+              <%= error_tag f, :password_confirmation %>
+            </div>
+
+            <div class="card-footer text-center">
+              <div class="form-group">
+                <%= submit @label, class: "btn btn-primary" %>
+                <%= link dgettext("coherence", "Cancel"), to: Coherence.Config.logged_out_url("/"), class: "btn" %>
+              </div>
+            </div>
+          </div>
+        
+        <% end %>
+
+      </div>
     </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= required_label f, dgettext("coherence", "Name"), class: "control-label" %>
-    <%= text_input f, :name, class: "form-control", required: "" %>
-    <%= error_tag f, :name %>
   </div>
-
-  <%= unless (login_field = Coherence.Config.login_field) == :email do %>
-    <div class="form-group">
-      <%= required_label f, login_field, class: "control-label" %>
-      <%= text_input f, login_field, class: "form-control", required: "" %>
-      <%= error_tag f, login_field %>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= required_label f, dgettext("coherence", "Email"), class: "control-label" %>
-    <%= text_input f, :email, class: "form-control", required: "" %>
-    <%= error_tag f, :email %>
-  </div>
-
-  <%= if Coherence.Config.require_current_password and not is_nil(@changeset.data.id) do %>
-    <div class="form-group">
-      <%= required_label f, :current_password, class: "control-label" %>
-      <%= password_input f, :current_password, [class: "form-control"] ++ @required %>
-      <%= error_tag f, :current_password %>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= required_label f, dgettext("coherence", "Password"), class: "control-label" %>
-    <%= password_input f, :password, [class: "form-control"] ++ @required %>
-    <%= error_tag f, :password %>
-  </div>
-
-  <div class="form-group">
-    <%= required_label f, dgettext("coherence", "Password Confirmation"), class: "control-label" %>
-    <%= password_input f, :password_confirmation, [class: "form-control"] ++ @required %>
-    <%= error_tag f, :password_confirmation %>
-  </div>
-
-  <div class="form-group">
-    <%= submit @label, class: "btn btn-primary" %>
-    <%= link dgettext("coherence", "Cancel"), to: Coherence.Config.logged_out_url("/"), class: "btn" %>
-  </div>
-<% end %>
+</div>

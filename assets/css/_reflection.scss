@@ -10,8 +10,8 @@
 
 /* Display area */
 
-.col-md-2.no-padding {
-  padding: 0;
+.no-padding {
+  padding: 5px;
 }
 
 .reflection-page .display-wrapper {
@@ -23,7 +23,8 @@
   position: fixed;
   top: 0;
   right: 0;
-  min-width: 200px;
+  min-width: 16rem;
+  max-width: 20rem;
   margin: 8px;
   border: 0px solid #252525;
   background-image: none;
@@ -35,14 +36,13 @@
   position: absolute;
   right: 4px;
   top: 4px;
-  width: 42px;
 }
 
 .reflection-page #user-list.phase-right {
-  right: -208px;
+  right: -17rem;
 }
 .reflection-page #user-list.phase-right #btn-minimize-users {
-  right: 212px;
+  right: 17rem;
 }
 
 .reflection-page .display-wrapper > #w1 > div, .reflection-page .display-wrapper > #w2 > div {
@@ -50,11 +50,14 @@
   background-image: url("/images/retina_wood.png");
 }
 
-.reflection-page .display-wrapper .ul-date-label {
-  list-style: none;
+.reflection-page .display-wrapper .date-label {
+  background-color: #ddd;
   padding: 10px;
-  text-decoration: underline;
   color: #252525;
+  background-color: whitesmoke;
+  h2 {
+    text-align: center;
+  }
 }
 
 .reflection-page li {
@@ -63,15 +66,13 @@
 
 .reflection-page .ul-box {
   margin: 0;
-  padding: 4px;
-  min-height: 267.667px;
+  padding: 0;
+  min-height: 250px;
   list-style: none;
-  text-decoration: underline;
 }
 
 .reflection-page .ul-box > li.col-md-6 {
   width: 48%;
-  margin: 1%;
 }
 
 .reflection-page .ul-box > li {
@@ -182,10 +183,10 @@
   border-radius: 3px;
 }
 .reflection-page .input-wrapper.phase-right {
-  right: -816px;
+  right: -40rem;
 }
 .reflection-page .input-wrapper.phase-right #btn-minimize-inputs {
-  right: 816px;
+  right: 40rem;
 }
 
 .reflection-page .input-wrapper #name, .reflection-page .input-wrapper #msg {
@@ -208,19 +209,19 @@
   margin: 0 auto;
   display: inline-block;
   text-align: center;
-  min-width: 70px;
+  min-width: 60px;
 }
 
 .reflection-page .message-text-input {
   display: inline-block;
   margin-right: 50px;
+  width: 85%;
 }
 
 .reflection-page #btn-minimize-inputs {
   transition: right 0.3s ease-in-out;
   position: absolute;
-  width: 42px;
-  bottom: 8px;
+  bottom: 1rem;
   right: 0;
   margin: 6px !important;
 }
@@ -233,5 +234,5 @@
 }
 
 .reflection-page .mh-250 {
-  min-height: 267.667px;
+  min-height: 250px;
 }

@@ -13,6 +13,7 @@
     <link href="<%= static_path(@conn, "/css/now-ui-kit.css") %>" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.css" rel="stylesheet">
     <link href="<%= static_path(@conn, "/css/app.css") %>" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
   </head>
 
@@ -26,8 +27,8 @@
         <%= PhoenixChatWeb.Coherence.ViewHelpers.signout_link(@conn, "Sign Out", "btn btn-default") %>
       </header>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <p class="alert alert-info text-center" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger text-center" role="alert"><%= get_flash(@conn, :error) %></p>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>

@@ -1,53 +1,54 @@
 <br \>
 
 <div class="content">
-            <div class="container">
-                <div class="col-md-5 ml-auto mr-auto">
-                    <div class="card card-login card-plain">
-                        <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f  -> %>
-                            <div class="card-header text-center">
-                              <div class="logo-container">
-                                <div style="font-size:3em; color:#f16440;">
-                                  <i class="fab fa-phoenix-framework fa-3x"></i>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="card-body">
-                              <div class="input-group form-group-no-border input-lg">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
-                                </div>
-                                <% login_field = Coherence.Config.login_field %>
-                                <%= text_input f, login_field, class: "form-control", placeholder: "Email...", required: "" %>
-                                <%= error_tag f, login_field %>
-                              </div>
-                              <div class="input-group form-group-no-border input-lg">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="now-ui-icons text_caps-small"></i></span>
-                                </div>
-                                <%= password_input f, :password, class: "form-control", placeholder: "Password...", required: "" %>
-                                <%= error_tag f, :password %>
-                              </div>
-                            </div>
-                            <div class="card-footer text-center">
-                              <div class="form-group">
-                                <%= submit dgettext("coherence", "Sign In"), class: "btn btn-primary btn-round btn-lg btn-block" %>
-                              </div>
-                            </div>
-                              <%= if @remember do %>
-                                <div class="form-group">
-                                  <input type="checkbox"  name="remember" id="remember">
-                                  <label for="remember"><%= dgettext "coherence", "Remember Me?" %></label>
-                                </div>
-                                <br />
-                              <% end %>
-                            <div class="text-center">
-                                <h6>
-                                  <%= coherence_links(@conn, :new_session) %>
-                                </h6>
-                            </div>
-                        <% end %>
-                    </div>
-                </div>
+  <div class="container">
+    <div class="col-md-5 ml-auto mr-auto">
+      <div class="card card-login card-plain">
+        <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f  -> %>
+          <div class="card-header text-center">
+            <div class="logo-container">
+              <div style="font-size:3em; color:#f16440;">
+                <i class="far fa-sticky-note fa-3x"></i>
+              </div>
+              <h1>Retrospex</h1>
             </div>
-        </div>
+          </div>
+          <div class="card-body">
+            <div class="input-group form-group-no-border input-lg">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
+              </div>
+              <% login_field = Coherence.Config.login_field %>
+              <%= text_input f, login_field, class: "form-control", placeholder: "Email...", required: "" %>
+              <%= error_tag f, login_field %>
+            </div>
+            <div class="input-group form-group-no-border input-lg">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="now-ui-icons ui-1_lock-circle-open"></i></span>
+              </div>
+              <%= password_input f, :password, class: "form-control", placeholder: "Password...", required: "" %>
+              <%= error_tag f, :password %>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            <div class="form-group">
+              <%= submit dgettext("coherence", "Sign In"), class: "btn btn-primary btn-round btn-lg btn-block" %>
+            </div>
+          </div>
+          <%= if @remember do %>
+            <div class="form-group">
+              <input type="checkbox"  name="remember" id="remember">
+              <label for="remember"><%= dgettext "coherence", "Remember Me?" %></label>
+            </div>
+            <br />
+          <% end %>
+          <div class="text-center">
+              <h6>
+                <%= coherence_links(@conn, :new_session) %>
+              </h6>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

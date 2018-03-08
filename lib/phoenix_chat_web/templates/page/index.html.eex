@@ -1,28 +1,28 @@
 <div class="reflection-page">
   <div class="display-wrapper">
 
-    <div id="w1" class="row mh-250">
-      <div id="w1-m" class="col-sm-6 col-md-2 no-padding"><ul class='row ul-box'></ul></div>
-      <div id="w1-t" class="col-sm-6 col-md-2 no-padding"><ul class='row ul-box'></ul></div>
-      <div id="w1-w" class="col-sm-6 col-md-2 no-padding"><ul class='row ul-box'></ul></div>
-      <div id="w1-th" class="col-sm-6 col-md-2 no-padding"><ul class='row ul-box'></ul></div>
-      <div id="w1-f" class="col-sm-6 col-md-2 no-padding"><ul class='row ul-box'></ul></div>
+    <div id="w1" class="row align-items-end">
+      <div id="w1-m" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
+      <div id="w1-t" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
+      <div id="w1-w" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
+      <div id="w1-th" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
+      <div id="w1-f" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
     </div>
 
-    <div class="row mh-30">
-      <div  class="col-sm-6 col-md-2 no-padding mh-30"><ul class='row ul-date-label'><h2 class="text-center">M</h2></ul></div>
-      <div  class="col-sm-6 col-md-2 no-padding mh-30"><ul class='row ul-date-label'><h2 class="text-center">T</h2></ul></div>
-      <div  class="col-sm-6 col-md-2 no-padding mh-30"><ul class='row ul-date-label'><h2 class="text-center">W</h2></ul></div>
-      <div  class="col-sm-6 col-md-2 no-padding mh-30"><ul class='row ul-date-label'><h2 class="text-center">Th</h2></ul></div>
-      <div  class="col-sm-6 col-md-2 no-padding mh-30"><ul class='row ul-date-label'><h2 class="text-center">F</h2></ul></div>
+    <div class="row">
+      <div class="col-12 col-md"><div class="date-label justify-content-center"><h2>Mo</h2></div></div>
+      <div class="col-12 col-md"><div class="date-label justify-content-center"><h2>Tu</h2></div></div>
+      <div class="col-12 col-md"><div class="date-label justify-content-center"><h2>We</h2></div></div>
+      <div class="col-12 col-md"><div class="date-label justify-content-center"><h2>Th</h2></div></div>
+      <div class="col-12 col-md"><div class="date-label justify-content-center"><h2>Fr</h2></div></div>
     </div>
 
-    <div id="w2" class="row mh-250">
-      <div id="w2-m" class="col-sm-6 col-md-2 no-padding"><ul class='row ul-box'></ul></div>
-      <div id="w2-t" class="col-sm-6 col-md-2 no-padding"><ul class='row ul-box'></ul></div>
-      <div id="w2-w" class="col-sm-6 col-md-2 no-padding"><ul class='row ul-box'></ul></div>
-      <div id="w2-th" class="col-sm-6 col-md-2 no-padding"><ul class='row ul-box'></ul></div>
-      <div id="w2-f" class="col-sm-6 col-md-2 no-padding"><ul class='row ul-box'></ul></div>
+    <div id="w2" class="row align-items-start">
+      <div id="w2-m" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
+      <div id="w2-t" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
+      <div id="w2-w" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
+      <div id="w2-th" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
+      <div id="w2-f" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
     </div>
 
   </div>
@@ -30,53 +30,74 @@
   <div class="container">
     <div class="input-wrapper">
 
-      <div id="week-options-radio" class="btn-group" data-toggle="buttons">
-        <label class="btn btn-lg btn-primary active">
-          <input type="radio" name="week-options" id="option-w1" autocomplete="off" checked> Week 1
-        </label>
-        <label class="btn btn-lg btn-primary">
-          <input type="radio" name="week-options" id="option-w2" autocomplete="off"> Week 2
-        </label>
+      <div class="card" data-background-color="black">
+        <div class="card-body content-danger">
+        <h6 class="category-social">
+          <i class="fa fas fa-sticky-note fa-lg"></i> Add Sticky
+        </h6>
+          <div id="week-options-radio" class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+              <input type="radio" name="week-options" id="option-w1" autocomplete="off" checked> Week 1
+            </label>
+            <label class="btn btn-primary">
+              <input type="radio" name="week-options" id="option-w2" autocomplete="off"> Week 2
+            </label>
+          </div>
+
+          <div id="day-options-radio" class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary active">
+              <input type="radio" name="day-options" id="option-m" autocomplete="off" checked> M
+            </label>
+            <label class="btn btn-primary">
+              <input type="radio" name="day-options" id="option-t" autocomplete="off"> T
+            </label>
+              <label class="btn btn-primary">
+              <input type="radio" name="day-options" id="option-w" autocomplete="off"> W
+            </label>
+            <label class="btn btn-primary">
+              <input type="radio" name="day-options" id="option-th" autocomplete="off"> Th
+            </label>
+              <label class="btn btn-primary">
+              <input type="radio" name="day-options" id="option-f" autocomplete="off"> F
+            </label>
+          </div>
+
+          <div class="card-footer text-center">
+            <div class="message-text-input">
+              <input type="text" id="msg" class="form-control" placeholder="Your Message">
+            </div>
+          </div>
+
+        </div>
       </div>
 
-      <div id="day-options-radio" class="btn-group" data-toggle="buttons">
-        <label class="btn btn-lg btn-primary active">
-          <input type="radio" name="day-options" id="option-m" autocomplete="off" checked> M
-        </label>
-        <label class="btn btn-lg btn-primary">
-          <input type="radio" name="day-options" id="option-t" autocomplete="off"> T
-        </label>
-          <label class="btn btn-lg btn-primary">
-          <input type="radio" name="day-options" id="option-w" autocomplete="off"> W
-        </label>
-        <label class="btn btn-lg btn-primary">
-          <input type="radio" name="day-options" id="option-th" autocomplete="off"> Th
-        </label>
-          <label class="btn btn-lg btn-primary">
-          <input type="radio" name="day-options" id="option-f" autocomplete="off"> F
-        </label>
-      </div>
-
-      <div class="message-text-input">
-          <input type="text" id="msg" class="form-control" placeholder="Your Message">
-      </div>
-      
-      <button id="btn-minimize-inputs" type="button" class="btn btn-default">
-        <span class="fa fa-chevron-right" aria-hidden="true"></span>
+      <button id="btn-minimize-inputs" type="button" class="btn btn-default" data-background-color="black">
+        <span class="fa fa-chevron-right fa-lg" aria-hidden="true"></span>
       </button>
+
     </div>
   </div>
 
   <div id="user-list">
-    <div class="panel panel-primary chat-room">
-      <div class="panel-heading">
-        Online Users
-        <button id="btn-minimize-users" type="button" class="btn btn-default">
-          <span class="fa fa-chevron-right" aria-hidden="true"></span>
+    <div class="card" data-background-color="orange">
+      <div class="card-body">
+        <h6 class="category-social">
+          <i class="fas fa-users fa-lg"></i> Online Users
+        </h6>
+        <button id="btn-minimize-users" type="button" class="btn btn-primary">
+          <span class="fas fa-chevron-right fa-lg" aria-hidden="true"></span>
         </button>
-      </div>
-      <div class="panel-body panel-users" id="online-users">
-      <ul></ul>
+
+        <div class="card-footer">
+          <div class="author">
+            <div class="card-body panel-users" id="online-users">
+              <ul class="card-text"></ul>
+            </div>
+          </div>
+          <div class="stats stats-right">
+
+          </div>
+        </div>
       </div>
     </div>
   </div>

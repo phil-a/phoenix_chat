@@ -1,26 +1,53 @@
-<%= form_for @changeset, invitation_path(@conn, :create), [as: :invitation], fn f  -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p><%= dgettext "coherence", "Oops, something went wrong! Please check the errors below." %></p>
+<div class="content">
+  <div class="container">
+    <div class="col-md-5 ml-auto mr-auto">
+      <div class="card card-login card-plain">
+
+        <%= form_for @changeset, invitation_path(@conn, :create), [as: :invitation], fn f  -> %>
+          <div class="card-header text-center">
+            <div class="logo-container">
+              <div style="font-size:3em; color:#f16440;">
+                <i class="far fa-sticky-note fa-3x"></i>
+              </div>
+              <h3>Invite a team member</h3>
+            </div>
+          </div>
+          
+          <div class="card-body">
+            <%= if @changeset.action do %>
+              <div class="alert alert-danger">
+                <p><%= dgettext "coherence", "Oops, something went wrong! Please check the errors below." %></p>
+              </div>
+            <% end %>
+            <div class="input-group form-group-no-border input-lg">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
+              </div>
+              <%= text_input f, :name, class: "form-control", placeholder: "Suggested Name...", required: "" %>
+              <%= error_tag f, :name %>
+            </div>
+
+            <div class="input-group form-group-no-border input-lg">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
+              </div>
+              <%= text_input f, :email, class: "form-control", placeholder: "Email...", required: "" %>
+              <%= error_tag f, :email %>
+            </div>
+
+            <div class="card-footer text-center">
+              <div class="form-group">
+                <%= submit dgettext("coherence", "Send Invitation"), class: "btn btn-primary" %>
+                <%= link dgettext("coherence", "Cancel"), to: Coherence.Config.logged_out_url("/"), class: "btn" %>
+                <%= if invitation = @conn.assigns[:invitation] do %>
+                  <%= link dgettext("coherence", "Resend Invitation!"), to: invitation_path(@conn, :resend, invitation.id), class: "btn" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
     </div>
-  <% end %>
-  <div class="form-group">
-    <%= required_label f, dgettext("coherence", "Name"), class: "control-label" %>
-    <%= text_input f, :name, class: "form-control", required: "" %>
-    <%= error_tag f, :name %>
   </div>
-
-  <div class="form-group">
-    <%= required_label f, dgettext("coherence", "Email"), class: "control-label" %>
-    <%= text_input f, :email, class: "form-control", required: "" %>
-    <%= error_tag f, :email %>
-  </div>
-
-  <div class="form-group">
-    <%= submit dgettext("coherence", "Send Invitation"), class: "btn btn-primary" %>
-    <%= link dgettext("coherence", "Cancel"), to: Coherence.Config.logged_out_url("/"), class: "btn" %>
-    <%= if invitation = @conn.assigns[:invitation] do %>
-      <%= link dgettext("coherence", "Resend Invitation!"), to: invitation_path(@conn, :resend, invitation.id), class: "btn" %>
-    <% end %>
-  </div>
-<% end %>
+</div>

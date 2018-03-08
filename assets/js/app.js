@@ -29,7 +29,7 @@ $( "#btn-minimize-users" ).click(function() {
 /* Toggle Input */
 $( "#btn-minimize-inputs" ).click(function() {
   $( ".input-wrapper" ).toggleClass("phase-right");
-  $( this ).find("svg").toggleClass("fa-chevron-right fa-keyboard");
+  $( this ).find("svg").toggleClass("fa-chevron-right fa-sticky-note");
 });
 
 const DAY_OPTIONS = ["option-m", "option-t", "option-w", "option-th", "option-f"];
@@ -101,9 +101,9 @@ if (window.location.pathname === "/") {
 
   channel.on('shout', function (payload) {                      // listen to shout event
     var li = $(document.createElement("li"))                    // create new list item
-              .addClass("col-md-6")[0]                          
+              .addClass("col-12 col-lg-6")[0]                          
     var name = payload.name || 'anon';                          // get name from payload or use default
-    li.innerHTML = `<i class="fas fa-thumbtack fa-xs" style="color:#444;"></i><b>${name}</b>:<br/>${payload.message}`;    // set li contents
+    li.innerHTML = `<b>${name}</b>:<br/>${payload.message}`;    // set li contents
     getCorrectUl(payload).appendChild(li);                      // append to list    
   });
 

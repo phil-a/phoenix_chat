@@ -1,0 +1,30 @@
+/*
+  Typography
+*/
+h2 {
+  margin: 1rem;
+}
+
+/*
+  Alerts
+*/
+.alert:empty {
+  display: none;
+}
+
+/*
+  Inputs
+*/
+input[type][type=text] {
+  background-color: white;
+}
+input[type][type=radio] {
+  display: none;
+}
+
+/*
+  Cards
+*/
+.card {
+  margin-bottom: 0;
+}
