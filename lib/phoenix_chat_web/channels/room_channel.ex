@@ -23,28 +23,55 @@ defmodule PhoenixChatWeb.RoomChannel do
   def handle_in("shout", payload, socket) do
     user = Repo.get(User, socket.assigns.user_id)
 
-    payload = %{  "day" => payload["day"],
+    payload = %{  "user_id" => user.id,
+                  "day" => payload["day"],
                   "message" => payload["message"],
                   "name" => user.name,
                   "week" => payload["week"]}
+
+    {_, %{id: msg_id, user_id: msg_user_id }} = 
     Message.changeset(%Message{}, payload)
     |> Repo.insert
 
+    payload = payload
+    |> Map.put("msg_user_id", msg_user_id)
+    |> Map.put("msg_id", msg_id) 
+
     broadcast socket, "shout", payload
     {:noreply, socket}
+  end
+
+  def handle_in("remove", payload, socket) do
+    user = Repo.get(User, socket.assigns.user_id)
+    msg_id = Map.get(payload, "msg_id")
+    msg_user_id = Map.get(payload, "msg_user_id")
+
+    case msg_user_id == user.id do
+      true ->
+        Message 
+        |> Repo.get(msg_id) 
+        |> Repo.delete
+
+        broadcast socket, "remove", payload
+        {:noreply, socket}
+      false ->
+        broadcast socket, "remove", %{}
+        {:noreply, socket}
+    end
   end
 
   def handle_info(:after_join, socket) do
     user = Repo.get(User, socket.assigns.user_id)
     push(socket, "presence_state", PhoenixChatWeb.Presence.list(socket))
     {:ok, _} = Presence.track(socket, user.name, %{ online_at: inspect(System.system_time(:seconds)) })
-    
     Message.get_messages()
     |> Enum.each(fn msg -> push(socket, "shout", %{
       name: msg.name,
       message: msg.message,
       week: msg.week,
       day: msg.day,
+      msg_id: msg.id,
+      msg_user_id: msg.user_id
     }) end)
     {:noreply, socket}
   end

@@ -102,9 +102,28 @@ if (window.location.pathname === "/") {
   channel.on('shout', function (payload) {                      // listen to shout event
     var li = $(document.createElement("li"))                    // create new list item
               .addClass("col-12 col-lg-6")[0]                          
+    $(li).attr("id", `msg-${payload.msg_id}`);
+    $(li).data("id", payload.msg_id);
+    $(li).data("user", payload.msg_user_id);
     var name = payload.name || 'anon';                          // get name from payload or use default
-    li.innerHTML = `<b>${name}</b>:<br/>${payload.message}`;    // set li contents
-    getCorrectUl(payload).appendChild(li);                      // append to list    
+    li.innerHTML = `<b>${name}</b>:<br/>${payload.message}       
+    <button class="btn btn-link btn-danger remove-sticky">
+      <i class="fas fa-thumbtack"></i>
+    </button>`;                                                  // set li contents
+    getCorrectUl(payload).appendChild(li);                       // append to list    
+    
+    $(document.getElementById(`msg-${payload.msg_id}`))          // Add remove event listener for each card   
+      .children(".remove-sticky")[0]
+      .addEventListener('click', function (event) {              // check click
+        channel.push('remove', {                                 // delete message to server on "remove" channel
+          msg_id: payload.msg_id,
+          msg_user_id: payload.msg_user_id
+        });
+    });
+  });
+
+  channel.on('remove', function (payload) {                      // listen to remove event
+    $(`#msg-${payload.msg_id}`).remove()                         // remove element
   });
 
   channel.join();                                               // join channel
@@ -113,7 +132,7 @@ if (window.location.pathname === "/") {
   var week = $(document.getElementById('week-options-radio'))   // radio buttons for week
               .find("input:checked")[0]
   var day = $(document.getElementById('day-options-radio'))     // radio buttons for day
-              .find("input:checked")[0]
+              .find("input:checked")[0]            
 
   // Listen for [ Enter ]  keypress event to send message:
   msg.addEventListener('keypress', function (event) {
@@ -127,5 +146,5 @@ if (window.location.pathname === "/") {
       msg.value = '';                                            // reset message input
     }
   });
-
+    
 }

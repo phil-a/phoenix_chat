@@ -2,10 +2,16 @@
   Reflection Page
 */
 
-.fa-thumbtack {
+.iframe {
+  width: 65px;
+  height: 65px;
+}
+
+.remove-sticky {
   position: absolute;
-  top: -7px;
-  right: 50%;
+  top: -26px;
+  left: 38%;
+  border: 0;
 }
 
 /* Display area */
@@ -149,9 +155,9 @@
   -moz-box-shadow:10px 10px 11px rgba(0,0,0,.7);
   -webkit-box-shadow: 10px 10px 11px rgba(0,0,0,.7);
   box-shadow:10px 10px 11px rgba(0,0,0,.7);
-  -webkit-transform: scale(2.0);
-  -moz-transform: scale(2.0);
-  -o-transform: scale(2.0);
+  -webkit-transform: scale(1.6);
+  -moz-transform: scale(1.6);
+  -o-transform: scale(1.6);
   position:relative;
   z-index:5;
 }
