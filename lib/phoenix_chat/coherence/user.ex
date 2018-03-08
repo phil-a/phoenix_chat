@@ -8,6 +8,7 @@ defmodule PhoenixChat.Coherence.User do
   schema "users" do
     field :name, :string
     field :email, :string
+    has_many :messages, PhoenixChat.Message
     coherence_schema()
 
     timestamps()
