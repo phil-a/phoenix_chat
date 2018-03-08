@@ -47,7 +47,7 @@ defmodule PhoenixChat.Coherence.Schemas do
     @repo.insert change_user(params)
   end
 
-  Enum.each [PhoenixChat.Coherence.Invitation], fn module ->
+  Enum.each [PhoenixChat.Coherence.Invitation, PhoenixChat.Coherence.Rememberable], fn module ->
 
     name =
       module

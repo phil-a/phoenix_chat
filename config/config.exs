@@ -37,7 +37,7 @@ config :coherence,
   logged_out_url: "/",
   email_from_name: System.get_env("COHERENCE_EMAIL_FROM_NAME"),
   email_from_email: System.get_env("COHERENCE_EMAIL_FROM_EMAIL"),
-  opts: [:authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token, :invitable, :registerable]
+  opts: [:rememberable, :invitable, :confirmable, :authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token]
 
 config :coherence, PhoenixChatWeb.Coherence.Mailer,
   adapter: Swoosh.Adapters.Sendgrid,

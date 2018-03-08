@@ -29,23 +29,25 @@
               <%= password_input f, :password, class: "form-control", placeholder: "Password...", required: "" %>
               <%= error_tag f, :password %>
             </div>
+            <%= if @remember do %>
+              <div class="form-check text-right">
+                <label for="remember" class="form-check-label">
+                  <input  name="remember" id="remember" class="form-check-input" type="checkbox">
+                  <span class="form-check-sign"></span>
+                  Remember me?
+                </label>
+              </div>
+            <% end %>
           </div>
           <div class="card-footer text-center">
             <div class="form-group">
               <%= submit dgettext("coherence", "Sign In"), class: "btn btn-primary btn-round btn-lg btn-block" %>
             </div>
           </div>
-          <%= if @remember do %>
-            <div class="form-group">
-              <input type="checkbox"  name="remember" id="remember">
-              <label for="remember"><%= dgettext "coherence", "Remember Me?" %></label>
-            </div>
-            <br />
-          <% end %>
           <div class="text-center">
-              <h6>
-                <%= coherence_links(@conn, :new_session) %>
-              </h6>
+            <h6>
+              <%= coherence_links(@conn, :new_session) %>
+            </h6>
           </div>
         <% end %>
       </div>

@@ -7,6 +7,12 @@ defmodule PhoenixChat.Repo.Migrations.CreateCoherenceUser do
       add :email, :string
       # authenticatable
       add :password_hash, :string
+      # rememberable
+      add :remember_created_at, :utc_datetime
+      # confirmable
+      add :confirmation_token, :string
+      add :confirmed_at, :utc_datetime
+      add :confirmation_sent_at, :utc_datetime
       # recoverable
       add :reset_password_token, :string
       add :reset_password_sent_at, :utc_datetime
