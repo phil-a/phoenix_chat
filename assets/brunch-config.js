@@ -2,25 +2,26 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: "js/app.js"
-
-      // To use a separate vendor.js bundle, specify two files path
-      // http://brunch.io/docs/config#-files-
-      // joinTo: {
-      //   "js/app.js": /^js/,
-      //   "js/vendor.js": /^(?!js)/
-      // }
-      //
-      // To change the order of concatenation of files, explicitly mention here
-      // order: {
-      //   before: [
-      //     "vendor/js/jquery-2.1.1.js",
-      //     "vendor/js/bootstrap.min.js"
-      //   ]
-      // }
+      joinTo: {
+        "js/app.js": /^js/,
+        "js/vendor.js": /^(?!js)/
+      },
+      order: {
+        after: [
+          "js/app.js"
+        ]
+      }
     },
     stylesheets: {
-      joinTo: "css/app.css"
+      joinTo: {
+        "css/app.css": ["css/app.scss"],
+        "css/bootstrap.min.css": ["vendor/core/bootstrap.min.css"],
+        "css/demo.css": ["vendor/core/demo.css"],
+        "css/now-ui-kit.css": ["vendor/now-ui-kit.css"],
+      },
+      order: {
+        after: ["css/app.css", "css/now-ui-kit.css"] // concat app last
+      }
     },
     templates: {
       joinTo: "js/app.js"
@@ -47,6 +48,15 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/vendor/]
+    },
+    copycat: {
+      "fonts": ["node_modules/font-awesome/fonts", "static/fonts"]
+    },
+    sass: {
+      options: {
+        includePaths: ["node_modules/bootstrap/scss", "node_modules/font-awesome/scss", "node_modules/now-ui-kit/assets/sass"],
+        precision: 8
+      }
     }
   },
 
@@ -57,10 +67,10 @@ exports.config = {
   },
 
   npm: {
-    enabled: true,
     globals: {
       $: 'jquery',
       jQuery: 'jquery',
+      'Popper': 'popper.js'
     }
   }
 };

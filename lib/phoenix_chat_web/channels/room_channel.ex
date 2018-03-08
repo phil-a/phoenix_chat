@@ -1,6 +1,7 @@
 defmodule PhoenixChatWeb.RoomChannel do
   use PhoenixChatWeb, :channel
-  alias PhoenixChat.{ Repo, Message }
+  alias PhoenixChat.{ Repo, Message, Coherence.User }
+  alias PhoenixChatWeb.Presence
 
   def join("room:lobby", payload, socket) do
     if authorized?(payload) do
@@ -20,6 +21,12 @@ defmodule PhoenixChatWeb.RoomChannel do
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (room:lobby).
   def handle_in("shout", payload, socket) do
+    user = Repo.get(User, socket.assigns.user_id)
+
+    payload = %{  "day" => payload["day"],
+                  "message" => payload["message"],
+                  "name" => user.name,
+                  "week" => payload["week"]}
     Message.changeset(%Message{}, payload)
     |> Repo.insert
 
@@ -28,6 +35,10 @@ defmodule PhoenixChatWeb.RoomChannel do
   end
 
   def handle_info(:after_join, socket) do
+    user = Repo.get(User, socket.assigns.user_id)
+    push(socket, "presence_state", PhoenixChatWeb.Presence.list(socket))
+    {:ok, _} = Presence.track(socket, user.name, %{ online_at: inspect(System.system_time(:seconds)) })
+    
     Message.get_messages()
     |> Enum.each(fn msg -> push(socket, "shout", %{
       name: msg.name,

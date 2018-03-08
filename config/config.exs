@@ -25,3 +25,21 @@ config :logger, :console,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
+
+# %% Coherence Configuration %%   Don't remove this line
+config :coherence,
+  user_schema: PhoenixChat.Coherence.User,
+  repo: PhoenixChat.Repo,
+  module: PhoenixChat,
+  web_module: PhoenixChatWeb,
+  router: PhoenixChatWeb.Router,
+  messages_backend: PhoenixChatWeb.Coherence.Messages,
+  logged_out_url: "/",
+  email_from_name: System.get_env("COHERENCE_EMAIL_FROM_NAME"),
+  email_from_email: System.get_env("COHERENCE_EMAIL_FROM_EMAIL"),
+  opts: [:rememberable, :invitable, :confirmable, :authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token]
+
+config :coherence, PhoenixChatWeb.Coherence.Mailer,
+  adapter: Swoosh.Adapters.Sendgrid,
+  api_key: System.get_env("SENDGRID_API_KEY")
+# %% End Coherence Configuration %%
