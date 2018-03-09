@@ -1,0 +1,7 @@
+.coherence-page {
+  background-color: transparent;
+
+  .card a:not(.btn):not(.nav-link):not([data-toggle='collapse']):not(.footer-link):hover, .card a:not(.btn):not(.nav-link):not([data-toggle='collapse']):not(.footer-link):focus {
+    border-color: white;
+  }
+}

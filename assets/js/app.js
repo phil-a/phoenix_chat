@@ -101,7 +101,7 @@ if (window.location.pathname === "/") {
 
   channel.on('shout', function (payload) {                      // listen to shout event
     var li = $(document.createElement("li"))                    // create new list item
-              .addClass("col-12 col-lg-6")[0]                          
+              .addClass("col-12 col-md-12 col-xl-6")[0]                          
     $(li).attr("id", `msg-${payload.msg_id}`);
     $(li).data("id", payload.msg_id);
     $(li).data("user", payload.msg_user_id);

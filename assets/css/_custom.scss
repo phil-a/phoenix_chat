@@ -1,4 +1,20 @@
 /*
+  Body
+*/
+
+/*
+  Header
+*/
+.page-header:before {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/*
+  Navbar
+*/
+.navbar { margin-bottom: 0 }
+
+/*
   Typography
 */
 h2 {
@@ -8,6 +24,7 @@ h2 {
 /*
   Alerts
 */
+.alert { margin-bottom: 0 }
 .alert:empty {
   display: none;
 }
@@ -20,6 +37,10 @@ input[type][type=text] {
 }
 input[type][type=radio] {
   display: none;
+}
+
+.form-check .form-check-sign::after {
+  color: white;
 }
 
 /*

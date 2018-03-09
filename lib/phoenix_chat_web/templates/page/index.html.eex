@@ -2,27 +2,27 @@
   <div class="display-wrapper">
 
     <div id="w1" class="row align-items-end">
-      <div id="w1-m" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
-      <div id="w1-t" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
-      <div id="w1-w" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
-      <div id="w1-th" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
-      <div id="w1-f" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
+      <div id="w1-m" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Monday</div></ul></div>
+      <div id="w1-t" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Tuesday</div></ul></div>
+      <div id="w1-w" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Wednesday</div></ul></div>
+      <div id="w1-th" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Thursday</div></ul></div>
+      <div id="w1-f" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Friday</div></ul></div>
     </div>
 
     <div class="row">
-      <div class="col-12 col-md"><div class="date-label justify-content-center"><h2>Mo</h2></div></div>
-      <div class="col-12 col-md"><div class="date-label justify-content-center"><h2>Tu</h2></div></div>
-      <div class="col-12 col-md"><div class="date-label justify-content-center"><h2>We</h2></div></div>
-      <div class="col-12 col-md"><div class="date-label justify-content-center"><h2>Th</h2></div></div>
-      <div class="col-12 col-md"><div class="date-label justify-content-center"><h2>Fr</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>Mo</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>Tu</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>We</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>Th</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>Fr</h2></div></div>
     </div>
 
     <div id="w2" class="row align-items-start">
-      <div id="w2-m" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
-      <div id="w2-t" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
-      <div id="w2-w" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
-      <div id="w2-th" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
-      <div id="w2-f" class="col-12 col-md m-2"><ul class="row ul-box"></ul></div>
+      <div id="w2-m" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Monday</div></ul></div>
+      <div id="w2-t" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Tuesday</div></ul></div>
+      <div id="w2-w" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Wednesday</div></ul></div>
+      <div id="w2-th" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Thursday</div></ul></div>
+      <div id="w2-f" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Friday</div></ul></div>
     </div>
 
   </div>
