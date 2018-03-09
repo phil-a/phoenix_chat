@@ -1,46 +1,51 @@
-<br \>
-<div class="content">
-  <div class="container">
-    <div class="col-md-5 ml-auto mr-auto">
-      <div class="card card-login card-plain">
-        <%= form_for @conn, unlock_path(@conn, :create), [as: :unlock], fn f  -> %>
+<div class="coherence-page page-header header-filter" data-background-color="black">
+  <div class="page-header-image"></div>
+    <div class="content-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 ml-auto mr-auto">
+            <div class="card card-login card-plain">
+              <%= form_for @conn, unlock_path(@conn, :create), [as: :unlock], fn f  -> %>
 
-          <div class="card-header text-center">
-            <div class="logo-container">
-              <div style="font-size:3em; color:#f16440;">
-                <i class="far fa-sticky-note fa-3x"></i>
-              </div>
-              <h3>Unlock your account</h3>
+                <div class="card-header text-center">
+                  <div class="logo-container">
+                    <div style="font-size:3em; color:#f16440;">
+                      <i class="far fa-sticky-note fa-3x"></i>
+                    </div>
+                    <h3>Unlock your account</h3>
+                  </div>
+                </div>
+                
+                <div class="card-body">
+                  <div class="input-group form-group-no-border input-lg">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
+                    </div>
+                    <%= text_input f, :email, class: "form-control", placeholder: "Email...", required: "" %>
+                    <%= error_tag f, :email %>
+                  </div>
+
+                  <div class="input-group form-group-no-border input-lg">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="now-ui-icons ui-1_lock-circle-open"></i></span>
+                    </div>
+                    <%= password_input f, :password, class: "form-control", placeholder: "Password...", required: "" %>
+                    <%= error_tag f, :password %>
+                  </div>
+                </div>
+
+                <div class="card-footer text-center">
+                  <div class="form-group">
+                    <%= submit dgettext("coherence", "Send Instructions"), class: "btn btn-primary" %>
+                    <%= link dgettext("coherence", "Cancel"), to: Coherence.Config.logged_out_url("/"), class: "btn" %>
+                  </div>
+                </div>
+
+              <% end %>
             </div>
           </div>
-          
-          <div class="card-body">
-            <div class="input-group form-group-no-border input-lg">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
-              </div>
-              <%= text_input f, :email, class: "form-control", placeholder: "Email...", required: "" %>
-              <%= error_tag f, :email %>
-            </div>
-
-            <div class="input-group form-group-no-border input-lg">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="now-ui-icons ui-1_lock-circle-open"></i></span>
-              </div>
-              <%= password_input f, :password, class: "form-control", placeholder: "Password...", required: "" %>
-              <%= error_tag f, :password %>
-            </div>
-          </div>
-
-          <div class="card-footer text-center">
-            <div class="form-group">
-              <%= submit dgettext("coherence", "Send Instructions"), class: "btn btn-primary" %>
-              <%= link dgettext("coherence", "Cancel"), to: Coherence.Config.logged_out_url("/"), class: "btn" %>
-            </div>
-          </div>
-
-        <% end %>
-     </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

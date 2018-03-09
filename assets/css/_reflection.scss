@@ -2,6 +2,22 @@
   Reflection Page
 */
 
+.reflection-page {
+    height: 100vh;
+    background-image: url("../images/landscape.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.small-date {
+  font-size: 20px;
+  font-weight: bold;
+  height: 50px;
+  width: 100%;
+  text-align: center;
+  background-color: transparent;
+}
+
 .iframe {
   width: 65px;
   height: 65px;

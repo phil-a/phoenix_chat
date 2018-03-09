@@ -8,7 +8,7 @@ defmodule PhoenixChatWeb.Coherence.UserEmail do
   alias Coherence.Config
   import PhoenixChatWeb.Gettext
 
-  defp site_name, do: "Retrospex"
+  defp site_name, do: "Sprint-Retro"
 
   def password(user, url) do
     %Email{}
