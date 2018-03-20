@@ -2,6 +2,6 @@ defmodule PhoenixChatWeb.PageController do
   use PhoenixChatWeb, :controller
 
   def index(conn, _params) do
-    render conn, "index.html"
+    redirect conn, to: "/rooms"
   end
 end

@@ -2,7 +2,7 @@ defmodule PhoenixChatWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "room:lobby", PhoenixChatWeb.RoomChannel
+  channel "room:*", PhoenixChatWeb.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

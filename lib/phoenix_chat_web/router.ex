@@ -44,6 +44,9 @@ defmodule PhoenixChatWeb.Router do
     pipe_through :protected
     
     get "/", PageController, :index
+    get "users/:id/rooms", Coherence.UserController, :rooms
+    resources "/rooms", RoomController
+    post "/rooms/:id/join", RoomController, :join
   end
 
   # Other scopes may use custom stacks.
