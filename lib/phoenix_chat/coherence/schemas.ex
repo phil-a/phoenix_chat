@@ -47,6 +47,12 @@ defmodule PhoenixChat.Coherence.Schemas do
     @repo.insert change_user(params)
   end
 
+  def rooms(conn, _params) do
+    current_user = Coherence.current_user(conn)
+    rooms = PhoenixChat.Repo.all(Changeset.assoc(current_user, :rooms))
+    PhoenixChat.Template.render(conn, PhoenixChatWeb.RoomView, "index.html", %{rooms: rooms})
+  end
+
   Enum.each [PhoenixChat.Coherence.Invitation, PhoenixChat.Coherence.Rememberable], fn module ->
 
     name =

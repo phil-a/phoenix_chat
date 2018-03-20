@@ -85,8 +85,7 @@ $("#day-options-radio").find("label > input").map(function(i, e) {
 });
 
 //Connect to chat 'room' when logged in
-if (window.location.pathname === "/") {
-  var channel = socket.channel('room:lobby', {});               // connect to chat "room"
+  var channel = socket.channel('room:' + $('.reflection-page').data("room"), {});               // connect to chat "room"
 
   // Sync state
   channel.on('presence_state', state => {
@@ -100,11 +99,13 @@ if (window.location.pathname === "/") {
   });
 
   channel.on('shout', function (payload) {                      // listen to shout event
+    console.log(payload);
     var li = $(document.createElement("li"))                    // create new list item
               .addClass("col-6 col-md-6 col-lg-12 col-xl-6")[0]                          
     $(li).attr("id", `msg-${payload.msg_id}`);
     $(li).data("id", payload.msg_id);
     $(li).data("user", payload.msg_user_id);
+    $(li).data("room", payload.room_id);
     var name = payload.name || 'anon';                          // get name from payload or use default
     li.innerHTML = `<b>${name}</b>:<br/>${payload.message}       
     <button class="btn btn-link btn-danger remove-sticky">
@@ -127,7 +128,7 @@ if (window.location.pathname === "/") {
   });
 
   channel.join();                                               // join channel
-
+  var room_id = $('.reflection-page').data("room");
   var msg = document.getElementById('msg');                     // message input field
   var week = $(document.getElementById('week-options-radio'))   // radio buttons for week
               .find("input:checked")[0]
@@ -142,9 +143,8 @@ if (window.location.pathname === "/") {
         message: msg.value,                                      // get value of message text from DOM
         week: getCorrectId($(week).attr('id')),                  // get value of week id
         day: getCorrectId($(day).attr('id')),                    // get value of day id
+        room_id: room_id,
       });
       msg.value = '';                                            // reset message input
     }
   });
-    
-}
