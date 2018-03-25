@@ -47,6 +47,7 @@ defmodule PhoenixChatWeb.Router do
     get "users/:id/rooms", Coherence.UserController, :rooms
     resources "/rooms", RoomController
     post "/rooms/:id/join", RoomController, :join
+    post "/rooms/:id/leave", RoomController, :leave
   end
 
   # Other scopes may use custom stacks.

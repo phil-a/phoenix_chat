@@ -1,11 +1,12 @@
 defmodule PhoenixChatWeb.RoomController do
   use PhoenixChatWeb, :controller
 
-  alias PhoenixChat.{ Room, Repo, UserRoom }
+  alias PhoenixChat.{ Room, Repo, UserRoom, Coherence.User }
 
   def index(conn, _params) do
     rooms = Repo.all(Room)
-    render(conn, "index.html", rooms: rooms)
+    current_user = Coherence.current_user(conn) |> Repo.preload(:rooms)
+    render(conn, "index.html", rooms: rooms, user_rooms: current_user.rooms)
   end
 
   def new(conn, _params) do
@@ -41,22 +42,50 @@ defmodule PhoenixChatWeb.RoomController do
       %UserRoom{},
       %{room_id: room.id, user_id: current_user.id}
     )
-
     case Repo.insert(changeset) do
       {:ok, _user_room} ->
         conn
         |> put_flash(:info, "Room joined successfully.")
-        |> redirect(to: room_path(conn, :show, room))
+        |> redirect(to: room_path(conn, :index))
       {:error, changeset} ->
         conn
-        |> put_flash(:error, "Room could not be joined.")
-        |> render(conn, "new.html", changeset: changeset)
+        |> put_flash(:error, "You are already a member of this room.")
+        |> redirect(to: room_path(conn, :index))
+    end
+  end
+
+  def leave(conn, %{"id" => room_id}) do
+    current_user = Coherence.current_user(conn)
+    room = Repo.get(Room, room_id)
+    user_room = UserRoom
+    |> Repo.get_by(user_id: current_user.id, room_id: room_id)
+
+    case user_room !== nil do
+      true ->
+        Repo.delete(user_room)
+        conn
+        |> put_flash(:info, "Room left successfully.")
+        |> redirect(to: room_path(conn, :index))
+      false ->
+        conn
+        |> put_flash(:error, "You are not a member of this room.")
+        |> redirect(to: room_path(conn, :index))
     end
   end
 
   def show(conn, %{"id" => id}) do
+    current_user = Coherence.current_user(conn)
     room = Repo.get!(Room, id)
-    render(conn, "show.html", room: room)
+    user_room = UserRoom
+    |> Repo.get_by(user_id: current_user.id, room_id: id)
+    case user_room !== nil do
+      true ->
+        render(conn, "show.html", room: room)
+      false ->
+        conn
+        |> put_flash(:error, "You must first join the room.")
+        |> redirect(to: room_path(conn, :index))
+    end
   end
 
   def edit(conn, %{"id" => id}) do

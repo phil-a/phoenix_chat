@@ -85,7 +85,8 @@ $("#day-options-radio").find("label > input").map(function(i, e) {
 });
 
 //Connect to chat 'room' when logged in
-  var channel = socket.channel('room:' + $('.reflection-page').data("room"), {});               // connect to chat "room"
+  let room = $('.reflection-page').data("room") || "lobby";
+  let channel = socket.channel('room:' + room, {});               // connect to chat "room"
 
   // Sync state
   channel.on('presence_state', state => {

@@ -3,6 +3,7 @@ defmodule PhoenixChatWeb.RoomChannel do
   alias PhoenixChat.{ Repo, Message, Room, Coherence.User }
   alias PhoenixChatWeb.Presence
 
+  def join("room:lobby", payload, socket), do: {:error, %{reason: "lobby"}}
   def join("room:" <> room_id, payload, socket) do
     room = Repo.get!(Room, room_id)
     if authorized?(payload) do

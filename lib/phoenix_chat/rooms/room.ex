@@ -2,11 +2,12 @@ defmodule PhoenixChat.Room do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
-  alias PhoenixChat.User
+  alias PhoenixChat.{Message, Coherence.User, UserRoom}
 
   schema "rooms" do
     field :name, :string
-    many_to_many :users, PhoenixChat.Coherence.User, join_through: "user_rooms"
+    many_to_many :users, User, join_through: "user_rooms"
+    has_many :messages, Message
 
     timestamps()
   end
