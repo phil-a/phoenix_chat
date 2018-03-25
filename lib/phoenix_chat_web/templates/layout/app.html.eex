@@ -20,6 +20,7 @@
   <body>
       <header class="header">
           <%= if Coherence.current_user_name(@conn) do %>
+            <div id="current_user" style="display: hidden;" data-user-id="<%= @current_user.id %>"></div>
             <nav class="navbar navbar-expand-lg" data-background-color="black">
               <div class="collapse navbar-collapse" id="example-navbar">
                 <ul class="navbar-nav">

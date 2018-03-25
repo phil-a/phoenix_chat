@@ -55,6 +55,16 @@ function getCorrectUl(payload) {
   return $(document.getElementById(week + "-" + day)).find("ul")[0];
 }
 
+function messageBelongsToUser(payload) {
+  return $("#current_user").data("user-id") === payload.msg_user_id;
+}
+
+function renderThumbtack() {
+  return `<button class="btn btn-link btn-danger remove-sticky">
+            <i class="fas fa-thumbtack"></i>
+          </button>`
+}
+
 // Get id from option id
 function getCorrectId(str) {
   return str.split("-")[1];
@@ -99,29 +109,35 @@ $("#day-options-radio").find("label > input").map(function(i, e) {
     renderUsers(presences)
   });
 
-  channel.on('shout', function (payload) {                      // listen to shout event
-    console.log(payload);
-    var li = $(document.createElement("li"))                    // create new list item
-              .addClass("col-6 col-md-6 col-lg-12 col-xl-6")[0]                          
-    $(li).attr("id", `msg-${payload.msg_id}`);
-    $(li).data("id", payload.msg_id);
-    $(li).data("user", payload.msg_user_id);
-    $(li).data("room", payload.room_id);
-    var name = payload.name || 'anon';                          // get name from payload or use default
-    li.innerHTML = `<b>${name}</b>:<br/>${payload.message}       
-    <button class="btn btn-link btn-danger remove-sticky">
-      <i class="fas fa-thumbtack"></i>
-    </button>`;                                                  // set li contents
-    getCorrectUl(payload).appendChild(li);                       // append to list    
-    
-    $(document.getElementById(`msg-${payload.msg_id}`))          // Add remove event listener for each card   
-      .children(".remove-sticky")[0]
-      .addEventListener('click', function (event) {              // check click
-        channel.push('remove', {                                 // delete message to server on "remove" channel
+  channel.on('shout', function (payload) {                            // listen to shout event
+    let thumbtack = messageBelongsToUser(payload) ? renderThumbtack() : "";
+    var li = $(document.createElement("li"))                        // create new list item
+      .addClass("col-6 col-md-6 col-lg-12 col-xl-6")[0]                          
+      
+      $(li).attr("id", `msg-${payload.msg_id}`);
+      $(li).data("id", payload.msg_id);
+      $(li).data("user", payload.msg_user_id);
+      $(li).data("room", payload.room_id);
+      var name = payload.name || 'anon';                              // get name from payload or use default
+      li.innerHTML = 
+      `
+        <b>${name}</b>:<br/>
+        ${payload.message}
+        ${thumbtack}
+      `;                                                              // set li contents
+      getCorrectUl(payload).appendChild(li);                          // append to list    
+
+      // Attach event listener if user created
+      if (messageBelongsToUser(payload)) {
+        $(document.getElementById(`msg-${payload.msg_id}`))           // Add remove event listener for each card   
+        .children(".remove-sticky")[0]
+        .addEventListener('click', function (event) {                 // check click
+        channel.push('remove', {                                      // delete message to server on "remove" channel
           msg_id: payload.msg_id,
           msg_user_id: payload.msg_user_id
         });
-    });
+        });
+      }
   });
 
   channel.on('remove', function (payload) {                      // listen to remove event
