@@ -6,7 +6,7 @@ defmodule PhoenixChatWeb.RoomController do
   def index(conn, _params) do
     rooms = Repo.all(Room)
     current_user = Coherence.current_user(conn) |> Repo.preload(:rooms)
-    render(conn, "index.html", rooms: rooms, user_rooms: current_user.rooms)
+    render(conn, "index.html", rooms: rooms, user_rooms: current_user.rooms, current_user: current_user)
   end
 
   def new(conn, _params) do
