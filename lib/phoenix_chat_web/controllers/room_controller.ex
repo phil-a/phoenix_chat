@@ -110,7 +110,11 @@ defmodule PhoenixChatWeb.RoomController do
 
   def delete(conn, %{"id" => id}) do
     room = Repo.get!(Room, id)
-
+    
+    # Here we delete the UserRoom association
+    # before deleting the room
+    UserRoom.get_user_rooms_for_room(id)
+    |> Repo.delete_all()
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
     Repo.delete!(room)
