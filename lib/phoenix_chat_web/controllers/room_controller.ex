@@ -2,6 +2,9 @@ defmodule PhoenixChatWeb.RoomController do
   use PhoenixChatWeb, :controller
 
   alias PhoenixChat.{ Room, Repo, UserRoom, Coherence.User }
+  alias PhoenixChatWeb.Plugs.AuthenticateUserCreatedRoom
+
+  plug AuthenticateUserCreatedRoom when action in [:edit, :delete]
 
   def index(conn, _params) do
     rooms = Repo.all(Room)
@@ -16,8 +19,8 @@ defmodule PhoenixChatWeb.RoomController do
 
   def create(conn, %{"room" => room_params}) do
     current_user = Coherence.current_user(conn)
+    room_params = room_params |> Map.put("creator", current_user)
     changeset = Room.changeset(%Room{}, room_params)
-
     case Repo.insert(changeset) do
       {:ok, room} ->
         assoc_changeset = UserRoom.changeset(
@@ -89,13 +92,14 @@ defmodule PhoenixChatWeb.RoomController do
   end
 
   def edit(conn, %{"id" => id}) do
-    room = Repo.get!(Room, id)
+    room = Repo.get!(Room, id) |> Repo.preload(:creator)
     changeset = Room.changeset(room)
     render(conn, "edit.html", room: room, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "room" => room_params}) do
-    room = Repo.get!(Room, id)
+    room = Repo.get!(Room, id) |> Repo.preload(:creator)
+    room_params = room_params |> Map.put("creator", room.creator)
     changeset = Room.changeset(room, room_params)
 
     case Repo.update(changeset) do

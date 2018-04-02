@@ -9,6 +9,7 @@ defmodule PhoenixChat.Coherence.User do
     field :name, :string
     field :email, :string
     has_many :messages, PhoenixChat.Message
+    has_many :created_rooms, PhoenixChat.Room
     many_to_many :rooms, PhoenixChat.Room, join_through: "user_rooms"
     coherence_schema()
 
