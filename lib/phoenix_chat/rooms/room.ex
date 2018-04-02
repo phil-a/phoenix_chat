@@ -8,6 +8,7 @@ defmodule PhoenixChat.Room do
     field :name, :string
     many_to_many :users, User, join_through: "user_rooms"
     has_many :messages, Message
+    belongs_to :creator, User, on_replace: :update
 
     timestamps()
   end
@@ -20,5 +21,6 @@ defmodule PhoenixChat.Room do
     |> cast(params, [:name])
     |> validate_required([:name])
     |> unique_constraint(:name)
+    |> put_assoc(:creator, params["creator"])
   end
 end
