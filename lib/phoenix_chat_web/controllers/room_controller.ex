@@ -4,7 +4,7 @@ defmodule PhoenixChatWeb.RoomController do
   alias PhoenixChat.{ Room, Repo, UserRoom, Coherence.User }
   alias PhoenixChatWeb.Plugs.AuthenticateUserCreatedRoom
 
-  plug AuthenticateUserCreatedRoom when action in [:edit, :delete]
+  plug AuthenticateUserCreatedRoom when action in [:edit, :delete, :edit_permit, :update_permit]
 
   def index(conn, _params) do
     rooms = Repo.all(Room)
@@ -76,6 +76,51 @@ defmodule PhoenixChatWeb.RoomController do
     end
   end
 
+  def kick(conn, %{"id" => room_id, "user_id" => user_id}) do
+    user = Repo.get(User, user_id)
+    room = Repo.get(Room, room_id)
+    user_room = UserRoom
+    |> Repo.get_by(user_id: user.id, room_id: room_id)
+
+    case user_room !== nil do
+      true ->
+        Repo.delete(user_room)
+        conn
+        |> put_flash(:info, "User kicked successfully.")
+        |> redirect(to: room_path(conn, :edit_permit, room_id))
+      false ->
+        conn
+        |> put_flash(:error, "User is not a member of this room.")
+        |> redirect(to: room_path(conn, :edit_permit, room_id))
+    end
+  end
+
+  def edit_permit(conn, %{"id" => id}) do
+    room = Repo.get!(Room, id) |> Repo.preload([:creator, :users])
+    changeset = Room.changeset(room)
+    render(conn, "permit.html", room: room, changeset: changeset)
+  end
+
+  def update_permit(conn, %{"id" => room_id, "room" => %{"email" => email}}) do
+    user = Repo.get_by(User, email: String.trim(email))
+    room = Repo.get(Room, room_id)
+
+    changeset = UserRoom.changeset(
+      %UserRoom{},
+      %{room_id: room_id, user_id: get_user_id(user)}
+    )
+    case Repo.insert(changeset) do
+      {:ok, _user_room} ->
+         conn
+         |> put_flash(:info, email <> " added successfully.")
+         |> redirect(to: room_path(conn, :edit_permit, room))
+      {:error, changeset} ->
+        conn
+        |> put_flash(:error, get_error(email, changeset.errors))
+        |> redirect(to: room_path(conn, :edit_permit, room))
+    end
+  end
+
   def show(conn, %{"id" => id}) do
     current_user = Coherence.current_user(conn)
     room = Repo.get!(Room, id)
@@ -86,7 +131,7 @@ defmodule PhoenixChatWeb.RoomController do
         render(conn, "show.html", room: room)
       false ->
         conn
-        |> put_flash(:error, "You must first join the room.")
+        |> put_flash(:error, "You are not a member of this room.")
         |> redirect(to: room_path(conn, :index))
     end
   end
@@ -126,5 +171,14 @@ defmodule PhoenixChatWeb.RoomController do
     conn
     |> put_flash(:info, "Room deleted successfully.")
     |> redirect(to: room_path(conn, :index))
+  end
+
+  defp get_user_id(nil), do: nil
+  defp get_user_id(user), do: user.id
+  defp get_error(email, [user_id: {"can't be blank", [validation: :required]}]) do
+    email <> " cannot be found."
+  end
+  defp get_error(email, _) do
+    email <> " is already in room."
   end
 end
