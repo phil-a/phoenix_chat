@@ -9,20 +9,22 @@
     </tr>
   </thead>
   <tbody>
-<%= for room <- @rooms do %>
-    <tr>
-      <td><span><%= link "#{room.name}", to: room_path(@conn, :show, room), class: "btn btn-lg btn-primary btn-xs btn-round" %></span></td>
-        <td class="text-right">
-          <%= if user_joined_room?(room, @user_rooms) do %>
-            <span><%= link "Leave", to: room_path(@conn, :leave, room), method: :post, class: "btn btn-link btn-warning btn-xs" %></span>
-          <% else %>
-            <span><%= link "Join", to: room_path(@conn, :join, room), method: :post, class: "btn btn-link btn-info btn-xs" %></span>
-          <% end %>
-          <span><%= link "Edit", to: room_path(@conn, :edit, room), class: "btn btn-link btn-default btn-xs" %></span>
-          <span><%= link "Delete", to: room_path(@conn, :delete, room), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-link btn-danger btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
+    <%= for room <- @rooms do %>
+      <%= if user_joined_room?(room, @user_rooms) do %>
+        <tr>
+          <td><span><%= link "#{room.name}", to: room_path(@conn, :show, room), class: "btn btn-lg btn-primary btn-xs btn-round" %></span></td>
+            <td class="text-right">
+              <%= if user_created_room?(Coherence.current_user(@conn), room) do %>
+                <span><%= link "Permit", to: room_path(@conn, :edit_permit, room), class: "btn btn-link btn-default btn-xs" %></span>
+                <span><%= link "Edit", to: room_path(@conn, :edit, room), class: "btn btn-link btn-default btn-xs" %></span>
+                <span><%= link "Delete", to: room_path(@conn, :delete, room), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-link btn-danger btn-xs" %></span>
+              <% else %>          
+                <span><%= link "Leave", to: room_path(@conn, :leave, room), method: :post, class: "btn btn-link btn-warning btn-xs" %></span>
+              <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
   </tbody>
 </table>
 

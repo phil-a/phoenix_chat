@@ -48,6 +48,9 @@ defmodule PhoenixChatWeb.Router do
     resources "/rooms", RoomController
     post "/rooms/:id/join", RoomController, :join
     post "/rooms/:id/leave", RoomController, :leave
+    post "/rooms/:id/kick/:user_id", RoomController, :kick
+    get "/rooms/:id/permit", RoomController, :edit_permit
+    post "/rooms/:id/permit", RoomController, :update_permit
   end
 
   # Other scopes may use custom stacks.
