@@ -38,25 +38,25 @@
                                   <%= if user_created_room?(Coherence.current_user(@conn), room) do %>
                                   
                                     <span>
-                                      <%= link to: room_path(@conn, :edit_permit, room), class: "btn btn-link btn-default btn-sm", rel: "tooltip", title: "", "data-placement": "bottom", target: "_blank", "data-original-title": "Edit room permissions" do %>
+                                      <%= link to: room_path(@conn, :edit_permit, room), class: "btn btn-link btn-default btn-sm", rel: "tooltip", title: "", "data-placement": "bottom", "data-original-title": "Edit room permissions" do %>
                                         <i class="fa fa-unlock-alt"></i>
                                       <% end %>
                                     </span>
 
                                     <span>
-                                      <%= link to: room_path(@conn, :edit, room), class: "btn btn-link btn-info btn-sm", rel: "tooltip", title: "", "data-placement": "bottom", target: "_blank", "data-original-title": "Edit room" do %>
+                                      <%= link to: room_path(@conn, :edit, room), class: "btn btn-link btn-info btn-sm", rel: "tooltip", title: "", "data-placement": "bottom", "data-original-title": "Edit room" do %>
                                         <i class="fa fa-edit"></i>
                                       <% end %>
                                     </span>
 
                                     <span>
-                                      <%= link to: room_path(@conn, :delete, room), method: :delete, data: [confirm: "Are you sure you want to delete this room?"], class: "btn btn-link btn-danger btn-sm", rel: "tooltip", title: "", "data-placement": "bottom", target: "_blank", "data-original-title": "Delete room" do %>
+                                      <%= link to: room_path(@conn, :delete, room), method: :delete, data: [confirm: "Are you sure you want to delete this room?"], class: "btn btn-link btn-danger btn-sm", rel: "tooltip", title: "", "data-placement": "bottom", "data-original-title": "Delete room" do %>
                                         <i class="fa fa-trash-alt"></i>
                                       <% end %>
                                     </span>
                                   <% else %>
                                     <span>
-                                      <%= link to: room_path(@conn, :leave, room), method: :post, data: [confirm: "Are you sure you want to leave the room?"], class: "btn btn-link btn-danger btn-sm", rel: "tooltip", title: "", "data-placement": "bottom", target: "_blank", "data-original-title": "Leave room" do %>
+                                      <%= link to: room_path(@conn, :leave, room), method: :post, data: [confirm: "Are you sure you want to leave the room?"], class: "btn btn-link btn-danger btn-sm", rel: "tooltip", title: "", "data-placement": "bottom", "data-original-title": "Leave room" do %>
                                         <i class="fa fa-sign-out-alt"></i>
                                       <% end %>
                                     </span>

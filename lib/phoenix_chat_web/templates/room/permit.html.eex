@@ -1,103 +1,105 @@
-<div class="permit-page page-header header-filter" data-background-color="black">
-  <div class="page-header-image"></div>
-    <div class="content-center">
-      <div class="">
-        <div class="row">
-          <div class="col-md-7 ml-auto mr-auto">
-            <div class="card card-login card-plain">
+<div class="permit-page" data-background-color="black">
+  <div class="content-center">
+    <div class="row">
+      <div class="col-md-7 ml-auto mr-auto">
+        <div class="add-member-card card card-plain">
 
-              <div class="card-header text-center">
-                <div class="logo-container">
-                  <div style="font-size:3em; color:#f16440;">
-                    <i class="fa fa-users fa-3x"></i>
-                  </div>
-                  <h3>Add team members to room</h3>
-                </div>
+          <div class="card-header text-center">
+            <div class="logo-container">
+              <div style="font-size:3em; color:#f16440;">
+                <i class="fa fa-users fa-3x"></i>
               </div>
-
-              <div class="card-body">
-                <%= form_for @changeset, room_path(@conn, :update_permit, @room), [method: "post"], fn f -> %>
-                  <%= if @changeset.action do %>
-                    <div class="alert alert-danger">
-                      <p>Oops, something went wrong! Please check the errors below.</p>
-                    </div>
-                  <% end %>
-
-
-                  <div class="input-group form-group-no-border input-lg">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
-                    </div>
-                    <%= text_input f, :email, class: "form-control", placeholder: "Email...", required: "" %>
-                    <%= error_tag f, :email %>
-                  </div>
-
-                  <div class="form-group">
-                    <%= submit [class: "btn btn-primary"] do %>
-                    <i class="fa fa-plus"></i> Add User
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-
-              <div class="card card-login text-center" data-background-color="gray">
-                <h4>Current members</h4>
-                <div class="card-body">
-                  <div class="card card-plain">
-                    <div class="card-body">
-                      <div class="table-responsive">
-                        <table class="table">
-                            <thead class="">
-                              <tr>
-                                  <th class="text-center">
-                                    #
-                                  </th>
-                                  <th>
-                                    Name
-                                  </th>
-                                  <th>
-                                    Email
-                                  </th>
-                                  <th>
-                                    Action
-                                  </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            <%= for u <- joined_users(@room) do %>
-                              <tr>
-                                <td class="text-center">
-                                  <%= u.id %>
-                                </td>
-                                <td>
-                                  <%= u.name %>
-                                </td>
-                                <td>
-                                  <%= u.email %>
-                                </td>
-                                <td class="text-right">
-                                  <%= if !user_created_room?(u, @room) do %>
-                                    <span>
-                                      <%= link to: room_path(@conn, :kick, @room, u), method: :post, data: [confirm: "Are you sure?"], class: "btn btn-link btn-danger btn-sm", rel: "tooltip", title: "", "data-placement": "bottom", target: "_blank", "data-original-title": "Remove user from room" do %>
-                                        <i class="fa fa-minus-square"></i>
-                                      <% end %>
-                                    </span>
-                                  <% end %>
-                                </td>
-                              </tr>
-                            <% end %>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <span><%= link "Back", to: room_path(@conn, :index) %></span>
-
+              <h3>Add team members to room</h3>
             </div>
           </div>
+
+          <div class="card-body">
+            <%= form_for @changeset, room_path(@conn, :update_permit, @room), [method: "post"], fn f -> %>
+              <%= if @changeset.action do %>
+                <div class="alert alert-danger">
+                  <p>Oops, something went wrong! Please check the errors below.</p>
+                </div>
+              <% end %>
+
+              <div class="row justify-content-center">
+                <div class="input-group form-group-no-border input-lg col-lg-8 col-sm-6">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
+                  </div>
+                  <%= text_input f, :email, class: "form-control", placeholder: "Email...", required: "" %>
+                  <%= error_tag f, :email %>
+                </div>
+
+                <div class="form-group col-lg-2 col-sm-4">
+                  <%= submit [class: "btn btn-primary btn-round"] do %>
+                  <i class="fa fa-plus"></i> Add User
+                  <% end %>
+                </div>
+              </div>
+
+            <% end %>
+          </div>
+
+          <div class="current-members-card card card-login text-center" data-background-color="gray">
+            <h4>Current members</h4>
+            <div class="card-body">
+              <div class="card card-plain">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                        <thead class="">
+                          <tr>
+                              <th class="text-center">
+                                #
+                              </th>
+                              <th>
+                                Name
+                              </th>
+                              <th>
+                                Email
+                              </th>
+                              <th>
+                                Action
+                              </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <%= for u <- joined_users(@room) do %>
+                          <tr>
+                            <td class="text-center">
+                              <%= u.id %>
+                            </td>
+                            <td>
+                              <%= u.name %>
+                            </td>
+                            <td>
+                              <%= u.email %>
+                            </td>
+                            <td class="text-right">
+                              <%= if !user_created_room?(u, @room) do %>
+                                <span>
+                                  <%= link to: room_path(@conn, :kick, @room, u), method: :post, data: [confirm: "Are you sure?"], class: "btn btn-link btn-danger btn-sm", rel: "tooltip", title: "", "data-placement": "bottom", target: "_blank", "data-original-title": "Remove user from room" do %>
+                                    <i class="fa fa-minus-square"></i>
+                                  <% end %>
+                                </span>
+                              <% end %>
+                            </td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row text-center m-5">
+            <div class="col">
+              <%= link "Back", to: room_path(@conn, :index), class: "back-link" %>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
