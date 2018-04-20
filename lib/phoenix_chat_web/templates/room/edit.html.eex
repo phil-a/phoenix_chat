@@ -1,6 +1,28 @@
-<h2>Edit room</h2>
+<div class="coherence-page page-header header-filter" data-background-color="black">
+  <div class="page-header-image"></div>
+    <div class="content-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 ml-auto mr-auto">
+            <div class="card card-login card-plain">
+              <div class="card-header text-center">
+                <div class="logo-container">
+                  <div style="font-size:3em; color:#f16440;">
+                    <i class="fa fa-warehouse fa-3x"></i>
+                  </div>
+                  <h3>Edit a Room</h3>
+                </div>
+              </div>
 
-<%= render "form.html", changeset: @changeset,
-                        action: room_path(@conn, :update, @room) %>
+              <%= render "form.html", changeset: @changeset,
+                action: room_path(@conn, :update, @room) %>
 
-<span><%= link "Back", to: room_path(@conn, :index) %></span>
+              <span><%= link "Back", to: room_path(@conn, :index) %></span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -40,33 +40,6 @@
   padding: 50px;
 }
 
-.reflection-page #user-list {
-  transition: right 0.3s ease-in-out;
-  position: fixed;
-  top: 0;
-  right: 0;
-  min-width: 16rem;
-  max-width: 20rem;
-  margin: 8px;
-  border: 0px solid #252525;
-  background-image: none;
-  z-index: 10;
-}
-
-.reflection-page #btn-minimize-users {
-  transition: right 0.3s ease-in-out;
-  position: absolute;
-  right: 4px;
-  top: 4px;
-}
-
-.reflection-page #user-list.phase-right {
-  right: -17rem;
-}
-.reflection-page #user-list.phase-right #btn-minimize-users {
-  right: 17rem;
-}
-
 .reflection-page .display-wrapper > #w1 > div, .reflection-page .display-wrapper > #w2 > div {
   border: 1px solid #252525;
   background-image: url("/images/retina_wood.png");
@@ -192,18 +165,12 @@
 .reflection-page .input-wrapper {
   transition: right 0.3s ease-in-out;
   background-color: #EEE;
-  position: fixed;
+  position: relative;
   bottom: 0;
   right: 0;
   margin: 8px;
   border: 1px solid #AAA;
   border-radius: 3px;
-}
-.reflection-page .input-wrapper.phase-right {
-  right: -40rem;
-}
-.reflection-page .input-wrapper.phase-right #btn-minimize-inputs {
-  right: 40rem;
 }
 
 .reflection-page .input-wrapper #name, .reflection-page .input-wrapper #msg {
@@ -211,6 +178,7 @@
 }
 
 .reflection-page #week-options-radio, .reflection-page #day-options-radio {
+  flex: 1;
   margin: 8px;
 }
 
@@ -222,28 +190,21 @@
 }
 
 .reflection-page #day-options-radio .btn {
+  min-width: 74px;
   font-size: 18px !important;
-  margin: 0 auto;
+  margin: 2px auto;
   display: inline-block;
   text-align: center;
-  min-width: 60px;
 }
 
 .reflection-page .message-text-input {
   display: inline-block;
-  margin-right: 50px;
-  width: 85%;
-}
-
-.reflection-page #btn-minimize-inputs {
-  transition: right 0.3s ease-in-out;
-  position: absolute;
-  bottom: 1rem;
-  right: 0;
-  margin: 6px !important;
-}
-
-.reflection-page .form-control {
+  #msg {
+    color: black;
+  }
+  #msg:focus {
+    background-color: white;
+  }
 }
 
 .reflection-page .mh-30 {
@@ -252,4 +213,16 @@
 
 .reflection-page .mh-250 {
   min-height: 250px;
+}
+
+#add-sticky-button {
+  position: fixed;
+  bottom: -10px;
+  right: 0px;
+}
+
+#online-users-button {
+  position: fixed;
+  bottom: -10px;
+  left: 0px;
 }

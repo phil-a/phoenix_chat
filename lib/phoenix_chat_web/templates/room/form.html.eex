@@ -4,14 +4,18 @@
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
-
-  <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control" %>
-    <%= error_tag f, :name %>
+  <div class="card-body">
+    <div class="input-group form-group-no-border input-lg">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="now-ui-icons design_app"></i></span>
+      </div>
+      <%= text_input f, :name, class: "form-control", placeholder: "Name...", required: "" %>
+      <%= error_tag f, :name %>
+    </div>
   </div>
-
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+  <div class="card-footer text-center">
+    <div class="form-group">
+      <%= submit "Submit", class: "btn btn-primary" %>
+    </div>
   </div>
 <% end %>

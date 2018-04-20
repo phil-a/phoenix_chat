@@ -20,18 +20,6 @@ import "phoenix_html"
 import socket from "./socket"
 import {Presence} from "phoenix"
 
-/* Toggle Users */
-$( "#btn-minimize-users" ).click(function() {
-  $( "#user-list" ).toggleClass("phase-right");
-  $( this ).find("svg").toggleClass("fa-chevron-right fa-users");
-});
-
-/* Toggle Input */
-$( "#btn-minimize-inputs" ).click(function() {
-  $( ".input-wrapper" ).toggleClass("phase-right");
-  $( this ).find("svg").toggleClass("fa-chevron-right fa-sticky-note");
-});
-
 const DAY_OPTIONS = ["option-m", "option-t", "option-w", "option-th", "option-f"];
 const WEEK_OPTIONS = ["option-w1", "option-w2"];
 
@@ -147,14 +135,30 @@ $("#day-options-radio").find("label > input").map(function(i, e) {
   channel.join();                                               // join channel
   var room_id = $('.reflection-page').data("room");
   var msg = document.getElementById('msg');                     // message input field
+  var add_sticky_btn = document.getElementById('add-sticky');   // add sticky button
   var week = $(document.getElementById('week-options-radio'))   // radio buttons for week
               .find("input:checked")[0]
   var day = $(document.getElementById('day-options-radio'))     // radio buttons for day
               .find("input:checked")[0]            
 
+
   // Listen for [ Enter ]  keypress event to send message:
   msg.addEventListener('keypress', function (event) {
-    if (event.keyCode == 13 && msg.value.length > 0) {           // check keypress and non-empty message
+    if (event.keyCode == 13 && msg.value.length > 0) {           // check keypress and non-empty message                                  // check click and non-empty message
+      channel.push('shout', {                                    // send message to server on "shout" channel
+        name: "",                                                // get value of "name" from DOM
+        message: msg.value,                                      // get value of message text from DOM
+        week: getCorrectId($(week).attr('id')),                  // get value of week id
+        day: getCorrectId($(day).attr('id')),                    // get value of day id
+        room_id: room_id,
+      });
+      msg.value = '';                                            // reset message input
+    }
+  });
+
+  // Listen for click  keypress event to send message:
+  add_sticky_btn.addEventListener('click', function (event) {
+    if (msg.value.length > 0) {                                  // check click and non-empty message
       channel.push('shout', {                                    // send message to server on "shout" channel
         name: "",                                                // get value of "name" from DOM
         message: msg.value,                                      // get value of message text from DOM
