@@ -25,6 +25,7 @@ const WEEK_OPTIONS = ["option-w1", "option-w2"];
 
 let presences = {}
 let onlineUsers = document.getElementById("online-users")
+
 // Create list of users
 let listUsers = (user) => {
   return {
@@ -37,6 +38,15 @@ let renderUsers = (presences) => {
   .map(presence => `
     <li>${presence.user}</li>`).join("")
 }
+
+// Modal functions
+$( "#online-users-button" ).click(function() {
+  $('#onlineUsersModal').modal('toggle');
+});
+
+$( "#add-sticky-button" ).click(function() {
+  $('#addStickyModal').modal('toggle');
+});
 
 function getCorrectUl(payload) {
   var {week, day} = payload;
