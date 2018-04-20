@@ -28,78 +28,105 @@
   </div>
 
   <div class="container">
-    <div class="input-wrapper">
+    <!-- Add Sticky -->
+    <button id="add-sticky-button" class="btn btn-primary" data-toggle="modal" data-target="#addStickyModal">
+      <i class="fa fas fa-plus fa-lg"></i>
+      Add Sticky
+    </button>
 
-      <div class="card" data-background-color="black">
-        <div class="card-body content-danger">
-        <h6 class="category-social">
-          <i class="fa fas fa-sticky-note fa-lg"></i> Add Sticky
-        </h6>
-          <div id="week-options-radio" class="btn-group" data-toggle="buttons">
-            <label class="btn btn-primary active">
-              <input type="radio" name="week-options" id="option-w1" autocomplete="off" checked> Week 1
-            </label>
-            <label class="btn btn-primary">
-              <input type="radio" name="week-options" id="option-w2" autocomplete="off"> Week 2
-            </label>
+    <div class="modal fade" id="addStickyModal" tabindex="-1" role="dialog" aria-labelledby="addStickyLabel" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"  data-background-color="black">
+          <div class="modal-header justify-content-center">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <i class="now-ui-icons ui-1_simple-remove"></i>
+            </button>
+            <h4 class="title title-up"><i class="fa fas fa-plus fa-lg"></i> Add Sticky</h4>
           </div>
+          <div class="modal-body">
+            <div class="input-wrapper">
 
-          <div id="day-options-radio" class="btn-group" data-toggle="buttons">
-            <label class="btn btn-primary active">
-              <input type="radio" name="day-options" id="option-m" autocomplete="off" checked> M
-            </label>
-            <label class="btn btn-primary">
-              <input type="radio" name="day-options" id="option-t" autocomplete="off"> T
-            </label>
-              <label class="btn btn-primary">
-              <input type="radio" name="day-options" id="option-w" autocomplete="off"> W
-            </label>
-            <label class="btn btn-primary">
-              <input type="radio" name="day-options" id="option-th" autocomplete="off"> Th
-            </label>
-              <label class="btn btn-primary">
-              <input type="radio" name="day-options" id="option-f" autocomplete="off"> F
-            </label>
-          </div>
+              <div class="card" data-background-color="black">
+                <div class="card-body content-danger">
+                <h6 class="category-social">
+                  
+                </h6>
+                  <div id="week-options-radio" class="row justify-content-center" data-toggle="buttons">
+                    <label class="btn btn-primary active col m-1">
+                      <input type="radio" name="week-options" id="option-w1" autocomplete="off" checked> Week 1
+                    </label>
+                    <label class="btn btn-primary col m-1">
+                      <input type="radio" name="week-options" id="option-w2" autocomplete="off"> Week 2
+                    </label>
+                  </div>
 
-          <div class="card-footer text-center">
-            <div class="message-text-input">
-              <input type="text" id="msg" class="form-control" placeholder="Your Message">
+                  <hr style="border-color: #bcbcbc;"/>
+
+                  <div id="day-options-radio" class="row justify-content-center" data-toggle="buttons">
+                    <label class="btn btn-primary col-3 m-1 active">
+                      <input type="radio" name="day-options" id="option-m" autocomplete="off" checked> Mo
+                    </label>
+                    <label class="btn btn-primary col-3 m-1">
+                      <input type="radio" name="day-options" id="option-t" autocomplete="off"> Tu
+                    </label>
+                      <label class="btn btn-primary col-3 m-1">
+                      <input type="radio" name="day-options" id="option-w" autocomplete="off"> We
+                    </label>
+                    <label class="btn btn-primary col-3 m-1">
+                      <input type="radio" name="day-options" id="option-th" autocomplete="off"> Th
+                    </label>
+                      <label class="btn btn-primary col-3 m-1">
+                      <input type="radio" name="day-options" id="option-f" autocomplete="off"> Fr
+                    </label>
+                  </div>
+
+                  <div class="card-footer text-center row">
+                    <div class="message-text-input col">
+                      <input type="text" id="msg" class="form-control" placeholder="Your Message">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
             </div>
           </div>
-
+          <div class="modal-footer">
+            <button type="button" class="btn btn-neutral btn-lg" data-dismiss="modal">Close</button>
+            <button id="add-sticky" class="btn btn-primary btn-lg">
+              <span class="fa fa-sticky-note fa-lg" aria-hidden="true"></span> Post it
+            </button>
+          </div>
         </div>
       </div>
-
-      <button id="btn-minimize-inputs" type="button" class="btn btn-default" data-background-color="black">
-        <span class="fa fa-chevron-right fa-lg" aria-hidden="true"></span>
-      </button>
-
     </div>
-  </div>
 
-  <div id="user-list">
-    <div class="card" data-background-color="orange">
-      <div class="card-body">
-        <h6 class="category-social">
-          <i class="fas fa-users fa-lg"></i> Online Users
-        </h6>
-        <button id="btn-minimize-users" type="button" class="btn btn-primary">
-          <span class="fas fa-chevron-right fa-lg" aria-hidden="true"></span>
-        </button>
+    <!-- Online users -->
+    <button id="online-users-button" class="btn btn-primary" data-toggle="modal" data-target="#onlineUsersModal">
+      <i class="fa fas fa-users fa-lg"></i>
+      Online
+    </button>
 
-        <div class="card-footer">
-          <div class="author">
-            <div class="card-body panel-users" id="online-users">
-              <ul class="card-text"></ul>
+    <div class="modal modal-mini modal-primary fade" id="onlineUsersModal" tabindex="-1" role="dialog" aria-labelledby="onlineUsersLabel" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"  data-background-color="black">
+          <div class="modal-header justify-content-center">
+            <h4 class="title title-up"><i class="fa fas fa-users fa-lg"></i> Online Users</h4>
+          </div>
+          <div class="modal-body">
+            <div id="user-list">
+              <div class="card-body panel-users" id="online-users">
+                <ul class="card-text"></ul>
+              </div>
             </div>
           </div>
-          <div class="stats stats-right">
-
+          <div class="modal-footer">
+          <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal"></button>
+            <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 
 </div>
