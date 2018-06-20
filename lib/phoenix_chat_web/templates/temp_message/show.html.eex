@@ -1,0 +1,28 @@
+<h2>Show Temp message</h2>
+
+<ul>
+
+  <li>
+    <strong>Message:</strong>
+    <%= @temp_message.message %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @temp_message.name %>
+  </li>
+
+  <li>
+    <strong>Week:</strong>
+    <%= @temp_message.week %>
+  </li>
+
+  <li>
+    <strong>Day:</strong>
+    <%= @temp_message.day %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: temp_message_path(@conn, :edit, @temp_message) %></span>
+<span><%= link "Back", to: temp_message_path(@conn, :index) %></span>

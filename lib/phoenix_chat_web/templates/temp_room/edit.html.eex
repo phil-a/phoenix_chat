@@ -1,0 +1,5 @@
+<h2>Edit Temp room</h2>
+
+<%= render "form.html", Map.put(assigns, :action, temp_room_path(@conn, :update, @temp_room)) %>
+
+<span><%= link "Back", to: temp_room_path(@conn, :index) %></span>

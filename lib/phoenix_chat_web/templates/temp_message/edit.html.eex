@@ -1,0 +1,5 @@
+<h2>Edit Temp message</h2>
+
+<%= render "form.html", Map.put(assigns, :action, temp_message_path(@conn, :update, @temp_message)) %>
+
+<span><%= link "Back", to: temp_message_path(@conn, :index) %></span>

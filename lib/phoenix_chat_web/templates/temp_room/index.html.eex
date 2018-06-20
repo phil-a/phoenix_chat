@@ -1,0 +1,26 @@
+<h2>Listing Temp rooms</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for temp_room <- @temp_rooms do %>
+    <tr>
+      <td><%= temp_room.name %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: temp_room_path(@conn, :show, temp_room), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: temp_room_path(@conn, :edit, temp_room), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: temp_room_path(@conn, :delete, temp_room), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Temp room", to: temp_room_path(@conn, :new) %></span>
