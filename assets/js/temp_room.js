@@ -37,7 +37,8 @@ function getCorrectId(str) {
   return str.split("-")[1];
 }
 
-function handleChangeElement(id) {
+function handleChangeElement(el, id) {
+  $(el.currentTarget).children("input").prop("checked", true);
   $(document.getElementById(id)).find("input").parent().removeClass("active");
   $(document.getElementById(id)).find("input:checked").parent().addClass("active");
   return $(document.getElementById(id)).find("input:checked")[0];
@@ -46,16 +47,16 @@ function handleChangeElement(id) {
 // Add event listeners to week buttons
 $("#week-options-radio").find("label > input").map(function(i, e) {
   let btn = $(document.getElementById(e.id)).parent()[0];
-  return btn.addEventListener("click", () => {
-    week = handleChangeElement("week-options-radio") 
+  return btn.addEventListener("click", (el) => {
+    week = handleChangeElement(el, "week-options-radio") 
   });
 });
 
 // Add event listeners to day buttons
 $("#day-options-radio").find("label > input").map(function(i, e) {
   let btn = $(document.getElementById(e.id)).parent()[0];
-  return btn.addEventListener("click", () => {
-    day = handleChangeElement("day-options-radio")
+  return btn.addEventListener("click", (el, ) => {
+    day = handleChangeElement(el, "day-options-radio")
   });
 });
 
