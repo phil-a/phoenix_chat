@@ -79,23 +79,25 @@ channel.join()                                               // join channel
 var temp_room_id = $('.reflection-page').data("room");
 var name = document.getElementById('name');                   // name of message sender
 var msg = document.getElementById('msg');                     // message input field
+var add_sticky_btn = document.getElementById('add-sticky');   // add sticky button
 var week = $(document.getElementById('week-options-radio'))
             .find("input:checked")[0]
 var day = $(document.getElementById('day-options-radio'))
             .find("input:checked")[0]
 console.log(day)
-// Listen for [ Enter ]  keypress event to send message:
-msg.addEventListener('keypress', function (event) {
-  if (event.keyCode == 13 && msg.value.length > 0) {           // check keypress and non-empty message
-    channel.push('shout', {                                    // send message to server on "shout" channel
-      name: name.value,                                        // get value of "name" from DOM
-      message: msg.value,                                      // get value of message text from DOM
-      week: getCorrectId($(week).attr('id')),                  // get value of week id
-      day: getCorrectId($(day).attr('id')),
-      temp_room_id: temp_room_id,                  // get value of day id
-    });
-    msg.value = '';                                            // reset message input
-  }
-});
+
+  // Listen for click  keypress event to send message:
+  add_sticky_btn.addEventListener('click', function (event) {
+    if (msg.value.length > 0) {                                  // check click and non-empty message
+      channel.push('shout', {                                    // send message to server on "shout" channel
+        name: "",                                                // get value of "name" from DOM
+        message: msg.value,                                      // get value of message text from DOM
+        week: getCorrectId($(week).attr('id')),                  // get value of week id
+        day: getCorrectId($(day).attr('id')),                    // get value of day id
+        temp_room_id: temp_room_id,                              // get value of associated temp_room_id  
+      });
+      msg.value = '';                                            // reset message input
+    }
+  });
 
 }

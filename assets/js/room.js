@@ -135,21 +135,6 @@ $("#day-options-radio").find("label > input").map(function(i, e) {
   var day = $(document.getElementById('day-options-radio'))     // radio buttons for day
               .find("input:checked")[0]            
 
-
-  // Listen for [ Enter ]  keypress event to send message:
-  msg.addEventListener('keypress', function (event) {
-    if (event.keyCode == 13 && msg.value.length > 0) {           // check keypress and non-empty message                                  // check click and non-empty message
-      channel.push('shout', {                                    // send message to server on "shout" channel
-        name: "",                                                // get value of "name" from DOM
-        message: msg.value,                                      // get value of message text from DOM
-        week: getCorrectId($(week).attr('id')),                  // get value of week id
-        day: getCorrectId($(day).attr('id')),                    // get value of day id
-        room_id: room_id,
-      });
-      msg.value = '';                                            // reset message input
-    }
-  });
-
   // Listen for click  keypress event to send message:
   add_sticky_btn.addEventListener('click', function (event) {
     if (msg.value.length > 0) {                                  // check click and non-empty message
