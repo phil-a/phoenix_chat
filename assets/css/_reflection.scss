@@ -199,11 +199,19 @@
 
 .reflection-page .message-text-input {
   display: inline-block;
-  #msg {
-    color: black;
+
+  input {
+    margin-bottom: 10px;
   }
-  #msg:focus {
-    background-color: white;
+
+  #name, #msg {
+    color: white;
+  }
+  #name:focus, #msg:focus {
+    background-color: transparent;
+  }
+  #name::placeholder, #msg::placeholder {
+    color: gray;
   }
 }
 
