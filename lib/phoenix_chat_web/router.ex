@@ -9,6 +9,7 @@ defmodule PhoenixChatWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Coherence.Authentication.Session
+    plug :put_temp_user_token
   end
 
   pipeline :protected do
@@ -37,14 +38,15 @@ defmodule PhoenixChatWeb.Router do
 
   scope "/", PhoenixChatWeb do
     pipe_through :browser # Use the default browser stack
-
+    resources "/temp_rooms", TempRoomController
+    resources "/temp_messages", TempMessageController
   end
 
   scope "/", PhoenixChatWeb do
     pipe_through :protected
     
     get "/", PageController, :index
-    get "users/:id/rooms", Coherence.UserController, :rooms
+    get "/users/:id/rooms", Coherence.UserController, :rooms
     resources "/rooms", RoomController
     post "/rooms/:id/join", RoomController, :join
     post "/rooms/:id/leave", RoomController, :leave
@@ -65,5 +67,11 @@ defmodule PhoenixChatWeb.Router do
                     Coherence.current_user(conn).id)
     conn
     |> assign(:user_id, user_id_token)
+  end
+
+  defp put_temp_user_token(conn, _) do
+      token = Phoenix.Token.sign(conn, "user_id", "anonymous")
+      conn
+      |> assign(:user_id, token)
   end
 end

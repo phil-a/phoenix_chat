@@ -1,0 +1,32 @@
+<h2>Listing Temp messages</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Message</th>
+      <th>Name</th>
+      <th>Week</th>
+      <th>Day</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for temp_message <- @temp_messages do %>
+    <tr>
+      <td><%= temp_message.message %></td>
+      <td><%= temp_message.name %></td>
+      <td><%= temp_message.week %></td>
+      <td><%= temp_message.day %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: temp_message_path(@conn, :show, temp_message), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: temp_message_path(@conn, :edit, temp_message), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: temp_message_path(@conn, :delete, temp_message), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Temp message", to: temp_message_path(@conn, :new) %></span>
