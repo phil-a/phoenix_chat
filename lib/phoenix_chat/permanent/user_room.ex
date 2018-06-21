@@ -1,8 +1,10 @@
-defmodule PhoenixChat.UserRoom do
+defmodule PhoenixChat.Permanent.UserRoom do
   use Ecto.Schema
+
   import Ecto.Changeset
-  alias PhoenixChat.{User, UserRoom}
   import Ecto.Query
+  
+  alias PhoenixChat.Permanent.{User, UserRoom}
 
   schema "user_rooms" do
     belongs_to :user, User, foreign_key: :user_id

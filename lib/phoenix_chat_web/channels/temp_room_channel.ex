@@ -1,7 +1,7 @@
 defmodule PhoenixChatWeb.TempRoomChannel do
   use PhoenixChatWeb, :channel
-  alias PhoenixChat.{ Repo }
-  alias PhoenixChat.Rooms.{TempRoom, TempMessage}
+  alias PhoenixChat.{ Repo, Temporary }
+  alias PhoenixChat.Temporary.{TempRoom, TempMessage}
 
   def join("temp_room:" <> temp_room_id, payload, socket) do
     IO.puts("JOIN")
@@ -36,7 +36,7 @@ defmodule PhoenixChatWeb.TempRoomChannel do
   def handle_info(:after_join, socket) do
     IO.puts("INFO")
     temp_room = Repo.get(TempRoom, socket.assigns[:temp_room])
-    TempMessage.get_messages_for_room(temp_room.id)
+    Temporary.list_messages_for_room(temp_room.id)
     |> Enum.each(fn msg -> push(socket, "shout", %{
       name: msg.name,
       message: msg.message,

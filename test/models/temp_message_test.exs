@@ -1,7 +1,7 @@
 defmodule PhoenixChat.TempMessageTest do
   use PhoenixChat.ModelCase
 
-  alias PhoenixChat.TempMessage
+  alias PhoenixChat.Temporary.TempMessage
 
   @valid_attrs %{day: "some day", message: "some message", name: "some name", week: "some week"}
   @invalid_attrs %{}

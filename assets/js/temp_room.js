@@ -62,10 +62,10 @@ $("#day-options-radio").find("label > input").map(function(i, e) {
 
 //Connect to chat 'room'
 let room = $('.reflection-page').data("room") || "lobby";
-var channel = socket.channel('temp_room:' + room, {});         // connect to chat "temp_room"
+var channel = socket.channel('temp_room:' + room, {});        // connect to chat "temp_room"
 channel.on('shout', function (payload) {                      // listen to shout event
   var li = $(document.createElement("li"))
-            .addClass("col-md-6")[0]                     // create new list item
+            .addClass("col-md-6")[0]                          // create new list item
   var name = payload.name || 'anon';                          // get name from payload or use default
   li.innerHTML = `<b>${name}</b>:<br/>${payload.message}`;    // set li contents
   getCorrectUl(payload).appendChild(li);                      // append to list
@@ -90,7 +90,7 @@ console.log(day)
   add_sticky_btn.addEventListener('click', function (event) {
     if (msg.value.length > 0) {                                  // check click and non-empty message
       channel.push('shout', {                                    // send message to server on "shout" channel
-        name: "",                                                // get value of "name" from DOM
+        name: name.value || "anon",                              // get value of "name" from DOM
         message: msg.value,                                      // get value of message text from DOM
         week: getCorrectId($(week).attr('id')),                  // get value of week id
         day: getCorrectId($(day).attr('id')),                    // get value of day id

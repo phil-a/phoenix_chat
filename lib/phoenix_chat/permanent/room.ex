@@ -1,8 +1,11 @@
-defmodule PhoenixChat.Room do
+defmodule PhoenixChat.Permanent.Room do
   use Ecto.Schema
+
   import Ecto.Changeset
   import Ecto.Query
-  alias PhoenixChat.{Message, Coherence.User, UserRoom}
+  
+  alias PhoenixChat.Coherence.User
+  alias PhoenixChat.Permanent.Message
 
   schema "rooms" do
     field :name, :string

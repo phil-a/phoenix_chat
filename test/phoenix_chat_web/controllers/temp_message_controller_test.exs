@@ -1,14 +1,14 @@
 defmodule PhoenixChatWeb.TempMessageControllerTest do
   use PhoenixChatWeb.ConnCase
 
-  alias PhoenixChat.Rooms
+  alias PhoenixChat.Temporary
 
   @create_attrs %{day: "some day", message: "some message", name: "some name", week: "some week"}
   @update_attrs %{day: "some updated day", message: "some updated message", name: "some updated name", week: "some updated week"}
   @invalid_attrs %{day: nil, message: nil, name: nil, week: nil}
 
   def fixture(:temp_message) do
-    {:ok, temp_message} = Rooms.create_temp_message(@create_attrs)
+    {:ok, temp_message} = Temporary.create_temp_message(@create_attrs)
     temp_message
   end
 
