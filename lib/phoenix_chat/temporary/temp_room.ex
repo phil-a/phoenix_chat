@@ -1,8 +1,9 @@
-defmodule PhoenixChat.Rooms.TempRoom do
+defmodule PhoenixChat.Temporary.TempRoom do
   use Ecto.Schema
-  import Ecto.Changeset
-  alias PhoenixChat.Rooms.{TempRoom, TempMessage}
 
+  import Ecto.Changeset
+  
+  alias PhoenixChat.Temporary.{TempRoom, TempMessage}
 
   schema "temp_rooms" do
     field :name, :string

@@ -1,14 +1,14 @@
 defmodule PhoenixChatWeb.TempRoomControllerTest do
   use PhoenixChatWeb.ConnCase
 
-  alias PhoenixChat.Rooms
+  alias PhoenixChat.Temporary
 
   @create_attrs %{name: "some name"}
   @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
 
   def fixture(:temp_room) do
-    {:ok, temp_room} = Rooms.create_temp_room(@create_attrs)
+    {:ok, temp_room} = Temporary.create_temp_room(@create_attrs)
     temp_room
   end
 

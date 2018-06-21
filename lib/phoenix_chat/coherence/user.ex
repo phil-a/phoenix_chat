@@ -3,14 +3,14 @@ defmodule PhoenixChat.Coherence.User do
   use Ecto.Schema
   use Coherence.Schema
 
-  
+  alias PhoenixChat.Permanent.{ Room, Message }  
 
   schema "users" do
     field :name, :string
     field :email, :string
-    has_many :messages, PhoenixChat.Message
-    has_many :created_rooms, PhoenixChat.Room
-    many_to_many :rooms, PhoenixChat.Room, join_through: "user_rooms"
+    has_many :messages, Message
+    has_many :created_rooms, Room
+    many_to_many :rooms, Room, join_through: "user_rooms"
     coherence_schema()
 
     timestamps()

@@ -1,10 +1,10 @@
-defmodule PhoenixChat.RoomsTest do
+defmodule PhoenixChat.TemporaryTest do
   use PhoenixChat.DataCase
 
-  alias PhoenixChat.Rooms
+  alias PhoenixChat.Temporary.Rooms
 
   describe "temp_rooms" do
-    alias PhoenixChat.Rooms.TempRoom
+    alias PhoenixChat.Temporary.TempRoom
 
     @valid_attrs %{name: "some name"}
     @update_attrs %{name: "some updated name"}
@@ -64,7 +64,7 @@ defmodule PhoenixChat.RoomsTest do
   end
 
   describe "temp_messages" do
-    alias PhoenixChat.Rooms.TempMessage
+    alias PhoenixChat.Temporary.TempMessage
 
     @valid_attrs %{day: "some day", message: "some message", name: "some name", week: "some week"}
     @update_attrs %{day: "some updated day", message: "some updated message", name: "some updated name", week: "some updated week"}

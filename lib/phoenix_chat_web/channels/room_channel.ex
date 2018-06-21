@@ -1,6 +1,7 @@
 defmodule PhoenixChatWeb.RoomChannel do
   use PhoenixChatWeb, :channel
-  alias PhoenixChat.{ Repo, Message, Room, Coherence.User }
+  alias PhoenixChat.{ Repo, Coherence.User, Permanent }
+  alias PhoenixChat.Permanent.{ Room, Message }
   alias PhoenixChatWeb.Presence
 
   def join("room:lobby", payload, socket), do: {:error, %{reason: "lobby"}}
@@ -66,10 +67,10 @@ defmodule PhoenixChatWeb.RoomChannel do
   def handle_info(:after_join, socket) do
     user = Repo.get(User, socket.assigns.user_id)
     room = Repo.get(Room, socket.assigns.room.id)
-    push(socket, "presence_state", PhoenixChatWeb.Presence.list(socket))
+    push(socket, "presence_state", Presence.list(socket))
     {:ok, _} = Presence.track(socket, user.name, %{ online_at: inspect(System.system_time(:seconds)) })
     IO.inspect(socket)
-    Message.get_messages_for_room(room.id)
+    Permanent.list_messages_for_room(room.id)
     |> Enum.each(fn msg -> push(socket, "shout", %{
       name: msg.name,
       message: msg.message,

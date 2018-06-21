@@ -1,12 +1,12 @@
-defmodule PhoenixChat.Rooms do
+defmodule PhoenixChat.Temporary do
   @moduledoc """
-  The Rooms context.
+  The Temporary context.
   """
 
   import Ecto.Query, warn: false
   alias PhoenixChat.Repo
 
-  alias PhoenixChat.Rooms.TempRoom
+  alias PhoenixChat.Temporary.TempRoom
 
   @doc """
   Returns the list of temp_rooms.
@@ -102,7 +102,7 @@ defmodule PhoenixChat.Rooms do
     TempRoom.changeset(temp_room, %{})
   end
 
-  alias PhoenixChat.Rooms.TempMessage
+  alias PhoenixChat.Temporary.TempMessage
 
   @doc """
   Returns the list of temp_messages.
@@ -115,6 +115,22 @@ defmodule PhoenixChat.Rooms do
   """
   def list_temp_messages do
     Repo.all(TempMessage)
+  end
+ 
+  @doc """
+  Returns the list of temp_messages for a specified temp_room_id.
+
+  ## Examples
+
+      iex> list_messages_for_room(123)
+      [%TempMessage{}, ...]
+
+  """
+  def list_messages_for_room(temp_room_id) do
+    query = from m in TempMessage,
+            where: m.temp_room_id == ^temp_room_id,
+            select: m
+    Repo.all(query)
   end
 
   @doc """

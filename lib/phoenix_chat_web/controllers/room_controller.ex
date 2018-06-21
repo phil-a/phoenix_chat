@@ -1,7 +1,8 @@
 defmodule PhoenixChatWeb.RoomController do
   use PhoenixChatWeb, :controller
 
-  alias PhoenixChat.{ Room, Repo, UserRoom, Coherence.User }
+  alias PhoenixChat.{ Repo, Coherence.User }
+  alias PhoenixChat.Permanent.{ Room, UserRoom }
   alias PhoenixChatWeb.Plugs.AuthenticateUserCreatedRoom
 
   plug AuthenticateUserCreatedRoom when action in [:edit, :delete, :edit_permit, :update_permit]

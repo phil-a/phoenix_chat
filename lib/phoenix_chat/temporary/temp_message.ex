@@ -1,9 +1,11 @@
-defmodule PhoenixChat.Rooms.TempMessage do
+defmodule PhoenixChat.Temporary.TempMessage do
   use Ecto.Schema
+
   import Ecto.Changeset
-  alias PhoenixChat.Repo
-  alias PhoenixChat.Rooms.{TempMessage, TempRoom}
   import Ecto.Query, only: [from: 2]
+  
+  alias PhoenixChat.Repo
+  alias PhoenixChat.Temporary.{ TempMessage, TempRoom }
 
   schema "temp_messages" do
     field :day, :string
@@ -22,14 +24,4 @@ defmodule PhoenixChat.Rooms.TempMessage do
     |> validate_required([:message, :name, :week, :day])
   end
 
-  def get_messages(limit \\ 20) do
-    Repo.all(TempMessage, limit: limit)
-  end
-
-  def get_messages_for_room(temp_room_id) do
-    query = from m in TempMessage,
-            where: m.temp_room_id == ^temp_room_id,
-            select: m
-    Repo.all(query)
-  end
 end

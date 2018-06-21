@@ -1,7 +1,7 @@
 defmodule PhoenixChat.TempRoomTest do
   use PhoenixChat.ModelCase
 
-  alias PhoenixChat.TempRoom
+  alias PhoenixChat.Temporary.TempRoom
 
   @valid_attrs %{name: "some name"}
   @invalid_attrs %{}

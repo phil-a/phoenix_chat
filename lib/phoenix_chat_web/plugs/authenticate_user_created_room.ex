@@ -1,8 +1,9 @@
 defmodule PhoenixChatWeb.Plugs.AuthenticateUserCreatedRoom do
   import Plug.Conn
   import Phoenix.Controller
-
-  alias PhoenixChat.{Room, Repo}
+  
+  alias PhoenixChat.Repo
+  alias PhoenixChat.Permanent.Room
   alias PhoenixChatWeb.Router.Helpers
 
   def init(_params) do
