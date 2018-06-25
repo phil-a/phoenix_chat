@@ -10,8 +10,17 @@ defmodule PhoenixChatWeb.TempRoomController do
   end
 
   def new(conn, _params) do
-    changeset = Temporary.change_temp_room(%TempRoom{})
-    render(conn, "new.html", changeset: changeset)
+    # Temporarily auto-create room with default name
+    # changeset = Temporary.change_temp_room(%TempRoom{})
+    # render(conn, "new.html", changeset: changeset)
+    case Temporary.create_temp_room(%{"name" => "temp_room"}) do
+      {:ok, temp_room} ->
+        conn
+        |> put_flash(:info, "Temp room created successfully.")
+        |> redirect(to: temp_room_path(conn, :show, temp_room))
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "new.html", changeset: changeset)
+    end
   end
 
   def create(conn, %{"temp_room" => temp_room_params}) do
@@ -25,19 +34,19 @@ defmodule PhoenixChatWeb.TempRoomController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    temp_room = Temporary.get_temp_room!(id)
+  def show(conn, %{"slug" => slug} = params) do
+    temp_room = Temporary.get_temp_room!(slug)
     render(conn, "show.html", temp_room: temp_room)
   end
 
-  def edit(conn, %{"id" => id}) do
-    temp_room = Temporary.get_temp_room!(id)
+  def edit(conn, %{"slug" => slug}) do
+    temp_room = Temporary.get_temp_room!(slug)
     changeset = Temporary.change_temp_room(temp_room)
     render(conn, "edit.html", temp_room: temp_room, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "temp_room" => temp_room_params}) do
-    temp_room = Temporary.get_temp_room!(id)
+  def update(conn, %{"slug" => slug, "temp_room" => temp_room_params}) do
+    temp_room = Temporary.get_temp_room!(slug)
 
     case Temporary.update_temp_room(temp_room, temp_room_params) do
       {:ok, temp_room} ->
@@ -49,8 +58,8 @@ defmodule PhoenixChatWeb.TempRoomController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    temp_room = Temporary.get_temp_room!(id)
+  def delete(conn, %{"slug" => slug}) do
+    temp_room = Temporary.get_temp_room!(slug)
     {:ok, _temp_room} = Temporary.delete_temp_room(temp_room)
 
     conn

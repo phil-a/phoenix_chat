@@ -11,7 +11,7 @@
   <tbody>
 <%= for temp_room <- @temp_rooms do %>
     <tr>
-      <td><%= temp_room.name %></td>
+      <td><%= temp_room.slug %></td>
 
       <td class="text-right">
         <span><%= link "Show", to: temp_room_path(@conn, :show, temp_room), class: "btn btn-default btn-xs" %></span>

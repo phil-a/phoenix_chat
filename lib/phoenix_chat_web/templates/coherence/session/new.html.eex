@@ -2,7 +2,7 @@
   <div class="page-header-image" style="background-image: url('<%= static_path(@conn, "/images/landscape.jpg") %>');"></div>
     <div class="content-center">
       <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
           <div class="col-md-7 ml-auto mr-auto">
             <div class="card card-login card-plain">
               <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f  -> %>
@@ -12,8 +12,11 @@
                       <i class="far fa-sticky-note fa-3x"></i>
                     </div>
                     <h1>Sprint-Retro</h1>
+                    <%= link "Create Temporary Room", to: temp_room_path(@conn, :new), class: "btn btn-primary btn-round btn-lg btn-block" %>
+                    <h3>OR</h3>
                   </div>
                 </div>
+                <div class="card card-login card-plain" style="border: 1px solid #555; padding: 30px;">
                 <div class="card-body">
                   <div class="input-group form-group-no-border input-lg">
                     <div class="input-group-prepend">
@@ -50,6 +53,8 @@
                     <%= coherence_links(@conn, :new_session) %>
                   </h6>
                 </div>
+                </div>
+
               <% end %>
             </div>
           </div>

@@ -35,7 +35,9 @@ defmodule PhoenixChat.Temporary do
       ** (Ecto.NoResultsError)
 
   """
-  def get_temp_room!(id), do: Repo.get!(TempRoom, id)
+  def get_temp_room!(slug) do 
+    Repo.get_by!(TempRoom, slug: slug)
+  end
 
   @doc """
   Creates a temp_room.
