@@ -4,4 +4,14 @@
   .card a:not(.btn):not(.nav-link):not([data-toggle='collapse']):not(.footer-link):hover, .card a:not(.btn):not(.nav-link):not([data-toggle='collapse']):not(.footer-link):focus {
     border-color: white;
   }
+
+  .session-icon {
+    transition: all 0.3s ease-in-out;
+    font-size:3em;
+    color:#f96332;
+
+    &:hover {
+      color: lighten($color: #f96332, $amount: 10%);
+    }
+  }
 }

@@ -17,6 +17,7 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
+import {Presence} from "phoenix"
 import socket from "./socket"
 
 if (window.location.pathname.split("/")[1] === "temp") {
@@ -36,6 +37,22 @@ if (window.location.pathname.split("/")[1] === "temp") {
 
 const DAY_OPTIONS = ["option-m", "option-t", "option-w", "option-th", "option-f"];
 const WEEK_OPTIONS = ["option-w1", "option-w2"];
+
+let presences = {}
+let onlineUsers = document.getElementById("online-users")
+
+// Create list of users
+let listUsers = (user) => {
+  return {
+    user: user
+  }
+}
+// Render list of users
+let renderUsers = (presences) => {
+  onlineUsers.innerHTML = Presence.list(presences, listUsers)
+  .map(presence => `
+    <li>${presence.user}</li>`).join("")
+}
 
 // Find correct Ul from payload
 function getCorrectUl(payload) {
@@ -74,6 +91,20 @@ $("#day-options-radio").find("label > input").map(function(i, e) {
 //Connect to chat 'room'
 let room = $('.reflection-page').data("room") || "lobby";
 var channel = socket.channel('temp_room:' + room, {});        // connect to chat "temp_room"
+
+  // Sync state
+  channel.on('presence_state', state => {
+    presences = Presence.syncState(presences, state)
+    console.log(presences)
+    renderUsers(presences)
+  });
+  // Sync diff
+  channel.on('presence_diff', diff => {
+    presences = Presence.syncDiff(presences, diff)
+    console.log(presences)
+    renderUsers(presences)
+  });
+
 channel.on('shout', function (payload) {                      // listen to shout event
   var li = $(document.createElement("li"))
             .addClass("col-6 col-md-6 col-lg-12 col-xl-6")[0] // create new list item

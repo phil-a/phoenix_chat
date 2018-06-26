@@ -43,3 +43,12 @@ config :coherence, PhoenixChatWeb.Coherence.Mailer,
   adapter: Swoosh.Adapters.Sendgrid,
   api_key: System.get_env("SENDGRID_API_KEY")
 # %% End Coherence Configuration %%
+
+config :phoenix_chat, PhoenixChat.Scheduler,
+  jobs: [
+    # Every second
+    # {{:extended, "*/1 * * * *"}, {PhoenixChat.Temporary, :heartbeat, []}},
+
+    # Every 15 minutes
+    {"*/15 * * * *", {PhoenixChat.Temporary, :heartbeat, []}},
+  ]

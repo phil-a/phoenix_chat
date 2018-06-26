@@ -51,7 +51,9 @@ defmodule PhoenixChat.Mixfile do
       {:excoveralls, "~> 0.7.0", only: [:test, :dev]},
       {:coherence, "~> 0.5"},
       {:ecto_autoslug_field, "~> 0.5"},
-      {:mnemonic_slugs, "~> 0.0.3"}
+      {:mnemonic_slugs, "~> 0.0.3"},
+      {:quantum, "~> 2.2"},
+      {:timex, "~> 3.0"}
     ]
   end
 
