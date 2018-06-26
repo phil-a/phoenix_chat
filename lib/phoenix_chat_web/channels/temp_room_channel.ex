@@ -2,7 +2,8 @@ defmodule PhoenixChatWeb.TempRoomChannel do
   use PhoenixChatWeb, :channel
   alias PhoenixChat.{ Repo, Temporary }
   alias PhoenixChat.Temporary.{TempRoom, TempMessage}
-
+  alias PhoenixChatWeb.Presence
+  
   def join("temp_room:" <> temp_room_id, payload, socket) do
     IO.puts("JOIN")
     temp_room = Repo.get!(TempRoom, temp_room_id)
@@ -34,8 +35,10 @@ defmodule PhoenixChatWeb.TempRoomChannel do
   end
 
   def handle_info(:after_join, socket) do
-    IO.puts("INFO")
+    user_name = MnemonicSlugs.generate_slug(1)
     temp_room = Repo.get(TempRoom, socket.assigns[:temp_room])
+    push(socket, "presence_state", Presence.list(socket))
+    {:ok, _} = Presence.track(socket, user_name, %{ online_at: inspect(System.system_time(:seconds)) })
     Temporary.list_messages_for_room(temp_room.id)
     |> Enum.each(fn msg -> push(socket, "shout", %{
       name: msg.name,

@@ -15,6 +15,8 @@ defmodule PhoenixChat.Application do
       # Start your own worker by calling: PhoenixChat.Worker.start_link(arg1, arg2, arg3)
       # worker(PhoenixChat.Worker, [arg1, arg2, arg3]),
       supervisor(PhoenixChatWeb.Presence, []),
+      
+      worker(PhoenixChat.Scheduler, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

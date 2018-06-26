@@ -91,6 +91,52 @@ defmodule PhoenixChat.Temporary do
     Repo.delete(temp_room)
   end
 
+  def heartbeat() do
+    IO.puts ("-------- HEARTBEAT ----------")
+    TempRoom
+    |> Repo.all
+    |> Repo.preload(:temp_messages)
+    |> Enum.each(&delete_room_if_expired(&1))
+  end
+
+  @doc """
+  Deletes a TempRoom if room or last message exceeds a day.
+
+  ## Examples
+
+      iex> delete_room_if_expired(temp_room)
+      {:ok, %TempRoom{}}
+
+      iex> delete_room_if_expired(%TempRoom{} = temp_room)
+      {:error, %Ecto.Changeset{}}
+
+  """
+
+  def delete_room_if_expired(%TempRoom{} = temp_room) do
+    last_message =
+    temp_room
+    |> Map.get(:temp_messages)
+    |> List.last()
+    
+    case last_message do
+      nil ->
+        diff = NaiveDateTime.diff(NaiveDateTime.utc_now(), temp_room.inserted_at)
+      _ ->
+        diff = NaiveDateTime.diff(NaiveDateTime.utc_now(), last_message.inserted_at)
+    end
+
+    case diff > 86400 do
+      true ->
+        IO.puts(diff)
+        IO.puts("DELETING")
+        delete_temp_room(temp_room)
+      false ->
+        IO.puts(diff)
+        IO.puts("STILL ACTIVE")
+    end
+
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking temp_room changes.
 

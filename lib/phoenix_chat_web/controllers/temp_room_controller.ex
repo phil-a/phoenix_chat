@@ -16,7 +16,7 @@ defmodule PhoenixChatWeb.TempRoomController do
     case Temporary.create_temp_room(%{"name" => "temp_room"}) do
       {:ok, temp_room} ->
         conn
-        |> put_flash(:info, "Temp room created successfully.")
+        |> put_flash(:info, "Room \'#{temp_room.slug}\' created. Self-destructs in: 1 day")
         |> redirect(to: temp_room_path(conn, :show, temp_room))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
