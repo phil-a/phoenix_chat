@@ -2,13 +2,21 @@ defmodule PhoenixChatWeb.TempMessageControllerTest do
   use PhoenixChatWeb.ConnCase
 
   alias PhoenixChat.Temporary
-
+  
   @create_attrs %{day: "some day", message: "some message", name: "some name", week: "some week"}
   @update_attrs %{day: "some updated day", message: "some updated message", name: "some updated name", week: "some updated week"}
   @invalid_attrs %{day: nil, message: nil, name: nil, week: nil}
 
+
+  def room_fixture(:temp_room) do
+    {:ok, temp_room} = Temporary.create_temp_room(@create_attrs)
+    temp_room
+  end
+
   def fixture(:temp_message) do
-    {:ok, temp_message} = Temporary.create_temp_message(@create_attrs)
+    temp_room = room_fixture(:temp_room)
+    attrs = %{temp_room_id: temp_room.id} |> Enum.into(@create_attrs)
+    {:ok, temp_message} = Temporary.create_temp_message(attrs)
     temp_message
   end
 
@@ -28,7 +36,9 @@ defmodule PhoenixChatWeb.TempMessageControllerTest do
 
   describe "create temp_message" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post conn, temp_message_path(conn, :create), temp_message: @create_attrs
+      temp_room = room_fixture(:temp_room)
+      attrs = %{temp_room_id: temp_room.id} |> Enum.into(@create_attrs)
+      conn = post conn, temp_message_path(conn, :create), temp_message: attrs
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == temp_message_path(conn, :show, id)
