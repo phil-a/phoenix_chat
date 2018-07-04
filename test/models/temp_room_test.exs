@@ -1,5 +1,5 @@
 defmodule PhoenixChat.TempRoomTest do
-  use PhoenixChat.ModelCase
+  use PhoenixChat.DataCase
 
   alias PhoenixChat.Temporary.TempRoom
 

@@ -1,5 +1,5 @@
 defmodule PhoenixChat.TempMessageTest do
-  use PhoenixChat.ModelCase
+  use PhoenixChat.DataCase
 
   alias PhoenixChat.Temporary.TempMessage
 
