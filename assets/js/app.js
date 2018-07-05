@@ -20,3 +20,14 @@ import "phoenix_html"
 import "./session"
 import "./room"
 import "./temp_room"
+
+
+// Update the online status screen based on connectivity
+window.addEventListener('online',  function() {
+  $("main").fadeIn("300");
+  $(".reconnect-section").fadeOut("300");
+});
+window.addEventListener('offline',  function() {
+  $("main").fadeOut("300");
+  $(".reconnect-section").fadeIn("300");
+});

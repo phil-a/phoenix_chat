@@ -47,6 +47,13 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 //       end
 //     end
 //
+
+
+// Clear stickes so no duplication (on mobile browsers)
+socket.onOpen(() => {
+  $(".display-wrapper li").remove()
+})
+
 // Finally, pass the token on connect as below. Or remove it
 // from connect if you don't care about authentication.
 socket.params.token ? socket.connect() : null
