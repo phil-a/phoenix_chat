@@ -101,6 +101,10 @@
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
+      <div class="reconnect-section" style="display: none;">
+        <i class="fa fa-plug fa-lg" style="font-size: 5rem;"></i>
+        <h2>You are offline. </br> Please check your internet connection.</h2>
+      </div>
 
     <!-- user token -->  
     <script>window.userToken = "<%= assigns[:user_id] %>"</script>
