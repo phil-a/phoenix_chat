@@ -4,7 +4,7 @@ import {Presence} from "phoenix"
 if (window.location.pathname.split("/")[1] === "rooms") {
 console.log("ROOMS")
 
-  const DAY_OPTIONS = ["option-m", "option-t", "option-w", "option-th", "option-f"];
+const DAY_OPTIONS = ["option-m", "option-t", "option-w", "option-th", "option-f"];
 const WEEK_OPTIONS = ["option-w1", "option-w2"];
 
 let presences = {}
