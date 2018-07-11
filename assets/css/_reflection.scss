@@ -3,9 +3,6 @@
 */
 
 .reflection-page {
-    background-image: url("../images/landscape.jpg");
-    background-size: 100% auto;
-    background-repeat: repeat;
 }
 
 .small-date {
@@ -79,18 +76,33 @@
   box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
 }
 
-.reflection-page .ul-box > li.fade {
-  -webkit-animation: fade 0.7s;
-  animation: fade 0.7s;
+.reflection-page .ul-box > li.zoom-in {
+  -webkit-animation: zoom-in 0.7s;
+  animation: zoom-in 0.7s;
   opacity: 1;
 }
 /* fallback  */
-@-webkit-keyframes fade {
-  from {opacity: 0}
-  to {opacity: 1}
-}@keyframes fade {
-  from {opacity: 0}
-  to {opacity: 1}
+@-webkit-keyframes zoom-in {
+  from { opacity: 0;
+      -webkit-transform: scale(1.6);
+    -moz-transform: scale(1.6);
+    -o-transform: scale(1.6);}
+  to {  
+    opacity: 1;
+    -webkit-transform: scale(1.0);
+    -moz-transform: scale(1.0);
+    -o-transform: scale(1.0);}
+}@keyframes zoom-in {
+  from {
+    opacity: 0;
+      -webkit-transform: scale(1.6);
+    -moz-transform: scale(1.6);
+    -o-transform: scale(1.6);}
+  to { 
+    opacity: 1;
+     -webkit-transform: scale(1.0);
+    -moz-transform: scale(1.0);
+    -o-transform: scale(1.0);}
 }
 
 /* Sticky Rotation */
@@ -223,7 +235,7 @@
   min-height: 250px;
 }
 
-#add-sticky-button {
+#add-sticky-reflection-button {
   position: fixed;
   bottom: -10px;
   right: 0px;

@@ -1,0 +1,202 @@
+/*
+  Reflection Page
+*/
+
+.happiness-page {
+}
+
+.small-date {
+font-size: 20px;
+font-weight: bold;
+height: 50px;
+width: 100%;
+text-align: center;
+background-color: transparent;
+}
+
+.iframe {
+width: 65px;
+height: 65px;
+}
+
+.remove-sticky {
+position: absolute;
+top: -26px;
+left: 38%;
+border: 0;
+}
+
+/* Display area */
+
+.no-padding {
+padding: 5px;
+}
+
+.happiness-page .display-wrapper {
+padding: 50px;
+}
+
+.happiness-page .display-wrapper > #w1 > div, .happiness-page .display-wrapper > #w2 > div {
+border: 1px solid #252525;
+background-image: url("/images/circles.png");
+}
+
+.happiness-page .display-wrapper .date-label {
+background-color: #ddd;
+padding: 10px;
+color: #252525;
+background-color: whitesmoke;
+h2 {
+  text-align: center;
+}
+}
+
+.happiness-page li {
+list-style-type: none;
+}
+
+.happiness-page .ul-box {
+padding: 0;
+list-style: none;
+}
+
+.happiness-page .ul-box > li.happiness-num {
+opacity: 1;
+border-radius: 8px;
+padding: 10px;
+font-size: 30px;
+font-weight: bold;
+word-wrap: break-word;
+}
+
+.happiness-page .happiness-name {
+  opacity: 1;
+  margin-bottom: 0;
+  border-radius: 0px;
+  font-size: 12px;
+  font-weight: bold;
+  word-wrap: break-word;
+  }
+  
+
+.happiness-page .ul-box > li:hover {
+-webkit-box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
+-moz-box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
+box-shadow: 6px 5px 4px rgba(0,0,0,0.2);
+}
+
+.happiness-page .ul-box > li.fade {
+-webkit-animation: fade 0.7s;
+animation: fade 0.7s;
+opacity: 1;
+margin-bottom: 2px;
+}
+/* fallback  */
+@-webkit-keyframes fade {
+from {opacity: 0; margin-bottom: -50%;}
+to {opacity: 1; margin-bottom: 0}
+}@keyframes fade {
+from {opacity: 0; margin-bottom: -50%;}
+to {opacity: 1; margin-bottom: 0}
+}
+
+/* Sticky Hover + Focus */
+.happiness-page .ul-box li:hover,ul li:focus{
+-moz-box-shadow:5px 5px 6px rgba(0,0,0,.7);
+-webkit-box-shadow: 5px 5px 6px rgba(0,0,0,.7);
+box-shadow:5px 5px 6px rgba(0,0,0,.7);
+-webkit-transform: scale(1.4);
+-moz-transform: scale(1.4);
+-o-transform: scale(1.4);
+position:relative;
+z-index:5;
+}
+
+.happiness-page .ul-box li{
+text-decoration:none;
+color:#000;
+background:#ffc;
+display:block;
+padding:1em;
+-moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+-webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+-moz-transition:-moz-transform .15s linear;
+-o-transition:-o-transform .15s linear;
+-webkit-transition:-webkit-transform .15s linear;
+}
+
+/* Input area */
+
+.happiness-page .input-wrapper {
+transition: right 0.3s ease-in-out;
+background-color: #EEE;
+position: relative;
+bottom: 0;
+right: 0;
+margin: 8px;
+border: 1px solid #AAA;
+border-radius: 3px;
+}
+
+.happiness-page .input-wrapper #name, .happiness-page .input-wrapper #msg {
+height: 46px;
+}
+
+.happiness-page #week-options-radio, .happiness-page #day-options-radio {
+flex: 1;
+margin: 8px;
+}
+
+.happiness-page #week-options-radio .btn {
+font-size: 18px !important;
+margin: 0 auto;
+display: inline-block;
+text-align: center;
+}
+
+.happiness-page #day-options-radio .btn {
+min-width: 74px;
+font-size: 18px !important;
+margin: 2px auto;
+display: inline-block;
+text-align: center;
+}
+
+.happiness-page .message-text-input {
+display: inline-block;
+
+input {
+  margin-bottom: 10px;
+}
+
+#name, #msg {
+  color: white;
+}
+#name:focus, #msg:focus {
+  background-color: transparent;
+}
+#name::placeholder, #msg::placeholder {
+  color: gray;
+}
+}
+
+.happiness-page .mh-30 {
+min-height:30px;
+}
+
+.happiness-page .mh-250 {
+min-height: 250px;
+}
+
+#add-sticky-happiness-button {
+position: fixed;
+bottom: -10px;
+right: 0px;
+}
+
+#online-users-button {
+position: fixed;
+bottom: -10px;
+left: 0px;
+}

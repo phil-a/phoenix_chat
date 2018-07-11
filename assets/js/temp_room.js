@@ -69,22 +69,40 @@ function handleChangeElement(el, id) {
   $(el.currentTarget).children("input").prop("checked", true);
   $(document.getElementById(id)).find("input").parent().removeClass("active");
   $(document.getElementById(id)).find("input:checked").parent().addClass("active");
+  console.log($(document.getElementById(id)).find("input:checked")[0])
   return $(document.getElementById(id)).find("input:checked")[0];
 }
 
 // Add event listeners to week buttons
-$("#week-options-radio").find("label > input").map(function(i, e) {
+$("#week-options-radio-reflection").find("label > input").map(function(i, e) {
   let btn = $(document.getElementById(e.id)).parent()[0];
   return btn.addEventListener("click", (el) => {
-    week = handleChangeElement(el, "week-options-radio") 
+    week_reflection = handleChangeElement(el, "week-options-radio-reflection") 
   });
 });
 
 // Add event listeners to day buttons
-$("#day-options-radio").find("label > input").map(function(i, e) {
+$("#day-options-radio-reflection").find("label > input").map(function(i, e) {
   let btn = $(document.getElementById(e.id)).parent()[0];
-  return btn.addEventListener("click", (el, ) => {
-    day = handleChangeElement(el, "day-options-radio")
+  return btn.addEventListener("click", (el) => {
+    day_reflection = handleChangeElement(el, "day-options-radio-reflection")
+  });
+});
+
+
+// Add event listeners to week buttons
+$("#week-options-radio-happiness").find("label > input").map(function(i, e) {
+  let btn = $(document.getElementById(e.id)).parent()[0];
+  return btn.addEventListener("click", (el) => {
+    week_happiness = handleChangeElement(el, "week-options-radio-happiness") 
+  });
+});
+
+// Add event listeners to day buttons
+$("#day-options-radio-happiness").find("label > input").map(function(i, e) {
+  let btn = $(document.getElementById(e.id)).parent()[0];
+  return btn.addEventListener("click", (el) => {
+    day_happiness = handleChangeElement(el, "day-options-radio-happiness")
   });
 });
 
@@ -106,11 +124,20 @@ var channel = socket.channel('temp_room:' + room, {});        // connect to chat
   });
 
 channel.on('shout', function (payload) {                      // listen to shout event
-  var li = $(document.createElement("li"))
-            .addClass("col-6 col-md-6 col-lg-12 col-xl-6")[0] // create new list item
-  var name = payload.name || 'anon';                          // get name from payload or use default
-  li.innerHTML = `<b>${name}</b>:<br/>${payload.message}`;    // set li contents
-  getCorrectUl(payload).appendChild(li);                      // append to list
+  if (payload.week !== "h1") {
+    var li = $(document.createElement("li"))
+      .addClass("col-6 col-md-6 col-lg-12 col-xl-6 zoom-in")[0]         // create new list item
+    var name = payload.name || 'anon';                          // get name from payload or use default
+    li.innerHTML = `<b>${name}</b>:<br/>${payload.message}`;    // set li contents
+    getCorrectUl(payload).appendChild(li);                      // append to list
+
+  } else if (payload.week === "h1"){
+    var li = $(document.createElement("li"))
+      .addClass("happiness-num col-md-6 offset-md-3 fade slide-in")[0]         // create new list item
+    var name = payload.name || 'anon';                          // get name from payload or use default
+    li.innerHTML = `<p class="happiness-name">${name}</p>${payload.day}`;    // set li contents
+    getCorrectUl(payload).appendChild(li);                      // append to list
+  }
                         
 });
 
@@ -118,27 +145,50 @@ channel.join()                                               // join channel
 .receive("ok", resp => { console.log("Joined successfully", resp) })
 .receive("error", resp => { console.log("Unable to join", resp) })
 
-var temp_room_id = $('.reflection-page').data("room");
-var name = document.getElementById('name');                   // name of message sender
-var msg = document.getElementById('msg');                     // message input field
-var add_sticky_btn = document.getElementById('add-sticky');   // add sticky button
-var week = $(document.getElementById('week-options-radio'))
+var temp_room_id_reflection = $('.reflection-page').data("room");
+var name_reflection = document.getElementById('name-reflection');                   // name of message sender
+var msg_reflection = document.getElementById('msg-reflection');                     // message input field
+var add_sticky_btn_reflection = document.getElementById('post-sticky-reflection');
+var week_reflection = $(document.getElementById('week-options-radio-reflection'))
             .find("input:checked")[0]
-var day = $(document.getElementById('day-options-radio'))
+var day_reflection = $(document.getElementById('day-options-radio-reflection'))
             .find("input:checked")[0]
-console.log(day)
+
+var temp_room_id_happiness = $('.reflection-page').data("room");
+var name_happiness = document.getElementById('name-happiness');                   // name of message sender
+var msg_happiness = document.getElementById('msg-happiness');                     // message input field
+var add_sticky_btn_happiness = document.getElementById('post-sticky-happiness');   // add sticky button
+var week_happiness = $(document.getElementById('week-options-radio-happiness'))
+            .find("input:checked")[0]
+var day_happiness = $(document.getElementById('day-options-radio-happiness'))
+            .find("input:checked")[0]
 
   // Listen for click  keypress event to send message:
-  add_sticky_btn.addEventListener('click', function (event) {
-    if (msg.value.length > 0) {                                  // check click and non-empty message
-      channel.push('shout', {                                    // send message to server on "shout" channel
-        name: name.value || "anon",                              // get value of "name" from DOM
-        message: msg.value,                                      // get value of message text from DOM
-        week: getCorrectId($(week).attr('id')),                  // get value of week id
-        day: getCorrectId($(day).attr('id')),                    // get value of day id
-        temp_room_id: temp_room_id,                              // get value of associated temp_room_id  
+  add_sticky_btn_reflection.addEventListener('click', function (event) {
+    if (msg_reflection.value.length > 0) {
+                                                                            // check click and non-empty message
+      channel.push('shout', {                                               // send message to server on "shout" channel
+        name: name_reflection.value || "anon",                              // get value of "name" from DOM
+        message: msg_reflection.value,                                      // get value of message text from DOM
+        week: getCorrectId($(week_reflection).attr('id')),                  // get value of week id
+        day: getCorrectId($(day_reflection).attr('id')),                    // get value of day id
+        temp_room_id: temp_room_id_reflection,                              // get value of associated temp_room_id  
       });
-      msg.value = '';                                            // reset message input
+      msg_reflection.value = '';                                            // reset message input
+    }
+  });
+
+  // Listen for click  keypress event to send message:
+  add_sticky_btn_happiness.addEventListener('click', function (event) {
+    if (msg_happiness.value.length > 0) {                                  // check click and non-empty message
+      channel.push('shout', {                                              // send message to server on "shout" channel
+        name: name_happiness.value || "anon",                              // get value of "name" from DOM
+        message: msg_happiness.value,                                      // get value of message text from DOM
+        week: getCorrectId($(week_happiness).attr('id')),                  // get value of week id
+        day: getCorrectId($(day_happiness).attr('id')),                    // get value of day id
+        temp_room_id: temp_room_id_happiness,                              // get value of associated temp_room_id  
+      });
+      msg_happiness.value = '';                                            // reset message input
     }
   });
 

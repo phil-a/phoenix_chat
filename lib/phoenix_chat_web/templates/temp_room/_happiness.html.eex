@@ -1,0 +1,122 @@
+<div class="happiness-page" data-room="<%= @temp_room.id %>">
+  <div class="display-wrapper">
+
+    <div id="h1" class="row align-items-end">
+      <div id="h1-1" class="col-12 col-lg m-2"><ul class="row ul-box align-items-end"><div class="small-date d-lg-none">1</div></ul></div>
+      <div id="h1-2" class="col-12 col-lg m-2"><ul class="row ul-box align-items-end"><div class="small-date d-lg-none">2</div></ul></div>
+      <div id="h1-3" class="col-12 col-lg m-2"><ul class="row ul-box align-items-end"><div class="small-date d-lg-none">3</div></ul></div>
+      <div id="h1-4" class="col-12 col-lg m-2"><ul class="row ul-box align-items-end"><div class="small-date d-lg-none">4</div></ul></div>
+      <div id="h1-5" class="col-12 col-lg m-2"><ul class="row ul-box align-items-end"><div class="small-date d-lg-none">5</div></ul></div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>1</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>2</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>3</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>4</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>5</h2></div></div>
+    </div>
+
+  </div>
+
+  <div class="container">
+    <!-- Add Sticky -->
+    <button id="add-sticky-happiness-button" class="btn btn-primary" data-toggle="modal" data-target="#addStickyHappiness">
+      <i class="fa fas fa-plus fa-lg"></i>
+      Add Sticky
+    </button>
+
+    <div class="modal fade" id="addStickyHappiness" tabindex="-1" role="dialog" aria-labelledby="addStickyHappinessLabel" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"  data-background-color="black">
+          <div class="modal-header justify-content-center">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <i class="now-ui-icons ui-1_simple-remove"></i>
+            </button>
+            <h4 class="title title-up"><i class="fa fas fa-plus fa-lg"></i> Add Sticky</h4>
+          </div>
+          <div class="modal-body">
+            <div class="input-wrapper">
+
+              <div class="card" data-background-color="black">
+                <div class="card-body content-danger">
+                <h6 class="category-social">
+                  
+                </h6>
+                  <div id="week-options-radio-happiness" class="row justify-content-center" data-toggle="buttons">
+                    <label class="btn btn-primary active col m-1">
+                      <input type="radio" name="week-options" id="option-h1" autocomplete="off" checked> Week 1
+                    </label>
+                  </div>
+
+                  <hr style="border-color: #bcbcbc;"/>
+
+                  <div id="day-options-radio-happiness" class="row justify-content-center" data-toggle="buttons">
+                    <label class="btn btn-primary col-3 m-1 active">
+                      <input type="radio" name="day-options" id="option-1" autocomplete="off" checked> 1
+                    </label>
+                    <label class="btn btn-primary col-3 m-1">
+                      <input type="radio" name="day-options" id="option-2" autocomplete="off"> 2
+                    </label>
+                      <label class="btn btn-primary col-3 m-1">
+                      <input type="radio" name="day-options" id="option-3" autocomplete="off"> 3
+                    </label>
+                    <label class="btn btn-primary col-3 m-1">
+                      <input type="radio" name="day-options" id="option-4" autocomplete="off"> 4
+                    </label>
+                      <label class="btn btn-primary col-3 m-1">
+                      <input type="radio" name="day-options" id="option-5" autocomplete="off"> 5
+                    </label>
+                  </div>
+
+                  <div class="card-footer text-center row">
+                    <div class="message-text-input col">
+                      <input type="text" id="name-happiness" class="form-control" placeholder="Your name">
+                      <input type="text" id="msg-happiness" class="form-control" placeholder="Your Message">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-neutral btn-lg" data-dismiss="modal">Close</button>
+            <button id="post-sticky-happiness" class="btn btn-primary btn-lg">
+              <span class="fa fa-sticky-note fa-lg" aria-hidden="true"></span> Post it
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Online users -->
+    <button id="online-users-button" class="btn btn-primary" data-toggle="modal" data-target="#onlineUsersModal">
+      <i class="fa fas fa-users fa-lg"></i>
+      Online
+    </button>
+
+    <div class="modal modal-mini modal-primary fade" id="onlineUsersModal" tabindex="-1" role="dialog" aria-labelledby="onlineUsersLabel" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"  data-background-color="black">
+          <div class="modal-header justify-content-center">
+            <h4 class="title title-up"><i class="fa fas fa-users fa-lg"></i> Online Users</h4>
+          </div>
+          <div class="modal-body">
+            <div id="user-list">
+              <div class="card-body panel-users" id="online-users">
+                <ul class="card-text"></ul>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal"></button>
+            <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
