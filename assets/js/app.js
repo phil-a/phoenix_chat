@@ -20,6 +20,7 @@ import "phoenix_html"
 import "./session"
 import "./room"
 import "./temp_room"
+import "./utils"
 
 
 // Update the online status screen based on connectivity
