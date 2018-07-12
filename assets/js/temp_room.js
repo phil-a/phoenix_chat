@@ -89,7 +89,6 @@ $("#day-options-radio-reflection").find("label > input").map(function(i, e) {
   });
 });
 
-
 // Add event listeners to week buttons
 $("#week-options-radio-happiness").find("label > input").map(function(i, e) {
   let btn = $(document.getElementById(e.id)).parent()[0];
@@ -150,18 +149,18 @@ var name_reflection = document.getElementById('name-reflection');               
 var msg_reflection = document.getElementById('msg-reflection');                     // message input field
 var add_sticky_btn_reflection = document.getElementById('post-sticky-reflection');
 var week_reflection = $(document.getElementById('week-options-radio-reflection'))
-            .find("input:checked")[0]
+  .children("label.active").find("input")[0]
 var day_reflection = $(document.getElementById('day-options-radio-reflection'))
-            .find("input:checked")[0]
+  .children("label.active").find("input")[0]
 
 var temp_room_id_happiness = $('.reflection-page').data("room");
 var name_happiness = document.getElementById('name-happiness');                   // name of message sender
 var msg_happiness = document.getElementById('msg-happiness');                     // message input field
 var add_sticky_btn_happiness = document.getElementById('post-sticky-happiness');   // add sticky button
 var week_happiness = $(document.getElementById('week-options-radio-happiness'))
-            .find("input:checked")[0]
+  .children("label.active").find("input")[0]
 var day_happiness = $(document.getElementById('day-options-radio-happiness'))
-            .find("input:checked")[0]
+  .children("label.active").find("input")[0]
 
   // Listen for click  keypress event to send message:
   add_sticky_btn_reflection.addEventListener('click', function (event) {
@@ -188,7 +187,7 @@ var day_happiness = $(document.getElementById('day-options-radio-happiness'))
         day: getCorrectId($(day_happiness).attr('id')),                    // get value of day id
         temp_room_id: temp_room_id_happiness,                              // get value of associated temp_room_id  
       });
-      msg_happiness.value = '';                                            // reset message input
+      msg_happiness.value = 'n/a';                                            // reset message input
     }
   });
 
