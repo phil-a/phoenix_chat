@@ -14,4 +14,19 @@
       color: lighten($color: #f96332, $amount: 10%);
     }
   }
+
+  .join-input-wrapper {
+    margin-top: 9em;
+  }
+
+  .main-header {
+    i {
+      margin-left: 2px;
+      font-size: 0.7em;
+    }
+    font-size: 1em;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 0;
+  }
 }
