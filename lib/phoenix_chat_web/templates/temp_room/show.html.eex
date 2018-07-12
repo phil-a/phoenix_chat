@@ -30,6 +30,34 @@
       </div>
     </div>
   </div>
+
+  <!-- Online users -->
+  <button id="online-users-button" class="btn btn-primary" data-toggle="modal" data-target="#onlineUsersModal">
+    <i class="fa fas fa-users fa-lg"></i>
+    Online
+  </button>
+
+  <div class="modal modal-mini modal-primary fade" id="onlineUsersModal" tabindex="-1" role="dialog" aria-labelledby="onlineUsersLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content"  data-background-color="black">
+        <div class="modal-header justify-content-center">
+          <h4 class="title title-up"><i class="fa fas fa-users fa-lg"></i> Online Users</h4>
+        </div>
+        <div class="modal-body">
+          <div id="user-list">
+            <div class="card-body panel-users" id="online-users">
+              <ul class="card-text"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal"></button>
+          <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>window.roomID = "<%= @temp_room.id %>"</script>
