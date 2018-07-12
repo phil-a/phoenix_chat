@@ -1,31 +1,32 @@
 /*
-  Reflection Page
+  Happiness Page
 */
 
 .happiness-page {
-}
 
-.small-date {
-font-size: 20px;
-font-weight: bold;
-height: 50px;
-width: 100%;
-text-align: center;
-background-color: transparent;
-}
+  .small-date {
+  font-size: 20px;
+  font-weight: bold;
+  height: 50px;
+  width: 100%;
+  text-align: center;
+  background-color: transparent;
+  }
 
-.iframe {
-width: 65px;
-height: 65px;
-}
+  .iframe {
+  width: 65px;
+  height: 65px;
+  }
 
-.remove-sticky {
-position: absolute;
-top: -26px;
-left: 38%;
-border: 0;
-}
+  .remove-sticky {
+  font-size: 0.5em;
+  position: absolute;
+  top: -26px;
+  left: 38%;
+  border: 0;
+  }
 
+}
 /* Display area */
 
 .no-padding {

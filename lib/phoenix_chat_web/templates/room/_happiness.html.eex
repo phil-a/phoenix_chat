@@ -1,4 +1,4 @@
-<div class="happiness-page" data-room="<%= @temp_room.id %>">
+<div class="happiness-page" data-room="<%= @room.id %>">
   <div class="display-wrapper">
 
     <div id="h1" class="row align-items-end">
@@ -71,7 +71,6 @@
 
                   <div class="card-footer text-center row">
                     <div class="message-text-input col">
-                      <input type="text" id="name-happiness" class="form-control" placeholder="Your name">
                       <input type="text" id="msg-happiness" class="form-control" placeholder="Your Message" value="n/a" style="display:none;">
                     </div>
                   </div>

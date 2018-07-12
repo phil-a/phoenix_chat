@@ -61,18 +61,34 @@ function handleChangeElement(el, id) {
 }
 
 // Add event listeners to week buttons
-$("#week-options-radio").find("label > input").map(function(i, e) {
+$("#week-options-radio-reflection").find("label > input").map(function(i, e) {
   let btn = $(document.getElementById(e.id)).parent()[0];
   return btn.addEventListener("click", (el) => {
-    week = handleChangeElement(el, "week-options-radio") 
+    week_reflection = handleChangeElement(el, "week-options-radio-reflection")
   });
 });
 
 // Add event listeners to day buttons
-$("#day-options-radio").find("label > input").map(function(i, e) {
+$("#day-options-radio-reflection").find("label > input").map(function(i, e) {
   let btn = $(document.getElementById(e.id)).parent()[0];
   return btn.addEventListener("click", (el) => {
-    day = handleChangeElement(el, "day-options-radio")
+    day_reflection = handleChangeElement(el, "day-options-radio-reflection")
+  });
+});
+
+// Add event listeners to week buttons
+$("#week-options-radio-happiness").find("label > input").map(function(i, e) {
+  let btn = $(document.getElementById(e.id)).parent()[0];
+  return btn.addEventListener("click", (el) => {
+    week_happiness = handleChangeElement(el, "week-options-radio-happiness") 
+  });
+});
+  
+// Add event listeners to day buttons
+$("#day-options-radio-happiness").find("label > input").map(function(i, e) {
+  let btn = $(document.getElementById(e.id)).parent()[0];
+  return btn.addEventListener("click", (el) => {
+    day_happiness = handleChangeElement(el, "day-options-radio-happiness")
   });
 });
 
@@ -93,8 +109,10 @@ $("#day-options-radio").find("label > input").map(function(i, e) {
 
   channel.on('shout', function (payload) {                            // listen to shout event
     let thumbtack = messageBelongsToUser(payload) ? renderThumbtack() : "";
-    var li = $(document.createElement("li"))                        // create new list item
-      .addClass("col-6 col-md-6 col-lg-12 col-xl-6")[0]                          
+
+    if (payload.week !== "h1") {
+      var li = $(document.createElement("li"))                        // create new list item
+      .addClass("col-6 col-md-6 col-lg-12 col-xl-6 zoom-in")[0]
       
       $(li).attr("id", `msg-${payload.msg_id}`);
       $(li).data("id", payload.msg_id);
@@ -120,6 +138,40 @@ $("#day-options-radio").find("label > input").map(function(i, e) {
         });
         });
       }
+    } else if (payload.week === "h1") {
+      var li = $(document.createElement("li"))                        // create new list item
+      .addClass("happiness-num col-md-6 offset-md-3 fade slide-in")[0]                          
+      
+      $(li).attr("id", `msg-${payload.msg_id}`);
+      $(li).data("id", payload.msg_id);
+      $(li).data("user", payload.msg_user_id);
+      $(li).data("room", payload.room_id);
+      var name = payload.name || 'anon';                              // get name from payload or use default
+      
+      li.innerHTML = 
+      `
+        <p class="happiness-name">
+          ${name}
+        </p>
+        ${payload.day}
+        ${thumbtack}
+      `;
+                                                            // set li contents
+      getCorrectUl(payload).appendChild(li);                          // append to list    
+
+      // Attach event listener if user created
+      if (messageBelongsToUser(payload)) {
+        $(document.getElementById(`msg-${payload.msg_id}`))           // Add remove event listener for each card   
+        .children(".remove-sticky")[0]
+        .addEventListener('click', function (event) {                 // check click
+        channel.push('remove', {                                      // delete message to server on "remove" channel
+          msg_id: payload.msg_id,
+          msg_user_id: payload.msg_user_id
+        });
+        });
+      }
+    }
+
   });
 
   channel.on('remove', function (payload) {                      // listen to remove event
@@ -127,25 +179,46 @@ $("#day-options-radio").find("label > input").map(function(i, e) {
   });
 
   channel.join();                                               // join channel
-  var room_id = $('.reflection-page').data("room");
-  var msg = document.getElementById('msg');                     // message input field
-  var add_sticky_btn = document.getElementById('add-sticky');   // add sticky button
-  var week = $(document.getElementById('week-options-radio'))   // radio buttons for week
-              .find("input:checked")[0]
-  var day = $(document.getElementById('day-options-radio'))     // radio buttons for day
-              .find("input:checked")[0]            
+  var room_id_reflection = $('.reflection-page').data("room");
+  var msg_reflection = document.getElementById('msg-reflection');                     // message input field
+  var add_sticky_btn_reflection = document.getElementById('post-sticky-reflection');   // add sticky button
+  var week_reflection = $(document.getElementById('week-options-radio-reflection'))   // radio buttons for week
+    .children("label.active").find("input")[0]
+  var day_reflection = $(document.getElementById('day-options-radio-reflection'))     // radio buttons for day
+    .children("label.active").find("input")[0]            
+  var room_id_happiness = $('.reflection-page').data("room");
+  var msg_happiness = document.getElementById('msg-happiness');                     // message input field
+  var add_sticky_btn_happiness = document.getElementById('post-sticky-happiness');   // add sticky button
+  var week_happiness = $(document.getElementById('week-options-radio-happiness'))   // radio buttons for week
+    .children("label.active").find("input")[0]
+  var day_happiness = $(document.getElementById('day-options-radio-happiness'))     // radio buttons for day
+    .children("label.active").find("input")[0]            
 
   // Listen for click  keypress event to send message:
-  add_sticky_btn.addEventListener('click', function (event) {
-    if (msg.value.length > 0) {                                  // check click and non-empty message
+  add_sticky_btn_reflection.addEventListener('click', function (event) {
+    if (msg_reflection.value.length > 0) {                                  // check click and non-empty message
       channel.push('shout', {                                    // send message to server on "shout" channel
         name: "",                                                // get value of "name" from DOM
-        message: msg.value,                                      // get value of message text from DOM
-        week: getCorrectId($(week).attr('id')),                  // get value of week id
-        day: getCorrectId($(day).attr('id')),                    // get value of day id
-        room_id: room_id,
+        message: msg_reflection.value,                                      // get value of message text from DOM
+        week: getCorrectId($(week_reflection).attr('id')),                  // get value of week id
+        day: getCorrectId($(day_reflection).attr('id')),                    // get value of day id
+        room_id: room_id_reflection,
       });
-      msg.value = '';                                            // reset message input
+      msg_reflection.value = '';                                            // reset message input
+    }
+  });
+
+  // Listen for click  keypress event to send message:
+  add_sticky_btn_happiness.addEventListener('click', function (event) {
+    if (msg_happiness.value.length > 0) {                                  // check click and non-empty message
+      channel.push('shout', {                                    // send message to server on "shout" channel
+        name: "",                                                // get value of "name" from DOM
+        message: msg_happiness.value,                                      // get value of message text from DOM
+        week: getCorrectId($(week_happiness).attr('id')),                  // get value of week id
+        day: getCorrectId($(day_happiness).attr('id')),                    // get value of day id
+        room_id: room_id_happiness,
+      });
+      msg_happiness.value = 'n/a';                                            // reset message input
     }
   });
 
