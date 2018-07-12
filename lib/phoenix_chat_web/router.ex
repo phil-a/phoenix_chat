@@ -38,7 +38,8 @@ defmodule PhoenixChatWeb.Router do
 
   scope "/", PhoenixChatWeb do
     pipe_through :browser # Use the default browser stack
-    resources "/temp", TempRoomController, param: "slug"
+    resources "/temp", TempRoomController, param: "slug", except: [:index]
+    resources "/temp_rooms", TempRoomController, param: "slug", only: [:index]
     resources "/temp_messages", TempMessageController
   end
 

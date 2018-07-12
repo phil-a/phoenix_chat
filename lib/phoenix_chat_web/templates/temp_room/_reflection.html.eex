@@ -82,7 +82,7 @@
 
                   <div class="card-footer text-center row">
                     <div class="message-text-input col">
-                      <input type="text" id="name-reflection" class="form-control" placeholder="Your name">
+                      <input type="text" id="name-reflection" class="form-control" placeholder="Your name" style="display:none;">
                       <input type="text" id="msg-reflection" class="form-control" placeholder="Your Message">
                     </div>
                   </div>

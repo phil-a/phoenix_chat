@@ -49,8 +49,6 @@
                     </label>
                   </div>
 
-                  <hr style="border-color: #bcbcbc;"/>
-
                   <div id="day-options-radio-happiness" class="row justify-content-center" data-toggle="buttons">
                     <label class="btn btn-primary col-3 m-1 active">
                       <input type="radio" name="day-options" id="option-1" autocomplete="off" checked> 1
@@ -71,7 +69,7 @@
 
                   <div class="card-footer text-center row">
                     <div class="message-text-input col">
-                      <input type="text" id="name-happiness" class="form-control" placeholder="Your name">
+                      <input type="text" id="name-happiness" class="form-control" placeholder="Your name" style="display:none;">
                       <input type="text" id="msg-happiness" class="form-control" placeholder="Your Message" value="n/a" style="display:none;">
                     </div>
                   </div>
@@ -82,7 +80,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-neutral btn-lg" data-dismiss="modal">Close</button>
-            <button id="post-sticky-happiness" class="btn btn-primary btn-lg">
+            <button id="post-sticky-happiness" class="btn btn-primary btn-lg" data-dismiss="modal">
               <span class="fa fa-sticky-note fa-lg" aria-hidden="true"></span> Post it
             </button>
           </div>

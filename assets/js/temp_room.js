@@ -21,6 +21,16 @@ import {Presence} from "phoenix"
 import socket from "./socket"
 
 if (window.location.pathname.split("/")[1] === "temp") {
+
+  $(document).ready(function() {
+    var person = prompt("Please enter your first name... (default: anon)", "");
+  
+  if (person != null) {
+    document.getElementById('name-reflection').value = person;
+    document.getElementById('name-happiness').value = person;
+  }
+  });
+
   let input_url = document.getElementById("temp_url")
   let copy_url = document.getElementById("copy_url")
   input_url.value = window.location.href;
@@ -187,7 +197,7 @@ var day_happiness = $(document.getElementById('day-options-radio-happiness'))
         day: getCorrectId($(day_happiness).attr('id')),                    // get value of day id
         temp_room_id: temp_room_id_happiness,                              // get value of associated temp_room_id  
       });
-      msg_happiness.value = 'n/a';                                            // reset message input
+      msg_happiness.value = '';                                            // reset message input
     }
   });
 
