@@ -1,0 +1,132 @@
+<div class="reflection-page" data-room="<%= @room.id %>">
+  <div class="display-wrapper">
+
+    <div id="w1" class="row align-items-end">
+      <div id="w1-m" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Monday</div></ul></div>
+      <div id="w1-t" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Tuesday</div></ul></div>
+      <div id="w1-w" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Wednesday</div></ul></div>
+      <div id="w1-th" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Thursday</div></ul></div>
+      <div id="w1-f" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Friday</div></ul></div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>Mo</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>Tu</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>We</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>Th</h2></div></div>
+      <div class="col-12 col-lg"><div class="date-label d-none d-lg-block justify-content-center"><h2>Fr</h2></div></div>
+    </div>
+
+    <div id="w2" class="row align-items-start">
+      <div id="w2-m" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Monday</div></ul></div>
+      <div id="w2-t" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Tuesday</div></ul></div>
+      <div id="w2-w" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Wednesday</div></ul></div>
+      <div id="w2-th" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Thursday</div></ul></div>
+      <div id="w2-f" class="col-12 col-lg m-2"><ul class="row ul-box align-items-start"><div class="small-date d-lg-none">Friday</div></ul></div>
+    </div>
+
+  </div>
+
+  <div class="container">
+    <!-- Add Sticky -->
+    <button id="add-sticky-reflection-button" class="btn btn-primary" data-toggle="modal" data-target="#addStickyReflection">
+      <i class="fa fas fa-plus fa-lg"></i>
+      Add Sticky
+    </button>
+
+    <div class="modal fade" id="addStickyReflection" tabindex="-1" role="dialog" aria-labelledby="addStickyReflectionLabel" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"  data-background-color="black">
+          <div class="modal-header justify-content-center">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              <i class="now-ui-icons ui-1_simple-remove"></i>
+            </button>
+            <h4 class="title title-up"><i class="fa fas fa-plus fa-lg"></i> Add Sticky</h4>
+          </div>
+          <div class="modal-body">
+            <div class="input-wrapper">
+
+              <div class="card" data-background-color="black">
+                <div class="card-body content-danger">
+                <h6 class="category-social">
+                  
+                </h6>
+                  <div id="week-options-radio-reflection" class="row justify-content-center" data-toggle="buttons">
+                    <label class="btn btn-primary active col m-1">
+                      <input type="radio" name="week-options" id="option-w1" autocomplete="off" checked> Week 1
+                    </label>
+                    <label class="btn btn-primary col m-1">
+                      <input type="radio" name="week-options" id="option-w2" autocomplete="off"> Week 2
+                    </label>
+                  </div>
+
+                  <hr style="border-color: #bcbcbc;"/>
+
+                  <div id="day-options-radio-reflection" class="row justify-content-center" data-toggle="buttons">
+                    <label class="btn btn-primary col-3 m-1 active">
+                      <input type="radio" name="day-options" id="option-m" autocomplete="off" checked> Mo
+                    </label>
+                    <label class="btn btn-primary col-3 m-1">
+                      <input type="radio" name="day-options" id="option-t" autocomplete="off"> Tu
+                    </label>
+                      <label class="btn btn-primary col-3 m-1">
+                      <input type="radio" name="day-options" id="option-w" autocomplete="off"> We
+                    </label>
+                    <label class="btn btn-primary col-3 m-1">
+                      <input type="radio" name="day-options" id="option-th" autocomplete="off"> Th
+                    </label>
+                      <label class="btn btn-primary col-3 m-1">
+                      <input type="radio" name="day-options" id="option-f" autocomplete="off"> Fr
+                    </label>
+                  </div>
+
+                  <div class="card-footer text-center row">
+                    <div class="message-text-input col">
+                      <input type="text" id="msg-reflection" class="form-control" placeholder="Your Message">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-neutral btn-lg" data-dismiss="modal">Close</button>
+            <button id="post-sticky-reflection" class="btn btn-primary btn-lg">
+              <span class="fa fa-sticky-note fa-lg" aria-hidden="true"></span> Post it
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Online users -->
+    <button id="online-users-button" class="btn btn-primary" data-toggle="modal" data-target="#onlineUsersModal">
+      <i class="fa fas fa-users fa-lg"></i>
+      Online
+    </button>
+
+    <div class="modal modal-mini modal-primary fade" id="onlineUsersModal" tabindex="-1" role="dialog" aria-labelledby="onlineUsersLabel" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"  data-background-color="black">
+          <div class="modal-header justify-content-center">
+            <h4 class="title title-up"><i class="fa fas fa-users fa-lg"></i> Online Users</h4>
+          </div>
+          <div class="modal-body">
+            <div id="user-list">
+              <div class="card-body panel-users" id="online-users">
+                <ul class="card-text"></ul>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal"></button>
+            <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
