@@ -31,3 +31,14 @@ window.addEventListener('offline',  function() {
   $("main").fadeOut("300");
   $(".reconnect-section").fadeIn("300");
 });
+
+// Join button for temp rooms
+let join_btn = document.getElementById("join-temp-room-btn");
+let join_input = document.getElementById("join-temp-room-input");
+$(join_btn).on('click', function() {
+  if (join_input.value) {
+    window.location.href = window.location.origin + '/temp/' + join_input.value.trim().toLowerCase();
+  } else {
+    $(join_input).focus()
+  }
+});
