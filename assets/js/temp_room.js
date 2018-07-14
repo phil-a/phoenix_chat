@@ -50,6 +50,7 @@ const WEEK_OPTIONS = ["option-w1", "option-w2"];
 
 let presences = {}
 let onlineUsers = document.getElementById("online-users")
+let onlineUsersButton = document.getElementById("online-users-button")
 
 // Create list of users
 let listUsers = (user) => {
@@ -57,11 +58,21 @@ let listUsers = (user) => {
     user: user
   }
 }
+
 // Render list of users
 let renderUsers = (presences) => {
   onlineUsers.innerHTML = Presence.list(presences, listUsers)
-  .map(presence => `
-    <li>${presence.user}</li>`).join("")
+    .map((presence) => `<li>${presence.user}</li>`).join("")
+}
+
+// Render total count of users
+let renderUserCount = (presences) => {
+  onlineUsersButton.innerHTML =
+  `
+    <i class="fa fas fa-users fa-lg"></i>&nbsp;&nbsp;
+    Online
+    ( <b>${Object.keys(presences).length}</b> )
+  `
 }
 
 // Find correct Ul from payload
@@ -124,12 +135,14 @@ var channel = socket.channel('temp_room:' + room, {});        // connect to chat
     presences = Presence.syncState(presences, state)
     console.log(presences)
     renderUsers(presences)
+    renderUserCount(presences)
   });
   // Sync diff
   channel.on('presence_diff', diff => {
     presences = Presence.syncDiff(presences, diff)
     console.log(presences)
     renderUsers(presences)
+    renderUserCount(presences)
   });
 
 channel.on('shout', function (payload) {                      // listen to shout event

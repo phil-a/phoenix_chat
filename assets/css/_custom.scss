@@ -64,6 +64,11 @@ input[type][type=radio] {
   color: white;
 }
 
+.btn.disabled {
+  opacity: 1;
+  cursor: default;
+}
+
 /*
   Cards
 */

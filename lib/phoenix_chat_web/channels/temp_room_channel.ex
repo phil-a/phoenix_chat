@@ -35,8 +35,8 @@ defmodule PhoenixChatWeb.TempRoomChannel do
   end
 
   def handle_info(:after_join, socket) do
-    user_name = MnemonicSlugs.generate_slug(1)
     temp_room = Repo.get(TempRoom, socket.assigns[:temp_room])
+    user_name = socket.assigns[:user_id]
     push(socket, "presence_state", Presence.list(socket))
     {:ok, _} = Presence.track(socket, user_name, %{ online_at: inspect(System.system_time(:seconds)) })
     Temporary.list_messages_for_room(temp_room.id)

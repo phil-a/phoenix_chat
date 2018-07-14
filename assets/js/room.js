@@ -9,6 +9,7 @@ const WEEK_OPTIONS = ["option-w1", "option-w2"];
 
 let presences = {}
 let onlineUsers = document.getElementById("online-users")
+let onlineUsersButton = document.getElementById("online-users-button")
 
 // Create list of users
 let listUsers = (user) => {
@@ -16,21 +17,22 @@ let listUsers = (user) => {
     user: user
   }
 }
+
 // Render list of users
 let renderUsers = (presences) => {
   onlineUsers.innerHTML = Presence.list(presences, listUsers)
-  .map(presence => `
-    <li>${presence.user}</li>`).join("")
+    .map((presence) => `<li>${presence.user}</li>`).join("")
 }
 
-// Modal functions
-$( "#online-users-button" ).click(function() {
-  $('#onlineUsersModal').modal('toggle');
-});
-
-$( "#add-sticky-button" ).click(function() {
-  $('#addStickyModal').modal('toggle');
-});
+// Render total count of users
+let renderUserCount = (presences) => {
+  onlineUsersButton.innerHTML =
+  `
+    <i class="fa fas fa-users fa-lg"></i>&nbsp;&nbsp;
+    Online
+    ( <b>${Object.keys(presences).length}</b> )
+  `
+}
 
 function getCorrectUl(payload) {
   var {week, day} = payload;
@@ -100,11 +102,13 @@ $("#day-options-radio-happiness").find("label > input").map(function(i, e) {
   channel.on('presence_state', state => {
     presences = Presence.syncState(presences, state)
     renderUsers(presences)
+    renderUserCount(presences)
   });
   // Sync diff
   channel.on('presence_diff', diff => {
     presences = Presence.syncDiff(presences, diff)
     renderUsers(presences)
+    renderUserCount(presences)
   });
 
   channel.on('shout', function (payload) {                            // listen to shout event

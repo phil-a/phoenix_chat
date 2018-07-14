@@ -71,7 +71,8 @@ defmodule PhoenixChatWeb.Router do
   end
 
   defp put_temp_user_token(conn, _) do
-      token = Phoenix.Token.sign(conn, "user_id", "anonymous")
+      user_name = MnemonicSlugs.generate_slug(1)
+      token = Phoenix.Token.sign(conn, "user_id", user_name)
       conn
       |> assign(:user_id, token)
   end

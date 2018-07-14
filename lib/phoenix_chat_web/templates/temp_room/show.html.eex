@@ -32,12 +32,12 @@
   </div>
 
   <!-- Online users -->
-  <button id="online-users-button" class="btn btn-primary" data-toggle="modal" data-target="#onlineUsersModal">
+  <button id="online-users-button" class="btn btn-default disabled" data-toggle="modal">
     <i class="fa fas fa-users fa-lg"></i>
     Online
   </button>
 
-  <div class="modal modal-mini modal-primary fade" id="onlineUsersModal" tabindex="-1" role="dialog" aria-labelledby="onlineUsersLabel" style="display: none;" aria-hidden="true">
+  <div class="modal modal-mini modal-primary fade" tabindex="-1" role="dialog" aria-labelledby="onlineUsersLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content"  data-background-color="black">
         <div class="modal-header justify-content-center">
