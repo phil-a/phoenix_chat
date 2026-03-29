@@ -13,7 +13,7 @@ defmodule PhoenixChatWeb.TempRoomLive.Show do
     user_name =
       case session do
         %{"temp_user_name" => name} -> name
-        _ -> MnemonicSlugs.generate_slug(1)
+        _ -> PhoenixChat.SlugGenerator.generate_slug(1)
       end
 
     if connected?(socket) do
