@@ -5,18 +5,11 @@ defmodule PhoenixChat.MixProject do
     [
       app: :phoenix_chat,
       version: "0.1.0",
-      elixir: "~> 1.14",
+      elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps(),
-      test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [
-        coveralls: :test,
-        "coveralls.detail": :test,
-        "coveralls.post": :test,
-        "coveralls.html": :test
-      ]
+      deps: deps()
     ]
   end
 
@@ -36,23 +29,22 @@ defmodule PhoenixChat.MixProject do
       {:phoenix_ecto, "~> 4.6"},
       {:ecto_sql, "~> 3.12"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 4.1"},
+      {:phoenix_html, "~> 4.2"},
       {:phoenix_live_reload, "~> 1.5", only: :dev},
       {:phoenix_live_view, "~> 1.0"},
       {:phoenix_live_dashboard, "~> 0.8"},
-      {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
+      {:esbuild, "~> 0.9", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
       {:floki, ">= 0.30.0"},
-      {:bandit, "~> 1.5"},
+      {:bandit, "~> 1.6"},
       {:gettext, "~> 0.26"},
-      {:jason, "~> 1.2"},
-      {:dns_cluster, "~> 0.1.1"},
-      {:bcrypt_elixir, "~> 3.0"},
+      {:jason, "~> 1.4"},
+      {:dns_cluster, "~> 0.1.3"},
+      {:bcrypt_elixir, "~> 3.2"},
       {:quantum, "~> 3.5"},
       {:timex, "~> 3.7"},
-      {:excoveralls, "~> 0.18", only: [:test, :dev]},
-      {:telemetry_metrics, "~> 1.0"},
-      {:telemetry_poller, "~> 1.0"}
+      {:telemetry_metrics, "~> 1.1"},
+      {:telemetry_poller, "~> 1.1"}
     ]
   end
 
