@@ -8,257 +8,100 @@ defmodule PhoenixChat.Temporary do
 
   alias PhoenixChat.Temporary.TempRoom
 
-  @doc """
-  Returns the list of temp_rooms.
-
-  ## Examples
-
-      iex> list_temp_rooms()
-      [%TempRoom{}, ...]
-
-  """
   def list_temp_rooms do
     Repo.all(TempRoom)
   end
 
-  @doc """
-  Gets a single temp_room.
-
-  Raises `Ecto.NoResultsError` if the Temp room does not exist.
-
-  ## Examples
-
-      iex> get_temp_room!(123)
-      %TempRoom{}
-
-      iex> get_temp_room!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_temp_room!(slug) do 
+  def get_temp_room!(slug) do
     Repo.get_by!(TempRoom, slug: slug)
   end
 
-  @doc """
-  Creates a temp_room.
-
-  ## Examples
-
-      iex> create_temp_room(%{field: value})
-      {:ok, %TempRoom{}}
-
-      iex> create_temp_room(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_temp_room(attrs \\ %{}) do
     %TempRoom{}
     |> TempRoom.changeset(attrs)
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a temp_room.
-
-  ## Examples
-
-      iex> update_temp_room(temp_room, %{field: new_value})
-      {:ok, %TempRoom{}}
-
-      iex> update_temp_room(temp_room, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def update_temp_room(%TempRoom{} = temp_room, attrs) do
     temp_room
     |> TempRoom.changeset(attrs)
     |> Repo.update()
   end
 
-  @doc """
-  Deletes a TempRoom.
-
-  ## Examples
-
-      iex> delete_temp_room(temp_room)
-      {:ok, %TempRoom{}}
-
-      iex> delete_temp_room(temp_room)
-      {:error, %Ecto.Changeset{}}
-
-  """
   def delete_temp_room(%TempRoom{} = temp_room) do
     Repo.delete(temp_room)
   end
 
   def heartbeat() do
-    IO.puts ("-------- HEARTBEAT ----------")
+    IO.puts("-------- HEARTBEAT ----------")
+
     TempRoom
-    |> Repo.all
+    |> Repo.all()
     |> Repo.preload(:temp_messages)
     |> Enum.each(&delete_room_if_expired(&1))
   end
 
-  @doc """
-  Deletes a TempRoom if room or last message exceeds a day.
-
-  ## Examples
-
-      iex> delete_room_if_expired(temp_room)
-      {:ok, %TempRoom{}}
-
-      iex> delete_room_if_expired(%TempRoom{} = temp_room)
-      {:error, %Ecto.Changeset{}}
-
-  """
-
   def delete_room_if_expired(%TempRoom{} = temp_room) do
     last_message =
-    temp_room
-    |> Map.get(:temp_messages)
-    |> List.last()
-    
-    case last_message do
-      nil ->
-        diff = NaiveDateTime.diff(NaiveDateTime.utc_now(), temp_room.inserted_at)
-      _ ->
-        diff = NaiveDateTime.diff(NaiveDateTime.utc_now(), last_message.inserted_at)
-    end
+      temp_room
+      |> Map.get(:temp_messages)
+      |> List.last()
 
-    case diff > 86400 do
-      true ->
-        IO.puts(diff)
-        IO.puts("DELETING")
-        delete_temp_room(temp_room)
-      false ->
-        IO.puts(diff)
-        IO.puts("STILL ACTIVE")
-    end
+    diff =
+      case last_message do
+        nil ->
+          NaiveDateTime.diff(NaiveDateTime.utc_now(), temp_room.inserted_at)
 
+        msg ->
+          NaiveDateTime.diff(NaiveDateTime.utc_now(), msg.inserted_at)
+      end
+
+    if diff > 86400 do
+      IO.puts("#{diff} - DELETING")
+      delete_temp_room(temp_room)
+    else
+      IO.puts("#{diff} - STILL ACTIVE")
+    end
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking temp_room changes.
-
-  ## Examples
-
-      iex> change_temp_room(temp_room)
-      %Ecto.Changeset{source: %TempRoom{}}
-
-  """
-  def change_temp_room(%TempRoom{} = temp_room) do
-    TempRoom.changeset(temp_room, %{})
+  def change_temp_room(%TempRoom{} = temp_room, attrs \\ %{}) do
+    TempRoom.changeset(temp_room, attrs)
   end
 
   alias PhoenixChat.Temporary.TempMessage
 
-  @doc """
-  Returns the list of temp_messages.
-
-  ## Examples
-
-      iex> list_temp_messages()
-      [%TempMessage{}, ...]
-
-  """
   def list_temp_messages do
     Repo.all(TempMessage)
   end
- 
-  @doc """
-  Returns the list of temp_messages for a specified temp_room_id.
 
-  ## Examples
-
-      iex> list_messages_for_room(123)
-      [%TempMessage{}, ...]
-
-  """
   def list_messages_for_room(temp_room_id) do
-    query = from m in TempMessage,
-            where: m.temp_room_id == ^temp_room_id,
-            select: m
+    query =
+      from m in TempMessage,
+        where: m.temp_room_id == ^temp_room_id,
+        select: m
+
     Repo.all(query)
   end
 
-  @doc """
-  Gets a single temp_message.
-
-  Raises `Ecto.NoResultsError` if the Temp message does not exist.
-
-  ## Examples
-
-      iex> get_temp_message!(123)
-      %TempMessage{}
-
-      iex> get_temp_message!(456)
-      ** (Ecto.NoResultsError)
-
-  """
   def get_temp_message!(id), do: Repo.get!(TempMessage, id)
 
-  @doc """
-  Creates a temp_message.
-
-  ## Examples
-
-      iex> create_temp_message(%{field: value})
-      {:ok, %TempMessage{}}
-
-      iex> create_temp_message(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_temp_message(attrs \\ %{}) do
     %TempMessage{}
     |> TempMessage.changeset(attrs)
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a temp_message.
-
-  ## Examples
-
-      iex> update_temp_message(temp_message, %{field: new_value})
-      {:ok, %TempMessage{}}
-
-      iex> update_temp_message(temp_message, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def update_temp_message(%TempMessage{} = temp_message, attrs) do
     temp_message
     |> TempMessage.changeset(attrs)
     |> Repo.update()
   end
 
-  @doc """
-  Deletes a TempMessage.
-
-  ## Examples
-
-      iex> delete_temp_message(temp_message)
-      {:ok, %TempMessage{}}
-
-      iex> delete_temp_message(temp_message)
-      {:error, %Ecto.Changeset{}}
-
-  """
   def delete_temp_message(%TempMessage{} = temp_message) do
     Repo.delete(temp_message)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking temp_message changes.
-
-  ## Examples
-
-      iex> change_temp_message(temp_message)
-      %Ecto.Changeset{source: %TempMessage{}}
-
-  """
-  def change_temp_message(%TempMessage{} = temp_message) do
-    TempMessage.changeset(temp_message, %{})
+  def change_temp_message(%TempMessage{} = temp_message, attrs \\ %{}) do
+    TempMessage.changeset(temp_message, attrs)
   end
 end

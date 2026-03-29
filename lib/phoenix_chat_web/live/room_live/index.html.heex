@@ -1,0 +1,88 @@
+<div class="max-w-4xl mx-auto">
+  <.header>
+    Private Rooms
+    <:actions>
+      <.link patch={~p"/rooms/new"}>
+        <.button>New Room</.button>
+      </.link>
+    </:actions>
+  </.header>
+
+  <%!-- Room form modal --%>
+  <.modal :if={@live_action in [:new, :edit]} id="room-modal" show on_cancel={JS.patch(~p"/rooms")}>
+    <.header>
+      {@page_title}
+    </.header>
+
+    <.simple_form for={to_form(@changeset)} id="room-form" phx-submit="save">
+      <.input field={to_form(@changeset)[:name]} type="text" label="Room name" />
+      <:actions>
+        <.button phx-disable-with="Saving...">Save Room</.button>
+      </:actions>
+    </.simple_form>
+  </.modal>
+
+  <div class="mt-8">
+    <table class="w-full text-sm text-left">
+      <thead class="text-xs uppercase text-gray-400 border-b border-gray-700">
+        <tr>
+          <th class="px-4 py-3">#</th>
+          <th class="px-4 py-3">Name</th>
+          <th class="px-4 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-700">
+        <%= for room <- @rooms do %>
+          <tr class="hover:bg-gray-800/50">
+            <td class="px-4 py-3 text-gray-400">{room.id}</td>
+            <td class="px-4 py-3">
+              <%= if user_joined_room?(room, @user_rooms) do %>
+                <.link navigate={~p"/rooms/#{room}"} class="text-blue-400 hover:text-blue-300 font-medium">
+                  {room.name}
+                </.link>
+              <% else %>
+                <span class="text-gray-400">{room.name}</span>
+              <% end %>
+            </td>
+            <td class="px-4 py-3 text-right">
+              <%= if user_joined_room?(room, @user_rooms) do %>
+                <%= if user_created_room?(@current_user, room) do %>
+                  <.link patch={~p"/rooms/#{room}/permit"} class="text-gray-400 hover:text-white mr-3" title="Permissions">
+                    <span class="text-lg">&#128274;</span>
+                  </.link>
+                  <.link patch={~p"/rooms/#{room}/edit"} class="text-blue-400 hover:text-blue-300 mr-3" title="Edit">
+                    <span class="text-lg">&#9998;</span>
+                  </.link>
+                  <.link
+                    phx-click={JS.push("delete", value: %{id: room.id})}
+                    data-confirm="Are you sure you want to delete this room?"
+                    class="text-red-400 hover:text-red-300"
+                    title="Delete"
+                  >
+                    <span class="text-lg">&#128465;</span>
+                  </.link>
+                <% else %>
+                  <.link
+                    phx-click={JS.push("leave", value: %{id: room.id})}
+                    data-confirm="Are you sure you want to leave this room?"
+                    class="text-red-400 hover:text-red-300"
+                    title="Leave"
+                  >
+                    Leave
+                  </.link>
+                <% end %>
+              <% else %>
+                <.link
+                  phx-click={JS.push("join", value: %{id: room.id})}
+                  class="text-green-400 hover:text-green-300"
+                >
+                  Join
+                </.link>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

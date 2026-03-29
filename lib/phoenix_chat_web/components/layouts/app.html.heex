@@ -1,0 +1,61 @@
+<header class="bg-gray-800 border-b border-gray-700">
+  <div class="flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+    <div class="flex items-center gap-4">
+      <a href="/" class="text-xl font-bold text-white hover:text-gray-300">
+        Sprint-Retro
+      </a>
+    </div>
+    <div class="flex items-center gap-4">
+      <%= if @current_user do %>
+        <span class="text-sm text-gray-300">
+          {@current_user.email}
+        </span>
+        <.link
+          href={~p"/rooms"}
+          class="text-sm text-gray-300 hover:text-white"
+        >
+          Rooms
+        </.link>
+        <.link
+          href={~p"/temp"}
+          class="text-sm text-gray-300 hover:text-white"
+        >
+          Temp Rooms
+        </.link>
+        <.link
+          href={~p"/users/log_out"}
+          method="delete"
+          class="text-sm text-gray-300 hover:text-white"
+        >
+          Log out
+        </.link>
+      <% else %>
+        <.link
+          href={~p"/temp"}
+          class="text-sm text-gray-300 hover:text-white"
+        >
+          Temp Rooms
+        </.link>
+        <.link
+          navigate={~p"/users/register"}
+          class="text-sm text-gray-300 hover:text-white"
+        >
+          Register
+        </.link>
+        <.link
+          navigate={~p"/users/log_in"}
+          class="text-sm text-gray-300 hover:text-white"
+        >
+          Log in
+        </.link>
+      <% end %>
+    </div>
+  </div>
+</header>
+
+<main class="px-4 py-10 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-6xl">
+    <.flash_group flash={@flash} />
+    {@inner_content}
+  </div>
+</main>

@@ -2,10 +2,8 @@ defmodule PhoenixChat.Temporary.TempMessage do
   use Ecto.Schema
 
   import Ecto.Changeset
-  import Ecto.Query, only: [from: 2]
-  
-  alias PhoenixChat.Repo
-  alias PhoenixChat.Temporary.{ TempMessage, TempRoom }
+
+  alias PhoenixChat.Temporary.TempRoom
 
   schema "temp_messages" do
     field :day, :string
@@ -17,11 +15,9 @@ defmodule PhoenixChat.Temporary.TempMessage do
     timestamps()
   end
 
-  @doc false
-  def changeset(%TempMessage{} = temp_message, attrs) do
+  def changeset(%__MODULE__{} = temp_message, attrs) do
     temp_message
     |> cast(attrs, [:message, :name, :week, :day, :temp_room_id])
     |> validate_required([:message, :name, :week, :day])
   end
-
 end

@@ -98,8 +98,8 @@ defmodule PhoenixChat.Permanent do
       %Ecto.Changeset{source: %Room{}}
 
   """
-  def change_room(%Room{} = room) do
-    Room.changeset(room, %{})
+  def change_room(%Room{} = room, attrs \\ %{}) do
+    Room.changeset(room, attrs)
   end
 
   alias PhoenixChat.Permanent.Message
@@ -210,7 +210,7 @@ defmodule PhoenixChat.Permanent do
       %Ecto.Changeset{source: %Message{}}
 
   """
-  def change_message(%Message{} = message) do
-    Message.changeset(message, %{})
+  def change_message(%Message{} = message, attrs \\ %{}) do
+    Message.changeset(message, attrs)
   end
 end

@@ -1,32 +1,24 @@
 defmodule PhoenixChat.Application do
+  @moduledoc false
+
   use Application
 
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
+  @impl true
   def start(_type, _args) do
-    import Supervisor.Spec
-
-    # Define workers and child supervisors to be supervised
     children = [
-      # Start the Ecto repository
-      supervisor(PhoenixChat.Repo, []),
-      # Start the endpoint when the application starts
-      supervisor(PhoenixChatWeb.Endpoint, []),
-      # Start your own worker by calling: PhoenixChat.Worker.start_link(arg1, arg2, arg3)
-      # worker(PhoenixChat.Worker, [arg1, arg2, arg3]),
-      supervisor(PhoenixChatWeb.Presence, []),
-      
-      worker(PhoenixChat.Scheduler, [])
+      PhoenixChat.Repo,
+      {DNSCluster, query: Application.get_env(:phoenix_chat, :dns_cluster_query) || :ignore},
+      {Phoenix.PubSub, name: PhoenixChat.PubSub},
+      PhoenixChatWeb.Presence,
+      PhoenixChatWeb.Endpoint,
+      PhoenixChat.Scheduler
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: PhoenixChat.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
-  # Tell Phoenix to update the endpoint configuration
-  # whenever the application is updated.
+  @impl true
   def config_change(changed, _new, removed) do
     PhoenixChatWeb.Endpoint.config_change(changed, removed)
     :ok

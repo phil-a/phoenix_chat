@@ -3,8 +3,9 @@ defmodule PhoenixChat.Permanent.UserRoom do
 
   import Ecto.Changeset
   import Ecto.Query
-  
-  alias PhoenixChat.Permanent.{User, UserRoom}
+
+  alias PhoenixChat.Accounts.User
+  alias PhoenixChat.Permanent.Room
 
   schema "user_rooms" do
     belongs_to :user, User, foreign_key: :user_id
@@ -13,9 +14,6 @@ defmodule PhoenixChat.Permanent.UserRoom do
     timestamps()
   end
 
-  @doc """
-  Builds a changeset based on the `struct` and `params`.
-  """
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:user_id, :room_id])
@@ -23,8 +21,8 @@ defmodule PhoenixChat.Permanent.UserRoom do
     |> unique_constraint(:user_id_room_id)
   end
 
-  def get_user_rooms_for_room(user_room_id) do
-    query = from ur in UserRoom,
-            where: ur.room_id == ^user_room_id
+  def get_user_rooms_for_room(room_id) do
+    from ur in __MODULE__,
+      where: ur.room_id == ^room_id
   end
 end

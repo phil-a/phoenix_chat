@@ -1,60 +1,91 @@
 defmodule PhoenixChatWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
-  as controllers, views, channels and so on.
+  as controllers, live views, and so on.
 
   This can be used in your application as:
 
       use PhoenixChatWeb, :controller
-      use PhoenixChatWeb, :view
-
-  The definitions below will be executed for every view,
-  controller, etc, so keep them short and clean, focused
-  on imports, uses and aliases.
-
-  Do NOT define functions inside the quoted expressions
-  below. Instead, define any helper function in modules
-  and import those modules here.
+      use PhoenixChatWeb, :live_view
   """
 
-  def controller do
-    quote do
-      use Phoenix.Controller, namespace: PhoenixChatWeb
-      import Plug.Conn
-      import PhoenixChatWeb.Router.Helpers
-      import PhoenixChatWeb.Gettext
-    end
-  end
-
-  def view do
-    quote do
-      use Phoenix.View, root: "lib/phoenix_chat_web/templates",
-                        namespace: PhoenixChatWeb
-
-      # Import convenience functions from controllers
-      import Phoenix.Controller, only: [get_flash: 2, view_module: 1]
-
-      # Use all HTML functionality (forms, tags, etc)
-      use Phoenix.HTML
-
-      import PhoenixChatWeb.Router.Helpers
-      import PhoenixChatWeb.ErrorHelpers
-      import PhoenixChatWeb.Gettext
-    end
-  end
+  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
 
   def router do
     quote do
-      use Phoenix.Router
+      use Phoenix.Router, helpers: false
+
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 
   def channel do
     quote do
       use Phoenix.Channel
+    end
+  end
+
+  def controller do
+    quote do
+      use Phoenix.Controller,
+        formats: [:html, :json],
+        layouts: [html: PhoenixChatWeb.Layouts]
+
+      import Plug.Conn
       import PhoenixChatWeb.Gettext
+
+      unquote(verified_routes())
+    end
+  end
+
+  def live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {PhoenixChatWeb.Layouts, :app}
+
+      unquote(html_helpers())
+    end
+  end
+
+  def live_component do
+    quote do
+      use Phoenix.LiveComponent
+
+      unquote(html_helpers())
+    end
+  end
+
+  def html do
+    quote do
+      use Phoenix.Component
+
+      import Phoenix.Controller,
+        only: [get_csrf_token: 0, view_module: 1, view_template: 1]
+
+      unquote(html_helpers())
+    end
+  end
+
+  defp html_helpers do
+    quote do
+      import Phoenix.HTML
+      import PhoenixChatWeb.CoreComponents
+      import PhoenixChatWeb.Gettext
+
+      alias Phoenix.LiveView.JS
+
+      unquote(verified_routes())
+    end
+  end
+
+  def verified_routes do
+    quote do
+      use Phoenix.VerifiedRoutes,
+        endpoint: PhoenixChatWeb.Endpoint,
+        router: PhoenixChatWeb.Router,
+        statics: PhoenixChatWeb.static_paths()
     end
   end
 

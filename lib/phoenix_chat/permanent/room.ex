@@ -2,9 +2,8 @@ defmodule PhoenixChat.Permanent.Room do
   use Ecto.Schema
 
   import Ecto.Changeset
-  import Ecto.Query
-  
-  alias PhoenixChat.Coherence.User
+
+  alias PhoenixChat.Accounts.User
   alias PhoenixChat.Permanent.Message
 
   schema "rooms" do
@@ -16,9 +15,6 @@ defmodule PhoenixChat.Permanent.Room do
     timestamps()
   end
 
-  @doc """
-  Builds a changeset based on the `struct` and `params`.
-  """
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:name])

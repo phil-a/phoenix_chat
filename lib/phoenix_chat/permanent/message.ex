@@ -2,10 +2,9 @@ defmodule PhoenixChat.Permanent.Message do
   use Ecto.Schema
 
   import Ecto.Changeset
-  import Ecto.Query, only: [from: 2]
-  
-  alias PhoenixChat.{Repo, Coherence.User}
-  alias PhoenixChat.Permanent.{ Message, Room }
+
+  alias PhoenixChat.Accounts.User
+  alias PhoenixChat.Permanent.Room
 
   schema "messages" do
     field :message, :string
@@ -17,11 +16,9 @@ defmodule PhoenixChat.Permanent.Message do
     timestamps()
   end
 
-  @doc false
-  def changeset(%Message{} = message, attrs) do
+  def changeset(%__MODULE__{} = message, attrs) do
     message
     |> cast(attrs, [:name, :message, :week, :day, :user_id, :room_id])
     |> validate_required([:message, :week, :day, :user_id, :room_id])
   end
-
 end

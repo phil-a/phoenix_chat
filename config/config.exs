@@ -1,54 +1,48 @@
-# This file is responsible for configuring your application
-# and its dependencies with the aid of the Mix.Config module.
-#
-# This configuration file is loaded before any dependency and
-# is restricted to this project.
-use Mix.Config
+import Config
 
-# General application configuration
 config :phoenix_chat,
-  ecto_repos: [PhoenixChat.Repo]
+  ecto_repos: [PhoenixChat.Repo],
+  generators: [timestamp_type: :utc_datetime]
 
-# Configures the endpoint
 config :phoenix_chat, PhoenixChatWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "kev8uVxEoheL+DXbc+bGOF/WwVxvbO/SkRmGMVBW0UCCR9TlemvHynqiopqEOe4v",
-  render_errors: [view: PhoenixChatWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: PhoenixChat.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  adapter: Bandit.PhoenixAdapter,
+  render_errors: [
+    formats: [html: PhoenixChatWeb.ErrorHTML, json: PhoenixChatWeb.ErrorJSON],
+    layout: false
+  ],
+  pubsub_server: PhoenixChat.PubSub,
+  live_view: [signing_salt: "TqQ6u9Q/"]
 
-# Configures Elixir's Logger
+config :phoenix_chat, PhoenixChat.Scheduler,
+  jobs: [
+    {"*/15 * * * *", {PhoenixChat.Temporary, :heartbeat, []}}
+  ]
+
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+config :phoenix, :json_library, Jason
 
-# %% Coherence Configuration %%   Don't remove this line
-config :coherence,
-  user_schema: PhoenixChat.Coherence.User,
-  repo: PhoenixChat.Repo,
-  module: PhoenixChat,
-  web_module: PhoenixChatWeb,
-  router: PhoenixChatWeb.Router,
-  messages_backend: PhoenixChatWeb.Coherence.Messages,
-  logged_out_url: "/",
-  email_from_name: System.get_env("COHERENCE_EMAIL_FROM_NAME"),
-  email_from_email: System.get_env("COHERENCE_EMAIL_FROM_EMAIL"),
-  opts: [:rememberable, :invitable, :confirmable, :authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token]
-
-config :coherence, PhoenixChatWeb.Coherence.Mailer,
-  adapter: Swoosh.Adapters.Sendgrid,
-  api_key: System.get_env("SENDGRID_API_KEY")
-# %% End Coherence Configuration %%
-
-config :phoenix_chat, PhoenixChat.Scheduler,
-  jobs: [
-    # Every second
-    # {{:extended, "*/1 * * * *"}, {PhoenixChat.Temporary, :heartbeat, []}},
-
-    # Every 15 minutes
-    {"*/15 * * * *", {PhoenixChat.Temporary, :heartbeat, []}},
+config :esbuild,
+  version: "0.17.11",
+  phoenix_chat: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
+
+config :tailwind,
+  version: "3.4.3",
+  phoenix_chat: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
+
+import_config "#{config_env()}.exs"

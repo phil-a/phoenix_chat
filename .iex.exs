@@ -1,6 +1,7 @@
 alias PhoenixChat.Repo
 
-alias PhoenixChat.Coherence.User
+alias PhoenixChat.Accounts
+alias PhoenixChat.Accounts.User
 
 alias PhoenixChat.Permanent
 alias PhoenixChat.Permanent.{Room, Message}

@@ -1,0 +1,165 @@
+<div class="max-w-6xl mx-auto">
+  <.back navigate={~p"/rooms"}>Back to rooms</.back>
+
+  <%!-- Tab navigation --%>
+  <div class="flex border-b border-gray-700 mt-4 mb-6">
+    <button
+      phx-click="switch_tab"
+      phx-value-tab="reflection"
+      class={"tab-button #{if @active_tab == :reflection, do: "active", else: ""}"}
+    >
+      Reflection
+    </button>
+    <button
+      phx-click="switch_tab"
+      phx-value-tab="happiness"
+      class={"tab-button #{if @active_tab == :happiness, do: "active", else: ""}"}
+    >
+      Happiness
+    </button>
+  </div>
+
+  <%!-- Reflection Tab --%>
+  <div :if={@active_tab == :reflection}>
+    <%!-- Week 1 --%>
+    <h3 class="text-sm text-gray-400 mb-2">Week 1</h3>
+    <div class="grid grid-cols-5 gap-2 mb-2">
+      <div :for={day <- ~w(m t w th f)} class="sticky-column bg-gray-800/50 rounded p-2">
+        <div class="text-xs text-gray-500 text-center mb-2">
+          {day_label(day)}
+        </div>
+        <div :for={msg <- messages_for(@messages, "w1", day)} class="sticky-note" id={"msg-#{msg.id}"}>
+          <span class="text-xs font-bold">{msg.name}</span>
+          <p>{msg.message}</p>
+          <button
+            :if={msg.user_id == @current_user.id}
+            phx-click="delete_message"
+            phx-value-id={msg.id}
+            class="delete-btn"
+            title="Delete"
+          >
+            &times;
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <%!-- Day labels --%>
+    <div class="grid grid-cols-5 gap-2 mb-2">
+      <div :for={day <- ~w(Mo Tu We Th Fr)} class="text-center text-lg font-bold text-gray-300">
+        {day}
+      </div>
+    </div>
+
+    <%!-- Week 2 --%>
+    <h3 class="text-sm text-gray-400 mb-2">Week 2</h3>
+    <div class="grid grid-cols-5 gap-2 mb-6">
+      <div :for={day <- ~w(m t w th f)} class="sticky-column bg-gray-800/50 rounded p-2">
+        <div class="text-xs text-gray-500 text-center mb-2">
+          {day_label(day)}
+        </div>
+        <div :for={msg <- messages_for(@messages, "w2", day)} class="sticky-note" id={"msg-#{msg.id}"}>
+          <span class="text-xs font-bold">{msg.name}</span>
+          <p>{msg.message}</p>
+          <button
+            :if={msg.user_id == @current_user.id}
+            phx-click="delete_message"
+            phx-value-id={msg.id}
+            class="delete-btn"
+            title="Delete"
+          >
+            &times;
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <%!-- Add Sticky Button --%>
+    <.button phx-click="toggle_sticky_modal">
+      + Add Sticky
+    </.button>
+
+    <%!-- Add Sticky Modal --%>
+    <.modal :if={@show_sticky_modal} id="add-sticky-modal" show on_cancel={JS.push("close_sticky_modal")}>
+      <.header>Add Sticky Note</.header>
+      <div class="mt-4 space-y-4">
+        <div>
+          <p class="text-sm text-gray-400 mb-2">Week</p>
+          <div class="flex gap-2">
+            <button
+              :for={week <- [{"w1", "Week 1"}, {"w2", "Week 2"}]}
+              phx-click="select_week"
+              phx-value-week={elem(week, 0)}
+              class={"px-3 py-1 rounded text-sm #{if @selected_week == elem(week, 0), do: "bg-blue-600 text-white", else: "bg-gray-700 text-gray-300"}"}
+            >
+              {elem(week, 1)}
+            </button>
+          </div>
+        </div>
+        <div>
+          <p class="text-sm text-gray-400 mb-2">Day</p>
+          <div class="flex gap-2">
+            <button
+              :for={day <- [{"m", "Mo"}, {"t", "Tu"}, {"w", "We"}, {"th", "Th"}, {"f", "Fr"}]}
+              phx-click="select_day"
+              phx-value-day={elem(day, 0)}
+              class={"px-3 py-1 rounded text-sm #{if @selected_day == elem(day, 0), do: "bg-blue-600 text-white", else: "bg-gray-700 text-gray-300"}"}
+            >
+              {elem(day, 1)}
+            </button>
+          </div>
+        </div>
+        <form phx-submit="post_sticky" class="flex gap-2">
+          <input
+            type="text"
+            name="message"
+            placeholder="Your message"
+            class="flex-1 rounded-lg bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-0"
+            required
+          />
+          <.button type="submit">Post it</.button>
+        </form>
+      </div>
+    </.modal>
+  </div>
+
+  <%!-- Happiness Tab --%>
+  <div :if={@active_tab == :happiness}>
+    <div class="grid grid-cols-5 gap-2 mb-2">
+      <div :for={score <- ~w(1 2 3 4 5)} class="happiness-column bg-gray-800/50 rounded p-2 min-h-[150px]">
+        <div :for={msg <- messages_for(@messages, "h1", score)} class="happiness-note">
+          {msg.name}
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-5 gap-2 mb-6">
+      <div :for={score <- ~w(1 2 3 4 5)} class="text-center text-lg font-bold text-gray-300">
+        {score}
+      </div>
+    </div>
+
+    <p class="text-sm text-gray-400 mb-4">How happy are you? (1 = low, 5 = high)</p>
+    <div class="flex gap-2">
+      <.button :for={score <- ~w(1 2 3 4 5)} phx-click="post_happiness" phx-value-day={score}>
+        {score}
+      </.button>
+    </div>
+  </div>
+
+  <%!-- Online Users --%>
+  <div class="fixed bottom-4 right-4">
+    <.button phx-click="toggle_users_modal">
+      Online ({map_size(@presences)})
+    </.button>
+  </div>
+
+  <.modal :if={@show_users_modal} id="online-users-modal" show on_cancel={JS.push("toggle_users_modal")}>
+    <.header>Online Users</.header>
+    <ul class="mt-4 space-y-2">
+      <li :for={user <- online_users(@presences)} class="flex items-center text-gray-300">
+        <span class="online-dot"></span>
+        {user}
+      </li>
+    </ul>
+  </.modal>
+</div>

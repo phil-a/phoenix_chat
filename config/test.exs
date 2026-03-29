@@ -1,19 +1,18 @@
-use Mix.Config
+import Config
 
-# We don't run a server during test. If one is required,
-# you can enable the server option below.
+config :bcrypt_elixir, :log_rounds, 1
+
 config :phoenix_chat, PhoenixChatWeb.Endpoint,
-  http: [port: 4001],
+  http: [ip: {127, 0, 0, 1}, port: 4002],
+  secret_key_base: "kev8uVxEoheL+DXbc+bGOF/WwVxvbO/SkRmGMVBW0UCCR9TlemvHynqiopqEOe4v",
   server: false
 
-# Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :warning
 
-# Configure your database
 config :phoenix_chat, PhoenixChat.Repo,
-  adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "phoenix_chat_test",
   hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+  database: "phoenix_chat_test#{System.get_env("MIX_TEST_PARTITION")}",
+  pool: Ecto.Adapters.SQL.Sandbox,
+  pool_size: 16

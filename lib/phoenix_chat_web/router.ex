@@ -1,79 +1,74 @@
 defmodule PhoenixChatWeb.Router do
   use PhoenixChatWeb, :router
-  use Coherence.Router
+
+  import PhoenixChatWeb.UserAuth
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
+    plug :fetch_live_flash
+    plug :put_root_layout, html: {PhoenixChatWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Coherence.Authentication.Session
-    plug :put_temp_user_token
-  end
-
-  pipeline :protected do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-    plug Coherence.Authentication.Session, protected: true
-    plug :put_user_token
-  end
-
-  scope "/" do
-    pipe_through :browser
-    coherence_routes()
-  end
-
-  scope "/" do
-    pipe_through :protected
-    coherence_routes :protected
+    plug :fetch_current_user
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
+  # Public temp room routes (no auth required)
   scope "/", PhoenixChatWeb do
-    pipe_through :browser # Use the default browser stack
-    resources "/temp", TempRoomController, param: "slug", except: [:index]
-    resources "/temp_rooms", TempRoomController, param: "slug", only: [:index]
-    resources "/temp_messages", TempMessageController
+    pipe_through :browser
+
+    live_session :public,
+      on_mount: [{PhoenixChatWeb.UserAuth, :mount_current_user}] do
+      live "/temp", TempRoomLive.Index, :index
+      live "/temp/new", TempRoomLive.Index, :new
+      live "/temp/:slug", TempRoomLive.Show, :show
+    end
+  end
+
+  # Auth routes
+  scope "/", PhoenixChatWeb do
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
+    live_session :redirect_if_user_is_authenticated,
+      on_mount: [{PhoenixChatWeb.UserAuth, :redirect_if_user_is_authenticated}] do
+      live "/users/register", UserRegistrationLive, :new
+      live "/users/log_in", UserLoginLive, :new
+    end
+
+    post "/users/log_in", UserSessionController, :create
   end
 
   scope "/", PhoenixChatWeb do
-    pipe_through :protected
-    
-    get "/", PageController, :index
-    get "/users/:id/rooms", Coherence.UserController, :rooms
-    resources "/rooms", RoomController
-    post "/rooms/:id/join", RoomController, :join
-    post "/rooms/:id/leave", RoomController, :leave
-    post "/rooms/:id/kick/:user_id", RoomController, :kick
-    get "/rooms/:id/permit", RoomController, :edit_permit
-    post "/rooms/:id/permit", RoomController, :update_permit
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :require_authenticated_user,
+      on_mount: [{PhoenixChatWeb.UserAuth, :ensure_authenticated}] do
+      live "/", RoomLive.Index, :index
+      live "/rooms", RoomLive.Index, :index
+      live "/rooms/new", RoomLive.Index, :new
+      live "/rooms/:id", RoomLive.Show, :show
+      live "/rooms/:id/edit", RoomLive.Index, :edit
+      live "/rooms/:id/permit", RoomLive.Permit, :edit
+    end
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", PhoenixChatWeb do
-  #   pipe_through :api
-  # end
-  
+  scope "/", PhoenixChatWeb do
+    pipe_through [:browser]
 
-  defp put_user_token(conn, _) do
-    current_user = Coherence.current_user(conn).id
-    user_id_token = Phoenix.Token.sign(conn, "user_id",   
-                    Coherence.current_user(conn).id)
-    conn
-    |> assign(:user_id, user_id_token)
+    delete "/users/log_out", UserSessionController, :delete
   end
 
-  defp put_temp_user_token(conn, _) do
-      user_name = MnemonicSlugs.generate_slug(1)
-      token = Phoenix.Token.sign(conn, "user_id", user_name)
-      conn
-      |> assign(:user_id, token)
+  # Enable LiveDashboard in development
+  if Application.compile_env(:phoenix_chat, :dev_routes) do
+    import Phoenix.LiveDashboard.Router
+
+    scope "/dev" do
+      pipe_through :browser
+      live_dashboard "/dashboard", metrics: PhoenixChatWeb.Telemetry
+    end
   end
 end
